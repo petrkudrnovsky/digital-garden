@@ -41,12 +41,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Vítejte v mé digitální zahradě!.md",
+                "file": "FIT/BIG/MapReduce.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Vítejte v mé digitální zahradě!"
+              "title": "MapReduce"
             }
           }
         ],
@@ -194,12 +194,13 @@
   },
   "active": "1501bed3b37d0cee",
   "lastOpenFiles": [
-    "Rozcestník.md",
-    "Vítejte v mé digitální zahradě!.md",
-    "index.md",
+    "FIT/BIG/BIG - MapReduce model - principy a jeho využití pro dotazování Big Data.md",
     "FIT/BIG/BIG - technologie pro Big data.md",
-    "FIT/BIG/Big Data.md",
     "FIT/BIG/BIG - CAP teorém a jeho vztah k NoSQL databázím.md",
+    "Rozcestník.md",
+    "index.md",
+    "Vítejte v mé digitální zahradě!.md",
+    "FIT/BIG/Big Data.md",
     "FIT/BIG/NoSQL databáze.md",
     "FIT/BIG/MongoDB.md",
     "FIT/BIG/Dokumentově orientovaná databáze.md",
@@ -219,7 +220,6 @@
     "FIT/BIG/Elasticsearch.md",
     "FIT/BIG/CAP teorém.md",
     "FIT/BIG/BIG - Typické databázové stroje pro Big Data (Cassandra nebo HBase) - architektura, databázový model, distribuce dat.md",
-    "FIT/BIG/BIG - Principy výpočtů v distribuovaných systémech - Spark framework. Principy distribuované indexace - Elastic.md",
     "FIT/BIG",
     "FIT/AWD",
     "FIT",
