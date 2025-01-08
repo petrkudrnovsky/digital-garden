@@ -1,0 +1,22 @@
+- stejně jako [[REST protokol]] se jedná o architekturu
+
+- získává data, jedná se o dotazovací jazyk
+- snaží se eliminovat nevýhody RESTu
+- je to typované 
+	- dokonce může mít i vlastní typy
+- na pomezí architektury a dotazovacího jazyka
+	- uživatel si může sám víc vydefinovat, jaká data vlastně chce
+- **při definování, co chci za data** (vypisováním properties) můžu jít i rekurzivně
+	- dobré je to, že si mohu vyžádat jenom ta data, která chci a žádná jiná
+- má jeden endpoint pro všechny dotazy, které zpracovává
+- problémy
+	- pro server je to výkonově víc náročnější - klient
+		- nějaké části nejde cachovat
+	- při dotazování na GET jsem omezený délkou URL
+		- takže se musí používat POST - ten ale nejde dobře cachovat
+- dotazování je hodně standardizované - to je výhoda
+- operace a properties nejsou předem definované - musím víc koukat do dokumentace (ale pro GraphQL se to umí vygenerovat)
+	- můžu mít i svoje datové typy a formáty
+### Mutations
+- dotazy (queries) se používají pro získávání dat
+- mutace se používají k vytváření/změně a mazání dat na serveru

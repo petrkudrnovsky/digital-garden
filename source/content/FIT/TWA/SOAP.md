@@ -1,0 +1,3 @@
+- posílání zpráv je pomocí XML
+- hodně balastu kolem, je to hodně strikně typované (není to kvůli tomu tolik oblíbené)
+	- díky tomu oblíbené ve státní správě a bankovnictví -> je to spolehlivé

@@ -1,0 +1,16 @@
+- používány k identifikaci uživatelů, sledování jejich chování a uchovávání uživatelských preferencí
+- server pošle prohlížeči instrukci **Set-Cookie**, aby si prohlížeč tuto informaci uložil
+	- prohlížeč ji uloží na disk klienta
+		- je to informace typu klíč - hodnota + atributy (platnost, doména, cesta...)
+- pokud prohlížeč odesílá další požadavek na server, automaticky připojí tyto cookies, které si uložil
+	- a server pak podle toho např. pozná přihlášeného uživatele, jeho košík atd. a může poslat správnou odpověď pro daného klienta
+	- posílá v hlavičce **Cookie**
+- server pak může dalšími **Set-Cookie** instrukcemi měnit hodnoty cookies a nebo přidá datum expirace v minulosti a tím ji smaže
+	- prohlížeč by měl automaticky mazat vypršelé cookies
+- je potřeba pro jistotu ošetřovat vstupy
+### Stavy Cookie
+- **Max-Age**: (Max-Age=3600) - kolik sekund má zůstat aktivní
+- **Expires**: (Expires=Wed, 09 Jun 2021 10:18:14 GMT) - kdy má vypršet, je to starší metoda, ale stále široce podporována
+- **Secure**: tato cookie se pošle jen pouze, pokud je navázáno spojení HTTPS, vhodné pro zabezpečení dat
+- **HttpOnly**: cookie nebude přístupná skriptovacím jazykům (jako [[Javascript]])
+	- s tím můžu zabránit [[Bezpečnost webových aplikací#Cross-Site Scripting (XSS)|XSS]] - cross site scripting útokům
