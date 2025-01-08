@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "index.md",
+                "file": "FIT/AWD/AWD - administrace webového a databázového serveru.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "index"
+              "title": "AWD - administrace webového a databázového serveru"
             }
           },
           {
@@ -193,12 +193,14 @@
   },
   "active": "2d8837e6263008e3",
   "lastOpenFiles": [
-    "Rozcestník.md",
-    "FIT/BIG/BIG - technologie pro Big data.md",
+    "FIT/AWD/AWD - Architektura databázového serveru, její podstatné komponenty a úloha databázového administrátora při jejich správě.md",
+    "FIT/AWD/PostgreSQL.md",
     "FIT/AWD/AWD - administrace webového a databázového serveru.md",
+    "Rozcestník.md",
+    "index.md",
+    "FIT/BIG/BIG - technologie pro Big data.md",
     "FIT/BIG/Dokumentově orientovaná databáze.md",
     "FIT/AWD/Jak funguje databázový systém.md",
-    "FIT/AWD/PostgreSQL.md",
     "FIT/BIG/Big Data - Proč používat něco jiného než RDBMS.md",
     "FIT/BIG/BASE model.md",
     "FIT/BIG/Big Data.md",
@@ -213,11 +215,9 @@
     "FIT/AWD/Databázová administrace.md",
     "FIT/AWD/AWD - Zpracování požadavků a poskytování zdrojů webovým serverem, statický a dynamický obsah, paralelní zpracování požadavků.md",
     "FIT/AWD/AWD - Protokol HTTP a jeho vlastnosti, komunikace klient-server a její bezpečnostní aspekty.md",
-    "FIT/AWD/AWD - Architektura databázového serveru, její podstatné komponenty a úloha databázového administrátora při jejich správě.md",
     "FIT/BIG/MapReduce.md",
     "FIT/BIG/BIG - MapReduce model - principy a jeho využití pro dotazování Big Data.md",
     "FIT/BIG/BIG - CAP teorém a jeho vztah k NoSQL databázím.md",
-    "index.md",
     "Vítejte v mé digitální zahradě!.md",
     "FIT/BIG",
     "FIT/AWD",
