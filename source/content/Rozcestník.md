@@ -2,4 +2,6 @@ Toto je hlavní rozcestník uprostřed mé digitální zahrady. Odtuď se prokli
 # FIT
 - [[BIG - technologie pro Big data]]
 - [[AWD - administrace webového a databázového serveru]]
+- [[TWA - tvorba webových aplikací]]
+- [[SWI - softwarové inženýrství]]
 
