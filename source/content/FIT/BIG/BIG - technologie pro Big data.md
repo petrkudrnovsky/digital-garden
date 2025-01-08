@@ -1,10 +1,12 @@
-Obsah předmětu
-[[Big Data]]
-- [[CAP teorém]]
-- [[BASE model]]
-- [[NoSQL databáze]]
-	- [[NoSQL vs. relační databáze]]
-	- [[Big Data - Proč používat něco jiného než RDBMS]]
+Obsah předmětu:
+
+- [[Big Data]]
+	- [[CAP teorém]]
+	- [[BASE model]]
+	- [[NoSQL databáze]]
+		- [[NoSQL vs. relační databáze]]
+		- [[Big Data - Proč používat něco jiného než RDBMS]]
+
 Databáze klíč-hodnota
 - [[Redis]]
 [[Dokumentově orientovaná databáze]]

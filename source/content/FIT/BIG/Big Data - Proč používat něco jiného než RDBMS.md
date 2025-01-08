@@ -15,11 +15,7 @@ Rysy relačních databází
 - vyžadují striktně [[ACID]]
 
 Fenomén [[Big Data]]
-	- 3x V
-		- volume - je jich hodně
-		- velocity - přibývají rychle
-		- variety - různorodost
-			- nemusí být perfektně čistý a jasný
+- 5x V
 - NoSQL
 	- technologie, které se nějak snaží kompenzovat nějaké problémy RDBMS (ale vždycky za cenu něčeho jiného)
 		- většinou se hodí na nějaký specifický use-cases <=> RDBMS jsou takový "univerzální" - one-size-fits-all
