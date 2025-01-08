@@ -7,21 +7,21 @@ Obsah předmětu:
 		- [[NoSQL vs. relační databáze]]
 		- [[Big Data - Proč používat něco jiného než RDBMS]]
 
-Databáze klíč-hodnota
-- [[Redis]]
-[[Dokumentově orientovaná databáze]]
-- [[MongoDB]]
-[[Sloupcové databáze]]
-- [[Apache Cassandra]] 
-[[Grafové databáze]]
-- [[Neo4j]]
-[[Elasticstack]]
-- [[Elasticsearch]]
-- [[Logstash]]
+- Databáze klíč-hodnota
+	- [[Redis]]
+- [[Dokumentově orientovaná databáze]]
+	- [[MongoDB]]
+- [[Sloupcové databáze]]
+	- [[Apache Cassandra]] 
+- [[Grafové databáze]]
+	- [[Neo4j]]
+- [[Elasticstack]]
+	- [[Elasticsearch]]
+	- [[Logstash]]
 
-[[Hadoop]]
-- [[MapReduce]]
-[[Apache Spark]]
+- [[Hadoop]]
+	- [[MapReduce]]
+- [[Apache Spark]]
 
 ### Státnicové okruhy
 

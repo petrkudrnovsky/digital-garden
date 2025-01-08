@@ -2,6 +2,7 @@
 - in progress
 ### Databázová část
 [[Databázová administrace]] + [[Postgres - administrace|Postgresová administrace]]
+
 [[Jak funguje databázový systém]]
 
 [[PostgreSQL]]
@@ -14,4 +15,5 @@
 - [[Postgres - záloha a obnovení]]
 
 [[Big Data - Proč používat něco jiného než RDBMS]]
+
 [[Neo4j]]
