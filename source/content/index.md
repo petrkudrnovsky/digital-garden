@@ -1,5 +1,5 @@
 # Vítejte v mé digitální zahradě!
-## [[Rozcestník]]
+## [[01 Rozcestník]]
 
 Jmenuji se Petr, je mi 22 let a rád zkouším nové věci! A tohle je moje digitální zahrada, malinký fragment mého mozku, který si tady na internetu pěstuji. Budu moc rád, když zabrouzdáte do mých poznámek, přečtete si ty, které Vás zajímají a pokud Vám nějak pomůžou či Vás nějak inspirují, tak budu mít velkou radost.
 
@@ -11,12 +11,9 @@ Chci, abyste věděli, že tohle je můj experimentální pokus, možná bude fu
 
 Budu moc rád, když se budete učit se mnou, na poznámky se podíváte, napíšete mi, co si myslíte. Pokud s něčím nesouhlasíte, napiště mi, rád si přečtu Váš názor. Pokud mám něco špatně, prosím dejte mi vědět :) rád se opravím, tak se člověk učí.
 
-Každopádně konec úvodnímu slovu. Poznámky mám organizované pomocí centrálního [[Rozcestník|rozcestníku]], odkud vedou odkazy na rozcestníky, které se věnují již konkrétnějším tématům.
+Každopádně konec úvodnímu slovu. Poznámky mám organizované pomocí centrálního [[01 Rozcestník|rozcestníku]], odkud vedou odkazy na rozcestníky, které se věnují již konkrétnějším tématům.
 
-> [!success] Podpoř mě
-> Tento obsah je k dispozici na internetu zcela zdarma a každý ho může využít ke svým účelům. Pokud se vám můj obsah líbí či vám nějakým způsobem pomohl a chtěli byste mě nějaký způsobem podpořit, tak mě můžete "pozvat na kafe" na odkazu níže a tím podpořit moji tvorbu. Za jakkoukoliv podporu vám děkuji a neskutečně si jí vážím.
-> [Buy me a coffee!](https://buymeacoffee.com/petrkudrnovsky)
-
+Kdybyste se rozhodli mě podpořit, budu vám moc vděčný -> [[Podpoř moji tvorbu]]
 
 
 

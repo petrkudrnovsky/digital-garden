@@ -1,0 +1,5 @@
+Dělá mi obrovskou radost, když dostávám zpětnou vazbu od okolí, jak jim moje poznámky pomohly v nějakém předmětu na FITu. Mám v plánu sem přidávat další a další obsah a průběžně aktualizovat ten stávající. Myslím si, že pro (nejenom) studenta na FITu je tohle velká přidaná hodnota a rozhodně ji nechci schovávat za nějakou paywall - je to můj způsob, jak dál rozvíjet komunitu kolem FITu a taky do ní něco vrátit, protože mi během mých studií moc pomohla.
+
+Pokud se vám můj obsah líbí nebo vám nějakým způsobem pomohl a chtěli byste mě nějakým způsobem podpořit, budu vám neskutečně vděčný. Podpoříte moji tvorbu a dáte mi skvělou zpětnou vazbu, že to, co tady tvořím, má smysl. Díky moc!
+
+<a href="https://www.buymeacoffee.com/petrkudrnovsky" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
