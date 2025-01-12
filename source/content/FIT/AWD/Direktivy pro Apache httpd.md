@@ -1,20 +1,26 @@
 `ServerRoot`
 - kořenový adresář s instalací serveru
 - když někde zadám relativní cestu, tak se bere vůči nastavenému `<ServerRoot>`
+
 `Listen`
 - na jakém portu se poslouchá (IP adresa/jméno, TCP port)
 - můžu mít více IP adres, tak je mohu mít na jiných portech
+
 `ServerName`
 - doména, jméno serveru pro odpovědi (např. při redirectu)
 - když se třeba přesměrovává na relativní adresu (tak se tam přidá ještě tenhle server name, aby to bylo kompletní absolutní adresa)
+
 Veškerou obsluhu chci vést pod jiným uživatelem (který není root)
 - root je jenom na načtení configu, otevření portu atd.
 - direktivy `User` a `Group` pro specifikování identity uživatele a skupiny
+
 `DocumentRoot`
 - kořenová složka pro soubory, které jsou pak dostupné veřejně na webu (mapování kořene webu na filesystém)
 - udává, jaký adresář na serveru koresponduje s "/"
 - díky tomu také funguje ochrana, že se nedá jít "výš" dotazem na "../../../" atd.
+
 `AddDefaultCharset` - nastavení znakové sady
+
 `Define` - definuje proměnnou, která se pak v konfiguraci může použít na více místech
 - viz [[Konfigurace Apache httpd#Proměnné v konfiguraci]]
 

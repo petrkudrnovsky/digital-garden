@@ -27,12 +27,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Rozcestník.md",
+                "file": "FIT/AWD/Zpracování požadavku od klienta na Apache httpd.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Rozcestník"
+              "title": "Zpracování požadavku od klienta na Apache httpd"
             }
           },
           {
@@ -208,13 +208,14 @@
   },
   "active": "117bb9590af0e896",
   "lastOpenFiles": [
+    "FIT/AWD/AWD - administrace webového a databázového systému.md",
+    "FIT/AWD/Direktivy pro Apache httpd.md",
+    "Rozcestník.md",
     "index.md",
     "Podpoř moji tvorbu.md",
-    "Rozcestník.md",
     "FIT/BIG/BIG - technologie pro Big data.md",
     "FIT/AWD/Write Ahead Logs (WAL).md",
     "FIT/AWD/AWD - Architektura databázového serveru, její podstatné komponenty a úloha databázového administrátora při jejich správě.md",
-    "FIT/AWD/AWD - administrace webového a databázového systému.md",
     "FIT/AWD/AWD - Zpracování požadavků a poskytování zdrojů webovým serverem, statický a dynamický obsah, paralelní zpracování požadavků.md",
     "FIT/AWD/AWD - administrace webového a databázového serveru.md",
     "FIT/AWD/AWD - Protokol HTTP a jeho vlastnosti, komunikace klient-server a její bezpečnostní aspekty.md",
@@ -233,7 +234,6 @@
     "FIT/AWD/Moduly pro práci s MIME informacemi.md",
     "FIT/AWD/Moduly pro Apache httpd.md",
     "FIT/AWD/MIME type.md",
-    "FIT/AWD/Konfigurace Apache httpd.md",
     "FIT/BIG",
     "FIT/AWD",
     "FIT",
