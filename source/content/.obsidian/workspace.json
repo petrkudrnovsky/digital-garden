@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "FIT/TWA/TWA - tvorba webových aplikací.md",
+                "file": "FIT/AWD/AWD - Architektura databázového serveru, její podstatné komponenty a úloha databázového administrátora při jejich správě.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "TWA - tvorba webových aplikací"
+              "title": "AWD - Architektura databázového serveru, její podstatné komponenty a úloha databázového administrátora při jejich správě"
             }
           },
           {
@@ -80,7 +80,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
+                "query": "trigger",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -105,7 +105,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 663.5
   },
   "right": {
     "id": "ba1ec06a672fb227",
@@ -193,32 +193,32 @@
   },
   "active": "2d8837e6263008e3",
   "lastOpenFiles": [
-    "FIT/TWA/REST protokol.md",
-    "FIT/TWA/TWA - tvorba webových aplikací.md",
+    "FIT/AWD/AWD - administrace webového a databázového systému.md",
     "Rozcestník.md",
-    "FIT/SWI/SWI - softwarové inženýrství.md",
-    "FIT/SWI/Modelování případů užití (Use Cases).md",
-    "FIT/TWA/Webové technologie.md",
-    "FIT/TWA/URL, URI, URN, IRI.md",
+    "FIT/AWD/AWD - Zpracování požadavků a poskytování zdrojů webovým serverem, statický a dynamický obsah, paralelní zpracování požadavků.md",
     "FIT/AWD/AWD - administrace webového a databázového serveru.md",
-    "FIT/AWD/AWD - Architektura databázového serveru, její podstatné komponenty a úloha databázového administrátora při jejich správě.md",
-    "FIT/AWD/PostgreSQL.md",
-    "index.md",
-    "FIT/BIG/BIG - technologie pro Big data.md",
-    "FIT/BIG/Dokumentově orientovaná databáze.md",
-    "FIT/AWD/Jak funguje databázový systém.md",
-    "FIT/BIG/Big Data - Proč používat něco jiného než RDBMS.md",
-    "FIT/BIG/BASE model.md",
-    "FIT/BIG/Big Data.md",
-    "FIT/AWD/Write Ahead Logs (WAL).md",
-    "FIT/AWD/Postgres - záloha a obnovení.md",
-    "FIT/AWD/Postgres - optimalizace a tuning.md",
-    "FIT/AWD/Postgres - monitoring.md",
-    "FIT/AWD/Postgres - logická replikace.md",
+    "FIT/AWD/AWD - Protokol HTTP a jeho vlastnosti, komunikace klient-server a její bezpečnostní aspekty.md",
     "FIT/AWD/Postgres - extensions.md",
-    "FIT/AWD/Postgres - architektura.md",
-    "FIT/AWD/Postgres - administrace.md",
-    "FIT/AWD/Databázová administrace.md",
+    "FIT/AWD/wget (web get).md",
+    "FIT/AWD/telnet.md",
+    "FIT/AWD/nc (Netcat).md",
+    "FIT/AWD/curl (Client URL).md",
+    "FIT/AWD/Zpracování požadavku od klienta na Apache httpd.md",
+    "FIT/AWD/XHTML.md",
+    "FIT/AWD/Virtual Hosting.md",
+    "FIT/AWD/Server Side Includes.md",
+    "FIT/AWD/Problém hlavičky HTML v kontextu HTTP protokolu.md",
+    "FIT/AWD/Příprava na zkoušku z AWD.md",
+    "FIT/AWD/Moduly pro souběžné zpracování požadavků.md",
+    "FIT/AWD/Moduly pro práci s MIME informacemi.md",
+    "FIT/AWD/Moduly pro Apache httpd.md",
+    "FIT/AWD/MIME type.md",
+    "FIT/AWD/Konfigurace Apache httpd.md",
+    "FIT/AWD/htaccess soubor.md",
+    "FIT/AWD/Generování a úprava obsahu v Apache httpd.md",
+    "FIT/AWD/Function vs. Procedure vs. Trigger v kontextu databází.md",
+    "FIT/AWD/Dojednávání obsahu v Apache httpd.md",
+    "FIT/AWD/Direktivy pro Apache httpd.md",
     "FIT/BIG",
     "FIT/AWD",
     "FIT",

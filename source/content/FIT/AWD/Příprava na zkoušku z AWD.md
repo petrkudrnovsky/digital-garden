@@ -1,0 +1,234 @@
+Napíšu si za pár minut shrnutí - jako na zkoušce (prostě všechno, co vím), řeknu si to a pak si to přečtu/doplním.
+
+Edit: projedu to znovu a zkusím upravit či doplnit informace
+- plus si dopíšu poznámku na [[ACID]], abych se u Valenty neztrapnil
+
+- co všechno obnáší databázová administrace,
+	- správa DB serveru, clusteru, jednotlivých databází (přístupy, zabezpečení...)
+	- řešení problémů, optimalizace, tuning databáze
+		- iterativní proces (hledání problematických částí, jejich zlepšování atd.)
+		- příkaz analyse
+			- pro aktualizování statistik optimalizátoru dotazů (hlavně po velkým zásahu do databáze - hromadné mazání, hromadný import např.)
+	- efektivní správa úložného prostoru
+		- management tablespaces podle typu dat
+		- příkaz vacuum - po transakcích odstraní nevalidní záznamy (commit/rollback)
+			- vacuum full - odstraní nevalidní záznamy po transakcích a ještě přerovná "sesype" záznamy k sobě, takže fyzicky se zmenší velikost databáze
+				- pomalejší, blokující
+		- autovacuum - probíhá automaticky periodicky a vyřeší 90% věcí
+			- vacuum chci zase po větších zásazích do databáze
+		- většinou po tomhle chci udělat analyse
+	- správa uživatelů databáze, přístupy, autorizace, autentizace
+		- ta probíhá hlavně v souboru `pg_hba.conf`
+	- provádění dotazů, hledání neefektivních dotazů (explain, explain analyze)
+	- provádění zátěžových testů nad databází
+		- benchmarky, pgbench extension
+		- sleduju pak výsledky a výkon v pgBadger
+	- migrace databází, zajištění konzistence dat
+	- zálohování databáze, inkrementální zálohy
+	- replikace serveru, logická replikace serveru
+	- monitoring a zabezpečení databáze
+
+- architektura PostgreSQL a důležité komponenty,
+	- obecně u databázových strojů máme dvě hlavní části
+		- instance/cluster a samotnou databázi
+			- na databázi se uživatelé nemohou připojit přímo, musí přes cluster/instanci
+			- abychom "spustili databázi", tak musíme nejdřív nahodit instanci/cluster
+			- 80% případů je to 1:1 (1 instance na 1 databázi)
+				- ale občas může být více databází na 1 instanci
+		- instance/cluster
+			- řeší připojování klientů (pomocí TCP/IP)
+			- běží tam procesy, memory procesy atd.
+			- obsluha databáze
+		- databáze
+			- obsahuje disk, logy, indexy, tabulky atd.
+	- běží hlavní proces Postmaster, který přijímá spojení
+		- Postmaster také startuje celý cluster - bere si postgres.conf, i pg_hba.conf
+		- a pak jednotlivé klienty deleguje na podprocesy (Postgres), které ty klienty obsluhují dokud jsou připojený (dotazy)
+			- obslužné procesy tady fsyncem zapisují WAL logy - které se pak událostí checkpoint zapíšou perzistentně na disk (defaultně cca co 5 min) taky fyncem
+				- fsync je systémová funkce, která periodicky zapisuje věci z cache perzistentně na disk
+				- proč? - no stejně je potřeba tvořit WAL logy na např. logickou replikaci nebo obnovu PITR
+					- ale hlavně jde o omezení I/O na disk, které jsou pomalé
+		- shared memory buffer - tam se tahají často přistupované objekty, většina často přistupovaných tabulek se tam nachází
+	- struktura tabulek
+		- v rootu clusteru jsou hlavní konfigurační soubory (spolu s pg_ident.conf)
+		- adresář base/
+			- každý podadresář je pro jednu databázi - jedna tabulka je pak 1 binární soubor
+			- každá databáze se tvoří podle template (0 neupravuji, do 1 si můžu přidat triggery, funkce atd.)
+		- výchozí databáze postgres - obsahuje tabulky s informacemi o systému, dotazech, statistiky, nastavení apod. (schéma pg_catalog - to je v podstatě Data dictionary)
+			- pgAdmin a další GUIčka jsou jenom grafický dotazy do těchto tabulek
+	- databázový stroj postgres může obsahovat více clusterů
+		- každý cluster může obsahovat více databází
+		- každý cluster musí běžet na jiném portu
+		- uživatelé "žijí" na úrovni clusteru
+
+- k čemu je WAL,
+	- write-ahead logs
+	- jsou to v podstatě změnové vektory, které obsahují id transakce, id řádku, starou hodnotu, novou hodnotu
+		- + informace o commitu, rollbacku a checkpointu
+		- obsahují informace o provedených DML operací
+	- využití
+		- optimalizování a omezení I/O zápisů na perzistentní disk
+		- využití v obnově databáze
+			- online hot file-system based backup, PITR
+		- logická replikace (jsou uložené v replikačním slotu publishera a ten si pomocí LSN = log sequence number; trackuje, které se už přenesly a které ne
+	- jsou důležité v PITR = point in time recovery
+		- kdy my jsme schopni obnovit databázi z jakkéhokoliv časového okamžiku (nebo spíš do jakéhokoliv časového okamžiku)
+		- protože v rámci PITR se dělají pravidelné zálohy (např. na týdenní bázi), ale když to klekne v půlce týdne, tak přijdu o důležitá data
+			- a tady se právě hodí WAL logy, které si mohu přehrát od-do, co chci
+
+- koncepty (způsoby/možnosti) zálohování databáze,
+	- je možné udělat cold backup a hot backup (to se liší podle toho, jestli je databáze v provozu nebo ne)
+	- cold backup
+		- jednoduchý, neběží se, nikoho to neovlivní, v klidu si zazálohuju, co potřebuju, všechno je sesynchronizované
+		- ale vyžaduje to, aby byla databáze (tedy i systém) nějakou dobu mimo provoz
+	- hot backup - zálohování za provozu
+		- máme na to extension - pg_backup???
+		- musí pracovat s konzistentností databáze, aby zachytil do backupu konzistentní databázi a zároveň nedošlo k výpadku
+			- zamrazí si kontext databáze (aby byla na začátku a konci backupu konzistentní)
+			- mezitím sleduje ukládané WAL logy během provozu a ty pak taky dosychronizuje
+		- online hot file system based backup - přístup, kdy se používá PITR - pravidelně se provádí hot backup a od té doby se pak ukládají WAL logy, které je pak možné libovolně přehrát a dostat databázi do konzistentního stavu
+	- teoreticky se tady dá zmínit i logická replikace - kdy při selhání serveru lze nahrát data z replikovaného serveru (ale jenom DML operace) a na tyhle účely to spíš není dělaný (nebo se to v praxi nepoužívá)
+
+- logická struktura PostgreSQL clusteru,
+	- cluster je takový "obal" pro celé fungování databáze
+	- můžeme tam mít více databází, máme jeden port
+	- na úrovni clusteru nám žijí uživatelé s různými oprávněními
+	- adresářovou strukturu jsem už zmínil
+		- databáze postgres
+			- je to třetí defaultní databáze vedle template0, template1 - to je pak základ pro nově vytvářené DATABÁZE 
+				- template0 se většinou nemění, to slouží jako holý základ
+				- template1 se může upravit pro specifické use-cases, pokud chci, aby vytvořené tabulky nějak vypadaly (už měly nějakou strukturu, pohledy, trigerry apod.)
+				- templatů můžu mít více
+	- v rámci clusteru je zafixovaná verze postgresu - můžu mít více clusterů s různými verzemi
+	- v clusteru se nachází
+		- databáze - ze začátku postgres, template0 a template1
+		- schémata - pg_catalog, information_schema (což jsou takový "vydestilovaný, lépe popsaný, s metadatama, splňují standard SQL" pohledy do pg_catalogu (aka data dictionary))
+			- defaultní je public, můžu přidávat další
+		- databázové objekty - tabulky, trigerry, pohledy, sekvance, indexy...
+		- uživatelé (roles) a oprávnění (privileges)
+		- adresářově (v PGDATA) jsou i konfigurační soubory, adresáře na WAL logy
+
+- jak lze přistupovat k ladění DB serveru,
+	- je to iterativní proces
+	- mohu sbírat statistiky (např. pomocí pg_stat_statements rozšíření) a sledovat, jaké dotazy jsou náročné (trvají dlouho, jsou často vykonávané) apod.
+		- pak mohu tyto dotazy pomocí explain či explain analyse zobrazit prováděcí plán a jejich cost - pak mohu optimalizovat jednotlivé části
+	- optimalizace např. pomocí - indexů (které bych taky měl sledovat, protože zase nevyužívané indexy zabírají celkem dost místa a zpomalují DML operace - protože index se musí udržovat aktuální
+		- pomocí materializovaných pohledů - klauzule REFRESH na aktualizaci
+			- to je uložený výsledek dotazu - není aktualizovaný
+	- další způsob, jak zlepšit výkon je příkaz Analyse - aktualizuje interní statistiky pro optimalizátor 
+	- můžu provádět zátěžové testy databáze - pgbench
+		- také mohu odhalit nějaké problematické části např. v HTML vygenerovém z pgBadger
+	- tablespaces - můžu ovlivňovat, kam se jaká data ukládají podle jejich nátury
+		- diskový prostor pak můžu zlepšovat i přes vacuum a vacuum full
+	- chci provádět monitoring, sledovat databázi a všímat si anomálií
+
+- co je to data dictionary a k čemu se používá,
+	- je to soubor tabulek a pohledů, která drží metadata o databázových objektech a jejich stavu
+	- nachází se ve schématu pg_catalog, kde jsou tabulky, které drží informace k ostatním db objektům (tabulky, schémata, funkce apod.), statistiky, metadata apod.
+	- information_schema pak je schema, které přidává další metadata (hlavně pro lehčí využití adminama, a pro GUIčka jako je pgAdmin
+	- db administrátor pomocí správných dotazů do data dictionary může zjistit prakticky cokoliv a změnit prakticky cokoliv
+
+- jak PostgreSQL pracuje s koncepty role a uživatel,
+	- nic jako přímo uživatel v postgresu neexistuje
+	- uživatel je ROLE s atributem LOGIN
+	- v rámci clusteru mám tedy různé role s různými atributy a oprávněními
+		- jiné možnosti přístupu či manipulace s konkrétními daty
+	- roli mohu přiřadit i skupinám uživatelů
+	- grant a revoke
+	- hierarchie rolí - mohou se dědit
+
+- jak se konfiguruje přístup, autentizace a autorizace k PostgreSQL,
+	- autorizace se dělá podle rolí a jejich atributů (tedy jestli mohou vytvářet db (CREATEDB), či upravovat data/mazat data atd., přistupovat k různým databázím atd.)
+		- grant a revoke práv 
+	- autentizace se konfiguruje v rámci pg_hba.conf souboru 
+		- můžu povolit přístup jenom z konkrétních IP adres (host, připojování přes TCP/IP)
+		- peer - přístup je, že se autentizuju uživatelem na stroji
+		- trust - bez omezení přístupu (jenom pro testovací účely)
+		- local - přes sockety (db stroj musí být na stejném serveru/stroji)
+		- password
+		- cert
+	- v postgres.conf je nastavení na listen_adresses
+	- existuje něco jako row-level-security - omezování přístupu na bázi řádků (pokročilejší)
+
+- co je to extension a jak se s ní pracuje,
+	- rozšíření funkcionality postgresu - jsou nějaké oficiální a přímo podporované vývojáři postgresu - ale většina je ze 3. stran
+	- jsou jich tisíce
+	- rozšíření se musí aktivovat příkazem ? a pak už ho mohu normálně používat
+		- existuje na to tabulka v rámci data dictionary
+	- např.
+		- pg_stat_statements
+		- fdw - foreign data wrappers
+		- PL/pgSQL - procedural language - přidává logiku procedurálního jazyka do funkcí, procedur, trigerrů atd. (cykly, podmínky apod.) a umožňuje tvořit komplexnější databázové aplikace
+
+- jak byste postupovali při ladění problematického SQL dotazu,
+	- můžu si ze statistik zjistit, kdy a jak často se provádí a jaký je kontext jeho provádění, abych to na to mohl přizpůsobit
+	- nejdřív EXPLAIN -> prováděcí plán + cost
+		- zjistím, kde jsou ty "náročné" části a které mohu optimalizovat
+			- např. předpočítat si nějakou část, vytvořit index nad nějakým sloupcem
+			- nějaká data dát dohromady v tabulkách atd.
+			- rozdělit náročný dotaz na menší dotazy (tím ulevím i optimalizátoru)
+		- opakovaně pouštím explain a dívám se na prováděcí plán a jak se mění cost
+	- mohu také používat explain analyse
+		- což by mělo skutečně ten dotaz provést a zobrazit skutečnou cenu dotazu
+	- většinou je to iterativní proces
+
+- co je databázový benchmark,
+	- je to test výkonu databázového stroje
+	- jedná se o sled operací, které testují nějakou část systému
+	- často se jedná o zátěžový test (který simuluje velkou zátěž od hodně klientů, či náročné operace), někdy se můžou testovat krajní a nepravděpodobné scénáře a sleduje se, jak se s tím databáze poradí
+	- sledují se statistiky a výsledky a podle toho se pak administrátor může zaměřit na konkrétní části systému, které selhaly/jsou pomalé/neoptimální apod.
+	- pg_bench, sleduju pomocí pgBadger
+		- TBC-B test
+
+- princip možnosti a omezení logické replikace v PostgreSQL,
+	- logická replikace funguje na principu publisher - subscriber problému
+	- hlavní databáze (publisher) provádí změny, odbavuje dotazy apod. a vytváří WAL logy, které jsou pak posílány na subscribery (těch může být víc) a ty je pak aplikují na data u sebe
+	- tvoří se 2 hlavní objekty - publication (to jsou tabulky či schémata, která se budou replikovat) a subscription (kde se specifikuje, která publication se bude replikovat)
+		- pak se provede intitial snapshot (první převedení/zkopírování dat)
+		- a pak se samotné replikování děje přes WAL logy generované publisherem - ty si pak ukládá do replication slotu (který má pro každou "přihlášenou" subscription), kde si drží a ukládá WAL logy, které použije pro replikaci - drží si tak LSN - log sequence number, aby jsme věděli, v jakém stavu replikace je
+			- v tom slotu jsou proto, že se WAL logy mohou checkpointem smazat / zneplatnit, tak aby to nenarušilo tu logickou replikaci
+	- nemusí se replikovat celá databáze, ale třeba jenom nějaké tabulky či schémata
+	- je to jednosměrný proces, tedy změny dat na subscriber databázi neovlivní data na publisher databázi
+	- omezení: není to plnohodnotné, myslím, že se propagují jenom DML operace (data manipulation language), takže vytváření tabulek atd. se nereplikuje
+	- další omezení je, že to není plnohodnotná záloha
+	- takže, když to chci nastavit, tak se musí manuálně vytvořit tabulky, které se budou mezi sebou replikovat na obou serverech najednou
+	- v případě výpadku publishera se dají data zpětně nahrát z subcribera
+	- synchronní a asynchronní replikace
+		- synchronní funguje tak, že než se skutečně provede nějaká operace, tak se čeká na potvrzení, že i subcriber je připraven zapsat/změnit, a až to udělá, tak se pošle výstup/zpětná vazba
+		- je to pomalejší, ale mám jistotu, že jsou data synchronizovaná
+		- moc se to nepoužívá
+
+- co je to grafová databáze,
+	- je to typ NoSQL databáze, která ukládá data specifickým způsobem - jako grafy
+	- tedy můžeme definovat vrcholy, hrany, atributy i u obou
+	- ideální pro reprezentaci grafových dat a problémů, blbý pro agregační funkce
+		- např. sociální sítě, vztahy mezi entitami apod.
+	- jsou mnohem výkonnější v řešení grafových problémů (hledání vztahů, hledání cesty apod.)
+	- nejsou tak dobré v horizontálním škálování na další serverech (synchronizace dat mezi jednotlivými servery je složitější než u jiných NoSQL databází)
+	- mají svoje specifální dotazové jazyky, které zohledňují grafová data
+	- využití
+		- sociální sítě - vztahy mezi uživateli, dosahy apod.
+		- bankovní podvody
+		- znalostní grafy pro AI
+		- optimalizace dopravy
+		- rodokmeny
+		- doporučovací systémy
+
+- jak vypadá datový model grafové databáze Neo4j,
+	- je to multilabeled property multigraph
+	- máme entity jako vrcholy - které mají svoje atributy (vlastnosti, properties)
+	- vztahy mezi těmito vrcholy (entitami) udávají hrany - každá hrana je orientovaná (ale nějak vyhledávat, či "chodit" po hranách se dá oboustranně, jenom má tu informaci) a může mít několik labelů, které charakterizují či upřesňují typ hrany/relace
+		- každou hranu můžeme pomocí labelů a properties "charakterizovat" jinak a tam můžeme modelovat komplexní vztahy
+	- data se dají hezky vizualizovat
+
+- jaký je koncept jazyka Cypher
+	- je to jazyk trochu založený na ASCII artu
+		- jednotlivé vrcholy a hrany reprezentuje `()->---<-` takhle nějak
+	- je to dotazovací jazyk pro databázi Neo4j
+	- myslím, že se dá použít i na jiné grafové databáze než Neo4j
+	- mohu s ním modelovat vztahy a doptávat se na vrcholy a další vtahy apod.
+	- je to deklarativní jazyk na bázi ASCII artu
+	- hlavní klauzule MATCH, která udává pattern, který v databázi hledáme
+	- sekundární jazyk Gremlin
+
+[[ACID]]

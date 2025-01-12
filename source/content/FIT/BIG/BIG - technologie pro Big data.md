@@ -1,5 +1,4 @@
 Obsah předmětu:
-
 - [[Big Data]]
 	- [[CAP teorém]]
 	- [[BASE model]]
