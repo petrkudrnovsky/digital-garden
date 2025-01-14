@@ -1,5 +1,9 @@
+Direktivy jsou pravidla, kterými můžu definovat jak se má server chovat, co je a co není dovoleno, kam se kdo může dostat apod. Direktivy píšu do konfiguračních souborů (`apache.conf`, `httpd.conf`)
+
+> Index direktiv a jejich podrobná dokumentace: [Directive Index - Apache HTTP Server Version 2.4](https://httpd.apache.org/docs/current/mod/directives.html)
+
 `ServerRoot`
-- kořenový adresář s instalací serveru
+- kořenový adresář s instalací serveru, určuje adresář, kde jsou všechna globální nastavení webserveru, konfigurace apod.
 - když někde zadám relativní cestu, tak se bere vůči nastavenému `<ServerRoot>`
 
 `Listen`
@@ -9,20 +13,21 @@
 `ServerName`
 - doména, jméno serveru pro odpovědi (např. při redirectu)
 - když se třeba přesměrovává na relativní adresu (tak se tam přidá ještě tenhle server name, aby to bylo kompletní absolutní adresa)
-
-Veškerou obsluhu chci vést pod jiným uživatelem (který není root)
-- root je jenom na načtení configu, otevření portu atd.
-- direktivy `User` a `Group` pro specifikování identity uživatele a skupiny
+- hodí se také u [[Virtual Hosting]], kde slouží k rozlišování jednotlivých VirtualHosts podle jména
 
 `DocumentRoot`
 - kořenová složka pro soubory, které jsou pak dostupné veřejně na webu (mapování kořene webu na filesystém)
 - udává, jaký adresář na serveru koresponduje s "/"
+- udává, kde má Apache hledat soubory a zdroje požadované klientem
 - díky tomu také funguje ochrana, že se nedá jít "výš" dotazem na "../../../" atd.
-
 `AddDefaultCharset` - nastavení znakové sady
-
 `Define` - definuje proměnnou, která se pak v konfiguraci může použít na více místech
 - viz [[Konfigurace Apache httpd#Proměnné v konfiguraci]]
+- každý [[Virtual Hosting|Virtual Host]] může být jiný document root
+
+Veškerou obsluhu chci vést pod jiným uživatelem (který není root)
+- root je jenom na načtení configu, otevření portu atd.
+- direktivy `User` a `Group` pro specifikování identity uživatele a skupiny
 
 Další direktivy najdu v poznámce [[Moduly pro Apache httpd]]
 ### Logování
@@ -50,7 +55,7 @@ Další direktivy najdu v poznámce [[Moduly pro Apache httpd]]
 			- nemohu je do sebe vnořovat
 
 > [!danger] Upozornění
-> Kontejner `<Directory />` je povolen defaultně pro všechny - obvykle je nutné přístup do `/` zakázat a pak povolovat jenom určité části souborového systému. Jinak je to bezpečnostní riziko.
+> Kontejner `<Directory />` je povolen defaultně pro všechny, to znamená, že Apache defaultně zpřístupní vše, o co se dá říct [[URL, URI, URN, IRI#URL|URL]] - obvykle je nutné přístup do `/` zakázat a pak povolovat jenom určité části souborového systému (`Require all denied`) . Jinak je to bezpečnostní riziko.
 
 
 

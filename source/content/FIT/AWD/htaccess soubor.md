@@ -1,4 +1,4 @@
-Soubor, který se umisťuje do adresářů umístněných na webu - klienti k němu mají přístup a mohou ho upravovat. Tedy umožníme klientům spravovat určitou část konfigurace a pro změnu konfigurace pak nemusím restartovat celý server.
+Soubor, který se umisťuje do adresářů umístněných na webu - klienti k němu mají přístup a mohou ho upravovat. Tedy umožníme klientům spravovat určitou část konfigurace a pak pro změnu konfigurace pak nemusím restartovat celý server.
 
 - konfigurace v tomto souboru je platná pro aktuální adresář a podadresáře
 - mohu používat stejné direktivy použitelné v [[Direktivy pro Apache httpd#Kontejnery pro direktivy|kontejneru]] (např. `<Directory>`)

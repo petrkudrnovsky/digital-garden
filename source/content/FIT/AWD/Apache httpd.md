@@ -26,7 +26,7 @@ Konkrétní dokumentace pro moji aktuální verzi se nachází přímo v soubore
 			- `./configure && make && make install`
 ## [[Konfigurace Apache httpd]]
 ## Ovládání Apache
-- pomocí wrapperu `apachectl` - start, stop, test, reload...
+- pomocí wrapperu `apachectl` - start, stop, test, reload, restart...
 	- umí také zkontrolovat konfigurační soubor samostatně
 	- je to jenom wrapper na příkaz `httpd`, kterému pak všechny argumenty předává
 	- můžu s ním zobrazit statické (zkompilované) a dynamické moduly

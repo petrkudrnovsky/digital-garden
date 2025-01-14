@@ -1,5 +1,5 @@
 2 způsoby handlování modulů
-- 1) zkompilované do binárky (statické moduly) - je to 1 soubor, jednoduché handlování, ale musím při každé změně v modulu rekompilovat
+- 1) zkompilované do binárky (statické moduly) - je to 1 soubor, jednoduché handlování, ale musím při každé změně v modulu rekompilovat celý server
 	- a zároveň pak když mám více obslužných procesů, tak ho každý musí mít v sobě
 - 2) `mod_so` (dynamické moduly) - mám to zkompilované stranou, když to server potřebuje, tak si to natáhne (dynamicky)
 	- `mod_so` je jeden z mála staticky kompilovaných modulů (aby server uměl natahovat další moduly)

@@ -6,12 +6,14 @@
 - jednotlivé filtry mohu za sebou řetězit
 ## CGI moduly (mod_cgi a mod_cgid)
 = *common gateway interface*
-- moduly, které zajišťují běh externích skriptů (napsaných v různých jazycích)
+- moduly, které zajišťují běh externích skriptů (napsaných v různých jazycích - Perl, Python, C...)
 	- procesové zpracování požadavků ([[Moduly pro souběžné zpracování požadavků#prefork]])
 	- vláknové zpracování požadavků ([[Moduly pro souběžné zpracování požadavků#worker]] či event) 
 - definuji si adresář, ve kterém se soubory budou zpracovávat jako skripty (`ScriptAlias`)
 ##### Jak to funguje?
 - uživatel pošle požadavek na stránku ovládanou CGI skriptem, server předá požadavek a jeho data skriptu a pak výsledek skriptu vrátí zpět uživateli
+	- webserver předá hlavičky, data v těle požadavku a nastaví proměnné prostředí (envvars) - tedy kontext pro daný skript, aby měl s čím pracovat
+	- skript pak vygenerovaný obsah předá zpět webovému serveru, který ho pak ještě před odesláním zpět může nějak upravit
 - skripty, které generují odpovědi pro uživatele/klienty, tak musí správně generovat hlavičku (a třeba `Content-Type`, aby bylo poznat, co bylo vygenerované)
 	- to, co skript vygeneruje (např. HTML stránka, se předává zpět klientovi)
 - skript má přístup k proměnnám prostředí, k obsahu hlaviček i k datům (např. u [[REST protokol#POST|POST]]) 
@@ -35,7 +37,7 @@
 Výhoda je jednoduchost a nižší nároky (než třeba PHP či Python) - hodí se na víceméně statické stránky s pár dynamickýma částma nebo menší weby, kde není nasazený plnohodnotný aplikační server.
 ## Actions (mod_actions)
 - jedná se o mechanismus, který na základě MIME typu souboru či přípony souboru rozhodne, jaký skript daný soubor obslouží
-	- např. všechny `.php` soubory se vykonají tímto specifickým skriptem
+	- např. všechny `.php` soubory se obslouží tímto specifickým skriptem
 	- v podstatě, když třeba klient žádá nějaký specifický soubor, tak se spustí určený skript, který může dělat cokoliv
 ```
 LoadModule actions_module modules/mod_actions.so

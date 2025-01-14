@@ -36,6 +36,20 @@
             }
           },
           {
+            "id": "68951ece72cfb2a9",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "FIT/AWD/AWD - Architektura databázového serveru, její podstatné komponenty a úloha databázového administrátora při jejich správě.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "AWD - Architektura databázového serveru, její podstatné komponenty a úloha databázového administrátora při jejich správě"
+            }
+          },
+          {
             "id": "77aef8df1abcfe7f",
             "type": "leaf",
             "state": {
@@ -64,7 +78,27 @@
             }
           }
         ],
-        "currentTab": 1
+        "currentTab": 2
+      },
+      {
+        "id": "1e3225b0dc6fc2d1",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "487877f8ef1d824b",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "index.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "index"
+            }
+          }
+        ]
       }
     ],
     "direction": "vertical"
@@ -206,13 +240,16 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "117bb9590af0e896",
+  "active": "68951ece72cfb2a9",
   "lastOpenFiles": [
-    "index.md",
-    "Rozcestník.md",
-    "Podpoř moji tvorbu.md",
-    "FIT/AWD/Zpracování požadavku od klienta na Apache httpd.md",
     "FIT/AWD/AWD - administrace webového a databázového systému.md",
+    "Rozcestník.md",
+    "index.md",
+    "Update log.md",
+    "Podpoř moji tvorbu.md",
+    "Blog/Proč tohle dělám.md",
+    "Blog",
+    "FIT/AWD/Zpracování požadavku od klienta na Apache httpd.md",
     "FIT/AWD/Direktivy pro Apache httpd.md",
     "FIT/BIG/BIG - technologie pro Big data.md",
     "FIT/AWD/Write Ahead Logs (WAL).md",
@@ -232,8 +269,6 @@
     "FIT/AWD/Příprava na zkoušku z AWD.md",
     "FIT/AWD/Moduly pro souběžné zpracování požadavků.md",
     "FIT/AWD/Moduly pro práci s MIME informacemi.md",
-    "FIT/AWD/Moduly pro Apache httpd.md",
-    "FIT/AWD/MIME type.md",
     "FIT/BIG",
     "FIT/AWD",
     "FIT",
