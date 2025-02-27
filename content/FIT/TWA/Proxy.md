@@ -1,0 +1,25 @@
+- funguje jako prostředník mezi klientem a serverem, předává požadavky tam a zpět
+	- může analyzovat průběh komunikace, případně ji měnit (blokování nějakých stránek, odstraňování reklam, detekce virů atd.)
+- jsou tady i kvůli bezpečnosti, izolaci
+### Forward proxy
+- když klient zná přímou cílovou adresu, ale komunikace se musí z nějakého důvodu odklonit nebo je potřeba request něčím obohatit
+	- požadavek od klienta jde na tu proxy, ta ho pak může přečíst, zalogovat, změnit apod. a pak jej přepošle dál na cílový server s tím, že se tváří, že ona je tím původním klientem
+	- sleduje provoz, kontroluje, odchytávají se útoky
+- typické jsou firemní proxy, kde sedíme "za proxy" a chceme se dostat někam "ven" - a ta proxy kontroluje komunikaci, filtruje apod.
+- sem patří i firewally
+- díky forward proxy můžeme řešit i nedostatek IPv4 adres
+- využití
+	- [[Webové technologie#Intranet|Intranet]] může používat díky forward proxy
+	- anonymita - může skrýt IP adresu klienta
+	- filtrace obsahu a zabezpečení
+	- cacheování
+### Reverse proxy
+- je to naopak, kdy klient nezná cílovou adresu, zná jenom adresu toho prostředníka - až teprve prostředník (= proxy) ví, kam požadavek přeposlat
+	- takže já jako klient posílám požadavky na tu proxy a až ta ví, kam to poputuje dále
+- stojí před jedním či více servery a klienti komunikují s proxy a ne příme se servery - často to ani nemusí vědět
+- častá reverzní proxy je load balancer, který se navenek tváří jako jeden server, ale ve skutečnosti požadavky rozhazuje na několik serverů (v pozadí) podle vytížení
+- také se může jednat o gateway, když se chceme dostat do jinak nepřístupné sítě (zabezpečení)
+- využití
+	- Cloud může mít reverse proxy
+	- škálovatelnost, rozdělování zátěže (load balancing)
+	- zabezpečení serverů (také schová jejich IP adresy)
