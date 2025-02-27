@@ -1,8 +1,8 @@
 ---
-title: Welcome to Quartz
+title: Vítejte v mé digitální zahradě!
+date: 27. 2. 2025
+draft: false
+description: Toto je úvodní poznámka do mé digitální zahrady. Všichni jste vítáni, vstupte a využijte všechno, co vidíte!
+aliases:
 ---
-
-This is a blank Quartz installation.
-See the [documentation](https://quartz.jzhao.xyz) for how to get started.
-
-Zkouška zkouška
+Toto je moje nová digitální zahrada!
