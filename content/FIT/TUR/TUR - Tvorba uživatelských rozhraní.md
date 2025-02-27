@@ -3,22 +3,21 @@
 [UX Library](https://www.uxlibrary.org/) perfektně zpracovaný web profesora UX ze Seattlu - odtud vede hodně odkazů na různé zdroje
 
 Zastřešující téma: [[HCI (Human Computer Interaction)]]
-### [[UCD (User Centered Design)]]
+### Hlavní téma: [[UCD (User Centered Design)]]
 ### Příprava - formativní fáze UCD
-[[Kontextová analýza]]
-[[Doménová analýza]]
-[[Průzkum uživatelů]]
-- [[Metody a techniky práce s uživateli]]
-[[Metody vyhodnocování při návrhu artefaktu]]
+- [[Kontextová analýza]]
+- [[Doménová analýza]]
+- [[Průzkum uživatelů]]
+	- [[Metody a techniky práce s uživateli]]
+- [[Metody vyhodnocování při návrhu artefaktu]]
 
 ### Návrh rozhraní - návrhová fáze UCD
-![[Pasted image 20230618165534.png|500]]
 - po každé "vrstvě" návrhu se provádí vyhodnocení
 - každá iterace začíná generováním nápadů, rozdílných přístupů a možností ([[Metody a techniky práce s uživateli#Brainstorming|Brainstorming]]) a pak se získané nápady vyhodnotí a diskutují
-[[Informační architektura v UCD]]
-[[Logická architektura v UCD]]
-[[Vizuální návrh v UCD]]
-[[HIGs a UX]]
+- [[Informační architektura v UCD]]
+- [[Logická architektura v UCD]]
+- [[Vizuální návrh v UCD]]
+- [[HIGs a UX]]
 
 [[Vzorce chování uživatelů]]
 

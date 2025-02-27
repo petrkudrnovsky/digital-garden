@@ -13,5 +13,6 @@ Webový server [[Apache httpd]], tam najdu vše ohledně komunikace klient serve
 
 Celkově témata předmětu AWD:
 - [[AWD - administrace webového a databázového systému]]
-### To-do
+
+### #to-do
 - ISO-OSI a TCP/IP modely

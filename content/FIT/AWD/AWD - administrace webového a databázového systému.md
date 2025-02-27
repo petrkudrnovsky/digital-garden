@@ -20,7 +20,7 @@
 	- GET, POST...
 	- [[HTTP protokol#Metody HTTP protokolu]]
 
-- [[DNS]] (to-do)
+- [[DNS]] #to-do 
 - [[Virtual Hosting]]
 - [[htaccess soubor]]
 - [[MIME type]]
