@@ -1,10 +1,11 @@
 ### Správný návrh metody
 - uplatním [[GRASP - Vysoká soudržnost|princip vysoké soudržnosti]] 
 	- metoda má právě jednu přesně definovanou zodpovědnost
+		- SRP = single responsibility principle
 	- pojmenování: srozumitelné a samo-popisné (vyvarovat se And nebo Or v názvu)
 - čím delší, tím větší chybovost
 - max. 100 - 200 řádků
-- v metodě volám jenom metody objektů (sebe, které vlastním, které vytvářím, které dostanu jako parametr)
+- v metodě volám jenom metody objektu (sebe, které vlastním, které vytvářím, které dostanu jako parametr)
 
 ### DRY - do not repeat yourself
 - kód - zapouzdření funkčnosti do metody a použití na více místech
@@ -19,8 +20,9 @@
 
 ### Dědičnost
 - něměli bychom používat dědičnost jen proto, že 2 třídy mají společnou možinu atributů
-- měl by platit **Liskov substitution principle**: 
+- měl by platit **Liskov substitution principle** (LSP): 
 	- pokud instanci rodiče nahradíme instancí potomka, tak pak by kód, který očekává instance rodiče měl fungovat i s instancí potomka
+		- neměli bychom používat dědičnost pouze kvůli tomu, že dvě třídy mají stejnou množinu atributů
 	- to platí např. pro stejné parametry a výstupní hodnoty
 	- např. potomek by neměl v overriden metodě vyžadovat striktnější pravidla pro parametry (pak to se zavoláním kódu, který očekává rodiče, spadne)
 - dědičnost je velmi silná vazba

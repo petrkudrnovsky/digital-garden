@@ -1,3 +1,8 @@
+### Proč?
+- zpřesnění zadání, podklady pro dokumentaci
+- podklady pro akceptační testy
+- vyjasnění si požadavků se zákazníkem
+- zadání pro programátory
 ![[Use_Case_Model.pdf]]
 - Případy užití už mohou být formou zadání pro programátory (už vidím aktéry, jaké přesně dělají činnosti apod.)
 - Tvoří základ pro tvorbu uživatelské příručky a také slouží jako podklad k tvorbě akceptačních testů

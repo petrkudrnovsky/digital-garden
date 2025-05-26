@@ -59,6 +59,14 @@ Musím stanovit, jakým způsobem bude software dodáván (většinou je to po �
 - pojem: kritická cesta - nejdelší cesta v projektu, určuje minimální délku projektu
 	- může jich být více
 
+**Jak mi projekt bude vlastně vycházet?**
+- [[Value proposition canvas]] - pro uvědomění si všech pohledů na projekt, opravdu v něm je hodnota pro lidi?
+- [[Elevator Pitch]] - chci svůj projekt představit potenciálním stakeholderům
+- [[LogFrame]] - sjednocení technické a business práce 
+- [[SWOT analýza]] - mapování silných/slabých stránek + příležitostí a hrozeb
+- [[Business Canvas]] - pomáhá stakeholderům a týmu pochopit big picture projektu
+- [[Gantt diagram]] - časový plán projektu
+
 ### Provádění projektu
 - zde projekťák komunikuje se zákazníkem a informuje ho o průběhu projektu
 	- řešení nedorozumění, nejasností, upřesnění 

@@ -15,4 +15,5 @@ Jsou to návrhové vzory, jak přidělovat třídám zodpovědnosti. Patří sem
 ### Jak GRASP používat
 - vzpomenout si na tyto vzory, až budu zvažovat, jak rozdělit zodpovědnosti
 - finální rozhodnutí je na mně, ale GRASP mě vyvaruje slepým uličkám a dá mi doporučení
+	- nikdy neexistuje jediné správné řešení
 - jednotlivé vzory nelze brát v potaz izolovaně, vždy v souvislosti s ostatními

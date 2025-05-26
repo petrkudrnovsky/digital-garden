@@ -11,7 +11,7 @@ Vyvinul ho Google v roce 2004 a implementován v nástroji [[Hadoop]]
 	- většinou je to nějaký klíč a k němu vypočtená hodnota
 - *chci provést stejnou úpravu na datech, který mám rozfrkaný po celým clusteru - tak místo toho, abych ty data dal na jedno místo a provedl úpravu na jednom místě, tak tu úpravu provedu na X místech najednou*
 ### Mezifáze
-- data ve formátu klíč-hodnota se pak třídí a seskupují podle klíče
+- data ve formátu klíč-hodnota se pak třídí a seskupují podle klíče (Shuffle and sort)
 - a pak se distribuují na společný redukovací uzel (pohromadě podle jednoho klíče)
 ### Reduce fáze
 - rozdělená data agreguje a kombinuje a vrací finální výsledek
@@ -32,8 +32,8 @@ Mapper
 Partitioner
 - vstupem je klíč-hodnota pár a rozhoduje o tom, do jakého Reduceru tyhle data půjdou
 Shuffle a Sort
-- přeskupí mezivýsledky podle klíčů (tak, aby byly data se stejnými klíči na stejných nodech) podle komparátoru klíče
-- tedy je kritická část pro síť, protože se data přemisťují přes síť
+- přeskupí mezivýsledky podle klíčů (tak, aby byla data se stejnými klíči na stejných nodech) podle komparátoru klíče
+- tedy je kritická část pro síť, protože se data přemisťují přes síť (a může dojít k různým problémům)
 Reducer
 - aplikuje agregační funkce na data se stejným klíčem (jsou přeskupená a seřazená z předchozí fáze)
 - a výsledek je vlastně jedna jediná hodnota pro všechny páry se stejným klíčem (většinou nějaká agregace)

@@ -1,7 +1,7 @@
 [[MDF - Moderní datové formáty]] - obecný MDF lore
 
-[[RDF]]
-[[SPARQL]]
+- [[RDF]]
+- [[SPARQL]]
 
 ***
 Přednášky (zdroj doc. RNDr. Jakub Klímek, Ph.D.):

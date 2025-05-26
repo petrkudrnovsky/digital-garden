@@ -7,4 +7,3 @@
 
 > [!question]- Jak funguje Elasticstack? Jaké má součásti a jaké jsou principy distribuované indexace?
 > [[Elasticstack]], [[Elasticsearch]]
-

@@ -2,6 +2,7 @@
 = *uniform resource identifier*
 - identifikuje/pojmenovává zdroje na internetu
 - syntaxe je specifická podle zvoleného schématu
+	- příklady schémat: `http`, `ftp`, `mailto`, `info` - schéma, které označuje záznamy v záznamovém katalogu 
 ### IRI
 = *Internationalized Resource Identifier*
 - zobecnění [[#URI]], umožňuje používat Unicode místo ASCII
@@ -11,14 +12,14 @@
 	- například: lokace souboru/stránky na internetu
 - podmnožina [[#URI]]
 - jeho schéma: `scheme:[//authority]path[?query][#fragment]` 
-	- fragment určuje pozici na stránce (bude načtena u elementu s `id=section2`) - orientace v rámci obsahu (už není součástí úrovně URL)
+	- fragment určuje pozici na stránce (bude načtena u elementu s `id=section2`) - orientace v rámci obsahu (už není součástí úrovně URL, je to doplňková informace pro prohlížeč)
 - příklady:
 	- `mailto:user@example.org`
 	- `ftp://anonymous:user%40example.org@ftp.example.org:21/…`
 	- `http://www.example.org:8080/cesta/nazev`
 - speciální znaky v URL musí být kódovány pomocí `%` notace
 	- buď jsou rezerované nebo nebezpečné (např. jsou speciální při přenosu nebo mohou být při přenosu změněny)
-	- např. `%40` je zavináč a nechová se jako oddělovač
+	- např. `%40` je zavináč a tudíž se nechová jako oddělovač
 ### URN
 = *uniform resource name*
 - je trvalý, perzistentní identifikátor nějakého zdroje (který není závislý na umístnění zdroje)

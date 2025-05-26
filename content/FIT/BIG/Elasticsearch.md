@@ -10,6 +10,7 @@ Komunikuje pomocí [[REST protokol]]ful API a přes [[HTTP protokol]]
 - je to taková kolekce souvisejících dokumentů -  "tabulka jednotlivých dokumentů"
 	- index obsahuje dokumenty a jejich fieldy
 - používá invertovaný index
+	- tj. ke každému slovu připojuje seznam dokumentů, kde se vyskytuje
 - obsahuje **mapování** = popisuje vnitřní strukturu vkládaných dokumentů
 	- to většinou nejde moc upravovat (byla by nutná kompletní reindexace)
 ##### Clustery a uzly (architektura)
@@ -55,6 +56,6 @@ Komunikuje pomocí [[REST protokol]]ful API a přes [[HTTP protokol]]
 		- proces, který data z paměti (in-memory buffer) převede do segmentů - tím se zpřístupní pro vyhledávání
 		- defaultně je to každou 1 sekundu
 	- jakmile jsou segmenty vytvořeny, jsou součastí indexu a může se vyhledávat
-## CAP teorém
+## [[CAP teorém]]
 - upředňosťuje dostupnost a toleranci vůči rozdělení sítě (AP)
 - konzistenci si může uživatel nakonfigurovat (jsou různé úrovně konzistence)

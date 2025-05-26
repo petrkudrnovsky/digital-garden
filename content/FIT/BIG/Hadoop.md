@@ -39,7 +39,7 @@ Hlavní komponenty
 	- reprezentuje zdroj (CPU, memory, disk...)
 	- v rámci kontejneru jsou spouštěny jednotlivé úlohy
 - ResourceManager (master)
-	- řídí alokaci zdrojů, udržuje si globální informace a dostupných zdrojích v clusteru
+	- řídí alokaci zdrojů, udržuje si globální informace o dostupných zdrojích v clusteru
 	- komunikuje s NodeManagery
 	- dostává žádosti od ApplicationMastera
 - NodeManager (slave)

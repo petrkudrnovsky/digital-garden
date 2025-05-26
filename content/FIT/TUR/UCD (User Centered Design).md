@@ -1,5 +1,7 @@
 Provádíme UCD - tedy návrh zaměřený na uživatele. Jak něco navrhnout tak, aby se to pak uživatelům dobře používalo. UCD není moc metoda, která nám říká co a jak přesně dělat, je to spíš takový postoj, taková filosofie. Existuje spoustu postupů a metod pro spoustu různých situací.
 
+-> [Psychology for UX: Study Guide - NNgroup](https://www.nngroup.com/articles/psychology-study-guide/) - od Nielsen Norman Group (skvělej rozcestník na zdroje ohledně UX a chápání, jak zaujmout lidi)
+
 Má mnoho metod pro:
 1) prozkoumávání, získávání dat ([[Metody a techniky práce s uživateli]])
 2) porozumění a interpretace dat ([[Metody vyhodnocování při návrhu artefaktu]])

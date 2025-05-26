@@ -1,8 +1,8 @@
 Klíč hodnota
 - [[Redis]], Valkey, Scalaris
 [[Dokumentově orientovaná databáze]]
-- [[MongoDB]], CouchDB
+- MongoDB, CouchDB
 [[Sloupcové databáze]]
-- [[Apache Cassandra]], Apache HBase
+- Neo4j
 [[Grafové databáze]]
-- [[Neo4j]]
+- Apache Cassandra, Apache HBase

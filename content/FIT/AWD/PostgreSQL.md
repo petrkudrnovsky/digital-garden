@@ -9,13 +9,13 @@
 >- [PostgreSQL: Documentation: 17: PostgreSQL 17.0 Documentation](https://www.postgresql.org/docs/current/)
 >- [PostgreSQL wiki](https://wiki.postgresql.org/wiki/Main_Page) - také spravované PostgreSQL
 
-[[Postgres - administrace]]
-[[Postgres - architektura]]
-[[Postgres - monitoring]]
-[[Postgres - optimalizace a tuning]]
-[[Postgres - extensions]]
-[[Postgres - logická replikace]]
-[[Postgres - záloha a obnovení]]
+- [[Postgres - administrace]]
+- [[Postgres - architektura]]
+- [[Postgres - monitoring]]
+- [[Postgres - optimalizace a tuning]]
+- [[Postgres - extensions]]
+- [[Postgres - logická replikace]]
+- [[Postgres - záloha a obnovení]]
 
 >[!info] Hlavní konfigurační soubory
 >- `postgresql.conf` - hlavní konfigurační soubor, načítá se při startu

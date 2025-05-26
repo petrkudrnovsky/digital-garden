@@ -7,10 +7,8 @@ Proč ji děláme?
 Požadavky mají 2 hlavní kategorie: [[#1) Funkční požadavky]] a [[#2) Obecné (nefunkční) požadavky]]
 Jiná kategorizace požadavků (FURPS):
 ![[Pasted image 20230520200231.png]]
-
 ### 1) Funkční požadavky
 - požadavky ohledně funkčnosti aplikace, co bude všechno umět a splňovat
-
 ### 2) Obecné (nefunkční) požadavky
 - určují různá omezení kladená na systém
 - mají velký vliv na návrh architektury aplikace
@@ -27,7 +25,6 @@ Jaké informace by měl mít správný a přehledný požadavek?
 
 Dále by požadavek měl být jednoznačný, splnitelný a ověřitelný - tedy by splnění požadavku mělo být ověřeno v rámci akceptačního testování 
 - Je třeba se vyhnout požadavkům, které jsou obecné a v podstatě nic neříkající
-
 #### Jak a kde získám požadavky?
 - z komunikace se zákazníkem (co požaduje, co se mu líbí, co by se mu hodilo)
 - z [[Modelování obchodních procesů|modelu obchodních procesů]] 

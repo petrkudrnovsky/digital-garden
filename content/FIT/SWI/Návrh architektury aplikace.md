@@ -4,7 +4,13 @@ Architektura aplikace má 2 významy:
 	- uspořádání balíčků do vrstev (prezentační, business, datová...) a podsystémů
 	- [[#Rozdělení architektur aplikací]] podle vrstev
 	- [[MVC a MVP architektura]]
-1) fyzická
+2) fyzická
+	- fyzické rozdělení systému na komponenty
+	- rozložení systému na více výpočetních uzlů
+		- thin client / smart server
+		- thick client / dumb-server
+		- enterprise service bus
+		- microservices
 
 Samotné programování a vývoj aplikace je menší část nákladů -> návrh architektury je velmi zásadní, pokud je dobrý, pak už se to programuje samo ;)
 
@@ -15,18 +21,18 @@ Chci zajistit hlavně:
 
 Hlavní pozornost věnuju místům, kde bude systém v budoucnu rozšiřován - tato místa je potřeba od zbytku aplikace oddělit nějakým zapouzdřením/rozhraním, aby byla snadno rozšiřitelná a zároveň rozšíření neovlivnilo zbytek aplikace.
 ### Diagram balíčků
-- definuji jím jak na sobě různé balíčky tříd souvisejí a závisí
-![[Pasted image 20230521193520.png]]
-	- zde ta horní relace je: A je závislý na B
-	- dolní relace je: C je uvnitř B (vnoření)
+- definuji jím jak na sobě různé balíčky tříd souvisejí a závisí 
+	- ![[Pasted image 20230521193520.png]]
+		- zde ta horní relace je: A je závislý na B
+		- dolní relace je: C je uvnitř B (vnoření)
 - obecně se chci snažit nemít cykly v diagramu balíčků
-	- pokud se tak stane, tak můžu 1) přesunou problémovou třídu, 2) vyčlenit třídy do nového balíčku a 3) vytvořit rozhraní (dependency inversion)
+	- pokud se tak stane, tak můžu 1) přesunout problémovou třídu, 2) vyčlenit třídy do nového balíčku a 3) vytvořit rozhraní (dependency inversion)
 ### Návrhový model tříd
 - dokumentuje provedená architektonická rozhodnutí
 - zachycuje různé zodpovědnosti různých tříd
 - dokumentuje použité vzory a principy
 - pokud je napsaný dobře, tak je možné z něho rovnou generovat zdrojový kód
-- může vycházet z [[Doménový model|doménového modelu]], jen se zpřesní atributy a metody (přidají se např. datové typy, výstupní typy metod, viditelnosti) a upřesní se relace (jejich směr, názvy konců asociací) a vytvoří se nové softwarové třídy (tedy ty, které nezastupují žádnou reálnou věc, ale jsou potřeba pro správný objektový návrh)
+- může vycházet z [[Analytický doménový model|doménového modelu]], jen se zpřesní atributy a metody (přidají se např. datové typy, výstupní typy metod, viditelnosti) a upřesní se relace (jejich směr, názvy konců asociací) a vytvoří se nové softwarové třídy (tedy ty, které nezastupují žádnou reálnou věc, ale jsou potřeba pro správný objektový návrh)
 
 - doporučení (hlavně pro přehlednost a přínos)
 	- nezobrazovat gettery/settery
@@ -90,6 +96,8 @@ Hlavní pozornost věnuju místům, kde bude systém v budoucnu rozšiřován - 
 	- kontroly stavů
 	- mediace [[GoF návrhové vzory#Mediator]]
 	- zabezpečení
+	- dá se rychle škálovat nasazením další aplikace a připojení do Enterprise service busu
+	- nemusím znát jména a konkrétní adresy aplikací - prostě pošlu požadavek a ona ho "nějaká" aplikace obslouží
 ![[Pasted image 20240106145557.png|500]]
 #### Microservices (https://microservices.io/)
 - malé služby, které mají jen jeden účel - umí fungovat samostatně a izolovaně

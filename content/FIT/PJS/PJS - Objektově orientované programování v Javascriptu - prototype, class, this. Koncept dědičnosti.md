@@ -1,0 +1,37 @@
+[[Javascript]]
+- [[Javascript - Objekty]]
+- [[Javascript - OOP, Prototypy]]
+- [[Javascript - Context (this)]]
+
+### Shrnutí
+- objekty v Javascriptu mohu definovat pomocí JSON notace (klíč jednotlivých parametrů může být pouze string či Symbol)
+	- Symbol je primitivní datový typ používaný hlavně jako unikátní a neměnný identifikátor
+		- pro definování (skrytých) klíčů v objektech
+		- `const sym1 = Symbol('id');`
+- mohu si definovat svoje vlastní custom properties (pomocí `defineProperty`)
+	- informace o nich dostanu pomocí deskriptorů (pomocí `getDescriptorForProperty`)
+	- mohu jim nastavovat `writeable` či `enumerable` a pak určitě způsoby `get` a `set`
+- dědičnost
+	- pomocí řetězce prototypů
+		- objekt může mít skrytý odkaz na svůj prototyp a pokud se volá property nebo funkce na objektu a není tam, tak se JS automaticky podívá jeho prototyp (a popř. na prototyp prototypu atd.)
+		- jako getter/setter se používá `__proto__` (starší) nebo `getPrototypeOf` či `setPrototypeOf` (novější)
+		- na `.prototype` mohu definovat objekty či metody, které chci mít uložené na prototypu nově vytvořeného objektu
+		- je možné také vytvářet objekty přes `Object.create(prototype)` rovnou s přiřazením prototypu
+	- od ECMAskriptu jsou definované i třídy (class), ale je to jenom syntaktický cukr pro prototypy (třída je vlastně taková velká funkce v JS, také je to syntaktický sugar)
+		- máme class variables a class functions
+		- používám `class`, `extends` a `super` - pro zavolání konstruktoru předka
+	- parametry a metody objektů se dělí na "own" a "inherited"
+- this a kontext
+	- this reprezentuje kontext provádění objektu či funkce, ve kterém je volán
+	- globálně
+		- ve sloppy (default) režimu je to window či global
+		- ve strict režimu je undefined
+	- v objektu
+		- má kontext toho objektu a mohu se tak dostat k aktuálním properties či funkcím
+	- ve funkci
+		- záleží, kde ta funkce je, pokud je na globálu, tak je tam hodnota podle sloppy/strict režimu
+		- ve funkci v rámci objektu je tam kontext toho objektu
+		- v arrow funkci nemá kontext, vždy přebírá z vnějšího kontextu
+			- pokud je to arrow funkce zabalená do `function () {}`, tak pak přebírá kontext této funkce
+	- v DOM objektu
+		- referencuje na ten objekt (např. tlačítko)

@@ -1,0 +1,22 @@
+- detekuje chybové vzory v kódu aplikace
+- není potřeba mít spuštěnou aplikaci
+#### Co odhalí?
+- technický dluh
+	- tzv. "špatné programování"
+	- neomezí funkčnost programu, ale omezí budoucí údržbu a přehlednost kódu
+	- vzniká když vývojář pracuje pod časovým tlakem nebo je nezkušený
+	- špatné jmenné konvence, složité ify, nepoužívané importy, literály místo konstant apod.
+- duplikace
+	- třeba dodržovat DRY princip
+		- zdržuje to změny (jsou potřeba udělat na více místech) a pokud se nějaké vynechá, zanese se chyba
+		- pokud spolu duplicitní části nesouvisí, tak je to v pohodě (není to porušení DRY)
+- problémy s dopadem na spolehlivost
+	- v proměnné se může objevit neošetřený null
+	- podmínky, které jsou vždy true nebo vždy false
+	- nepoužívané proměnné
+- problémy s dopadem na zabezpečení
+	- SQL injection (skládání SQL dotazů spojováním stringů)
+	- hesla v plain textu
+	- připojení do DB bez hesla
+#### Nástroje
+- SonarQube, PHPStan, FindBugs

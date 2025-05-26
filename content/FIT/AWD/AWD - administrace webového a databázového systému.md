@@ -20,7 +20,7 @@
 	- GET, POST...
 	- [[HTTP protokol#Metody HTTP protokolu]]
 
-- [[DNS]] #to-do 
+- [[DNS]] (to-do)
 - [[Virtual Hosting]]
 - [[htaccess soubor]]
 - [[MIME type]]
@@ -43,7 +43,7 @@
 - [[Postgres - logická replikace]]
 - [[Postgres - záloha a obnovení]]
 
-[[Big Data - Proč používat něco jiného než RDBMS]]
+[[Big Data - Proč používat něco jiného než RDBMS]] - tady mám hlavně komentář od Valenty
 [[Neo4j]]
 ### SZZ
 |            |                                                                                                                                  |              |

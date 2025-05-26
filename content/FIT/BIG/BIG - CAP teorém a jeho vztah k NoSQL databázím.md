@@ -11,4 +11,3 @@ Seznam: [[NoSQL databáze]] - v každé poznámce je vztah k CAP teorému
 > [[NoSQL databáze]] - v každé poznámce je vztah k CAP teorému
 
 Obecná teorie k [[Big Data]]
-

@@ -1,6 +1,5 @@
 [[Projektové řízení]]
 [[Metodiky vývoje SW]]
-#bi-swi
 ***
 ### Definice projektu
 - časově ohraničená činnost/úsilí
@@ -27,7 +26,7 @@
 		- obecné požadavky na aplikaci
 		- návrhy obrazovek (wireframes)
 	- popsání dat, se kterými zákazník pracuje
-		- [[Doménový model|doménový model]]
+		- [[Analytický doménový model|doménový model]]
 - výsledkem je **analytická dokumentace**
 
 ### Mám všechno zanalyzované, mohu se pustit do návrhu

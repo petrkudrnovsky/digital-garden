@@ -1,3 +1,4 @@
+Obecně o UML zde: [[UML]], Diagram aktivit patří do skupiny diagramů chování (*behavioral diagrams*)
 ![[Activity_Diagram.pdf]]
 
 ![[Pasted image 20230519165900.png]]
@@ -5,8 +6,8 @@
 - Počáteční uzel - generuje ==tokeny== - simuluje průchod procesem
 - Každá akce se spustí až tehdy, když má na všech vstupech token
 ![[Pasted image 20230519170236.png]]
-- zelený kosočtverec - pokud mu na vstup přijde jakkýkoliv token, pošle ho dál
-- hnědá ploška - nepustí tokeny dál, dokud nebudou na vstupech všechny (taková Bariéra v [[BI-OSY - rozcestník|BI-OSY]]) - dále pokračuje jen jeden
+- zelený kosočtverec s více vstupy - pokud mu na vstup přijde jakkýkoliv token, pošle ho dál
+- končící hnědá ploška - nepustí tokeny dál, dokud nebudou na vstupech všechny (taková Bariéra v [[BI-OSY - rozcestník|BI-OSY]]) - dále pokračuje jen jeden
 ![[Pasted image 20230519170513.png]]
 - zde také vidím znázornění různých zodpovědností aktérů za části procesu (znázorněno v tzv. *swimlines*)
 

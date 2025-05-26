@@ -5,8 +5,8 @@
 - data můžeme vnořovat do sebe
 - příklady: [[XML]], [[JSON]], YAML
 
-[[XML]]
-[[JSON]]
+- [[XML]]
+- [[JSON]]
 
 ***
 Přednášky (zdroj doc. RNDr. Jakub Klímek, Ph.D.):
