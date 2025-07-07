@@ -1,3 +1,10 @@
+---
+date: 8. 1. 2025
+title: Proč tohle dělám
+draft: false
+description: 
+aliases:
+---
 V lednu 2025 jsem se rozhodl jsem založit svoji veřejnou digitální zahradu. Obecně se principům druhého mozku věnuji přes 2 roky, vždycky jsem přemýšlel o tom, že bych si to nechtěl nechávat pro sebe - a část mých poznámek zveřejnit pro kohokoliv na internetu. Ptáte se proč? Za mě to má mě několik benefitů:
 
 1. **pomůžu tím ostatním** - ať už kolegům na FITu svými poznámkami nebo komukoliv dalšímu tím, že zde zjistí něco zajímavého nebo něco, co je může posunout dál

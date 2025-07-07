@@ -2,6 +2,8 @@
 title: Jak spravovat tento vault pomocí Quartz
 date: 27. 2. 2025
 draft: false
+description: 
+aliases:
 ---
 Hlavní složka pro moje poznámky je `content`, která funguje podobně jako `public` na webovém serveru. Na tuto složku mám namířený i Obsidian vault, kde spravuji veškeré poznámky, které chci, aby byly dostupné online.
 

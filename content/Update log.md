@@ -10,3 +10,4 @@ Přidal jsem celý předmět BI-TUR. Tyhle poznámky mám opravdu rád, protože
 Proveden celý update digitální zahrady. Dříve jsem používal template přes prostředníka na Githubu a teď jsem kvůli technickým problémům přehodil na řešení přímo od Quartz.
 ### 26. 5. 2025
 Vyřešil jsem problémy digitální zahrady s certifikátem a DNS záznamy. Také jsem přidal kompletní státnicové otázky k webovému inženýrství. 
+### 7. 7. 2025

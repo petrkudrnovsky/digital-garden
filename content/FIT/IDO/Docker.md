@@ -1,4 +1,3 @@
-
 > [!tldr] TL;DR
 > Docker je open-source platforma, která umožňuje spouštět aplikace v definovaném prostředí (závislosti, knihovny, konfigurace) nezávisle na zdrojích a infrastruktuře hardware.
 > Jedná se o jednu z forem virtualizace.

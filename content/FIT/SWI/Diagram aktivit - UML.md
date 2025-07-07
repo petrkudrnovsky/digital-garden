@@ -1,5 +1,5 @@
 Obecně o UML zde: [[UML]], Diagram aktivit patří do skupiny diagramů chování (*behavioral diagrams*)
-![[Activity_Diagram.pdf]]
+- PDF [zde](https://moodle-vyuka.cvut.cz/pluginfile.php/898710/mod_resource/content/4/Activity%20Diagram.pdf ) (pouze po ČVUT ověření)
 
 ![[Pasted image 20230519165900.png]]
 ![[Pasted image 20230519165907.png]]

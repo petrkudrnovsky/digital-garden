@@ -1,4 +1,4 @@
-![[Class_Diagram_Domain_Model.pdf]]
+PDF [zde](https://moodle-vyuka.cvut.cz/pluginfile.php/898721/mod_resource/content/2/Class%20Diagram%20Domain%20Model.pdf) (pouze po ČVUT ověření)
 ### Co je cílem doménového modelu?
 - popsat data, se kterými se bude pracovat
 - popis významů termínů - aby jim každý rozumněl  

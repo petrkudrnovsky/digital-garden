@@ -1,7 +1,7 @@
 ## [[OOP]]
 ## [[Javascript - OOP, Prototypy#Classes|Skip to Classes]]
 
-## \[\[Prototype\]\]
+## Prototype
 - klíčové slovo: `__proto__` 
 	- vlastnost konkrétní instance
 - objekt má svoji hidden vlastnost Prototype, která je buď `null` nebo referencuje jiný objekt (který nastavím) 

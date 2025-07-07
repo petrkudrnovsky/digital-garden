@@ -5,8 +5,6 @@ Frameworky (AngularJS a další) se snaží většinu logiky přesouvat na klien
 - ale je potřeba BE část (např. API), kvůli perzistenci dat apod.
 - zajišťují routování, tracking historie, perzistenci dat na straně klienta, komponenty
 
-React už padá, [[Vue.js]] je teďko populární (ale nebude na dlouho)
-
 Teďko se zase zpátky přiklání k server-side renderingu (takže přesun většiny aplikace na server zpátky)
 ### SPA výhody
 - výhodou je zacachování statických dat (jenom jednou se načtou celé)

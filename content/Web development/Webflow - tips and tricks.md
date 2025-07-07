@@ -1,1 +1,0 @@
-`Ctlr + E` - rychlé vyhledávací pole pro rychlé přidávání elementů

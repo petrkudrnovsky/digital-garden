@@ -7,7 +7,7 @@
 		- poskytuje klíčové informace pro správu a optimalizaci databáze
 - Datagrip - spíše pro developery než adminy
 - Tableplus
-- [[DBeaver]]
+- DBeaver
 ***
 ### Uživatelé a role
 - v Postgresu neexistují uživatelé v pravém slova smyslu - jsou to Role s atributem `LOGIN`

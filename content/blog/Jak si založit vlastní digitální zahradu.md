@@ -1,5 +1,9 @@
 ---
 draft: false
+date: 27. 2. 2025
+title: Jak si založit vlastní digitální zahradu
+description: 
+aliases:
 ---
 Líbí se vám moje zahrada? A chtěli byste si taky založit a publikovat svoji? Pokud ano, tak máte moji plnou podporu!
 

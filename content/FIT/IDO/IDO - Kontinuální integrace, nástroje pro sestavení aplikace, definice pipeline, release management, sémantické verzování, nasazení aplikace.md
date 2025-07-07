@@ -25,6 +25,7 @@ Doplnění otázky: správa prostředí, přínosy kontejnerizace a používané
 		- pro nasazování aplikací na server, na cloud
 		- obsahují pouze 1 proces (a jeho potomky)
 		- [[Docker]]
+	
 [[Docker]]
 - přínosy kontejnerizace (a rozdíly oproti VMs)
 
