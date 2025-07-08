@@ -46,9 +46,9 @@
 [[Big Data - Proč používat něco jiného než RDBMS]] - tady mám hlavně komentář od Valenty
 [[Neo4j]]
 ### SZZ
-|            |                                                                                                                                  |              |
-| ---------- | -------------------------------------------------------------------------------------------------------------------------------- | ------------ |
-| BI-WI.21-1 | [[AWD - Architektura databázového serveru, její podstatné komponenty a úloha databázového administrátora při jejich správě]]     | BI-AWD.21,PV |
-| BI-WI.21-2 | [[AWD - Protokol HTTP a jeho vlastnosti, komunikace klient-server a její bezpečnostní aspekty]]                                  | BI-AWD.21    |
-| BI-WI.21-3 | [[AWD - Zpracování požadavků a poskytování zdrojů webovým serverem, statický a dynamický obsah, paralelní zpracování požadavků]] | BI-AWD.21    |
+
+| [[AWD - administrace webového a databázového serveru\|AWD]] | [[AWD - Architektura databázového serveru, její podstatné komponenty a úloha databázového administrátora při jejich správě]]     |
+| ----------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
+|                                                             | [[AWD - Protokol HTTP a jeho vlastnosti, komunikace klient-server a její bezpečnostní aspekty]]                                  |
+|                                                             | [[AWD - Zpracování požadavků a poskytování zdrojů webovým serverem, statický a dynamický obsah, paralelní zpracování požadavků]] |
 

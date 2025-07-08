@@ -1,6 +1,6 @@
 ---
 title: Jak spravovat tento vault pomocí Quartz
-date: 27. 2. 2025
+date: 2025-01-14
 draft: false
 description: 
 aliases:

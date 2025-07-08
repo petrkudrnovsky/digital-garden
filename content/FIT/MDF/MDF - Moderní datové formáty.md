@@ -43,3 +43,7 @@ Identifikátory: [[URL, URI, URN, IRI]]
 	- různé konce řádků pro různé OS (Linux:  \\n, Windows: \\r\\n (*carriage return*))
 	- BOM (= byte order mark) - magické číslo na začátku souboru, které určovalo jak je kódovaný text v souboru
 		- teď už se skoro nepoužívá
+### SZZ otázky
+| [[MDF - Moderní datové formáty\|MDF]]                             | [[MDF - Grafový datový model RDF a jeho serializace (N-Tripples, RDF-Turtle). Dotazování nad daty v RDF - jazyk SPARQL]]                                                                          |
+| ----------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+|                                                                   | [[MDF - Hierarchické datové formáty - XML a JSON. Dobře formovaný (well-formed) a validní (valid) XML dokument. XSD a JSON Schema. Formát JSON-LD]]                                               |

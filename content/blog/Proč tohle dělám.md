@@ -1,5 +1,5 @@
 ---
-date: 8. 1. 2025
+date: 2025-01-08
 title: Proč tohle dělám
 draft: false
 description: 

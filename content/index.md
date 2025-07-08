@@ -1,11 +1,12 @@
 ---
 title: Vítejte v mé digitální zahradě!
-date: 27. 2. 2025
+date: 2025-01-08
 draft: false
 description: Toto je úvodní poznámka do mé digitální zahrady. Všichni jste vítáni, vstupte a využijte všechno, co vidíte!
 aliases:
 ---
-## [[Rozcestník]]
+# [[Rozcestník]]
+### [[Blog]]
 
 ***
 ### Úvodní slovo

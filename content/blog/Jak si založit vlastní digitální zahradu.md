@@ -1,6 +1,6 @@
 ---
 draft: false
-date: 27. 2. 2025
+date: 2025-01-14
 title: Jak si založit vlastní digitální zahradu
 description: 
 aliases:
