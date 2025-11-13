@@ -5,7 +5,7 @@ Zde najdete jednotlivé předměty bakalářského studia na FITu - zápisky zde
 Dále uvádím kompletní seznam vypracovaných státnicových otázek pro webové inženýrství:
 ### [[SZZ otázky]]
 
-Zápisky z jednotlivých předmětů
+Zápisky z jednotlivých předmětů BAKALÁŘ
 - [[AWD - administrace webového a databázového serveru]] komplet
 - [[BIG - technologie pro Big data]] komplet
 - [[IDO - Úvod do DevOps]] pouze na SZZ
@@ -15,6 +15,9 @@ Zápisky z jednotlivých předmětů
 - [[VWM - Vyhledávání na webu a v multimediálních databázích]] pouze na SZZ
 - [[MDF - Moderní datové formáty]] pouze na SZZ
 - [[Javascript|PJS - Programování v Javascriptu]] komplet
+
+Zápisky z jednotlivých předmětů MAGISTR
+- [[KOP - Combinatorial Optimization]] - work in progress
 ***
 #### Disclaimer
 Nezaručuji faktickou správnost, informace byste si měli vždycky ověřit. Některé poznámky mají nefunkční odkazy, většinou to jsou poznámky, které jsem z nějakých důvodů nenahrál a zůstaly jenom v mé soukromé digitální zahradě (ale opravdu se snažím nahrát všechny relevantní poznámky). K poznámkám mám i obrázky či screenshoty (např. z prezentací a dalších studijních materiálů), ale část z nich jsem se rozhodl nesdílet kvůli autorským právům.

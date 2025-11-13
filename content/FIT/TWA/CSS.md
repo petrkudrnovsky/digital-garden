@@ -3,6 +3,8 @@
 [Flexbox Froggy](https://flexboxfroggy.com/) - hra na naučení se Flexboxu
 [CSS Grid Garden](https://cssgridgarden.com/) - hra na naučení se CSS Grid
 [Material Design](https://m3.material.io/) - Google open-source design guidelines
+
+[[Best practices - stylování]]
 ***
 Full name: *Cascading Style Sheets*
 [[HTML]] definuje strukturu dokumentu, CSS definují grafickou reprezentaci

@@ -5,6 +5,7 @@ draft: false
 description: Toto je úvodní poznámka do mé digitální zahrady. Všichni jste vítáni, vstupte a využijte všechno, co vidíte!
 aliases:
 ---
+Zde jsou hlavní odkazy:
 # [[Rozcestník]]
 ### [[Blog]]
 

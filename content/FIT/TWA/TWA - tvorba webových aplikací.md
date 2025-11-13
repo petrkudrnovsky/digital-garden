@@ -1,5 +1,3 @@
-Obecně zde: [[Web Development]]
-
 Průlet předmětem podle témat: 
 [[Webové technologie]]
 - [[URL, URI, URN, IRI]], Doména, Intranet, DNS
