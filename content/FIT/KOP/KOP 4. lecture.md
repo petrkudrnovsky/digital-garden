@@ -1,4 +1,4 @@
-- optimalization problem classes (with the O appendix - like Optimization)
+- optimization problem classes (with the O appendix - like Optimization)
 ### PO class
 - same as P class, but for optimalization problems
 	- solution size is polynomial with the instance size
@@ -12,6 +12,10 @@
 	- very similar to proving the NP class
 		- polynomial constraints verification 
 		- + polynomial optimization criterion verification
+- we don't have NPO-Complete problems, the hardest problems from NPO are NPH
+- an optimization problem is NP-hard if it's decision version is NP-hard
+- ![[Pasted image 20251118152531.png|400]]
+- 
 ### Optimization problems
 - optimization of the cost function (also called optimization criterion)
 	- cost function gives us a "cost" or "score" for each admissible solution of the problem
@@ -86,7 +90,7 @@
 	- all problems in APX can be reduced to an APX-Hard problem
 - APX-complete problem
 	- is APX-Hard and belongs to APX
-### Good news and bad news in the composium
+### Good news and bad news in the Compendium
 - APX-complete is bad news, because we cannot specify the error level
 	- but there is always a some finite R bounding the error level
 - NPO-complete is the worst one

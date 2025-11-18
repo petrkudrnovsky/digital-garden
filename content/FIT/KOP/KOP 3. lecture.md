@@ -44,12 +44,13 @@
 	- if I find NPC solver running in polynomial time, I can solve all NP problems in polynomial time and I will prove $NP=P$ and make a lot of money
 ##### How to prove that the problem is NPC?
 - how to prove it's in NP (=> not harder then NP)?
-	- we can solve it by non-deterministic TM OR we can prove, that the verification of the solution is in polynomial time (the certificate)
+	- we can solve it by non-deterministic TM OR **we can prove, that the verification of the solution (=yes instance) is in polynomial time (the certificate)**
 - how to prove it's in NPC (=> not simpler then NPC)?
 	- we have at least one known problem in NPC
 	- our problem should be solvable by the origin NPC problem solver
-		- so the problem has to be reductible to our problem (in polynomial time **for all instances**)
+		- so a known NPC problem has to be reductible to our problem (in polynomial time **for all instances**)
 		- in other words: find some NPC problem and prove that it is reducible to our problem in polynomial time for all possible instances
+	- => the problem is as hard as NPC 
 - complete proof
 	- we take any NPC problem, try to reduce this problem to our problem in polynomial time -> if we succeed, we have a NPC problem
 	- with the solver of our problem we are basically able to solve any known NPC problem
@@ -66,7 +67,7 @@
 - NP intermediate problems ("in the middle")
 	- no polynomial algorithm is known yet
 	- no proven NP-completeness yet
-- they have to exists, otherwise P=NP
+- if P=NP, then NPI is empty
 ### Turing reduction
 - for both decision and optimization problems
 - problem $\Pi_1$ is Turing reductible to $\Pi_2$ ($\Pi_1\le_T\Pi_2$) if there exists a TM program $M_1$ solving each instance of $\Pi_1$ by calling a subroutine (which is TM $M_2$ solving $\Pi_2$)
@@ -85,3 +86,4 @@
 	- but it has to be called polynomial number of times
 ### Relations summary
 ![[Pasted image 20251112222707.png]]
+![[Pasted image 20251118152636.png]]

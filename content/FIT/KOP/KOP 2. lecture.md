@@ -13,7 +13,7 @@
 	- it is basically a programmable Turing machine
 - TM solves a problem if it **halts** in some final state
 ##### Deterministic TM
-- TM that for a combination of input symbol (the symbol being read) and current state, there exists only one transition rule
+- TM that for a combination of input symbol (the symbol being read) and current state, there exists exactly one transition rule
 	- so for a given input and starting position, the DTM follows one and only path with no ambiguity
 	- important:
 		- but for different inputs the path could be different 
@@ -38,7 +38,7 @@
 		- NP-Class problems are problems, which could be verified by a DTM in polynomial time
 		- problem belongs to NP, if there exists a non-deterministic TM which solves all yes-instances in polynomial time
 - **NP = non-deterministic polynomial**
-- certificate is a prove that a solution exists
+- certificate is a proof that a solution exists
 	- certificate = values of configuration variables satisfying the constraints
 	- if we can verify the solution (= verifying if it satisfies all the constraints) in polynomial time -> the problem is NP (because in non-deterministic TM, one branch of the algorithm is able to solve the problem in polynomial time)
 	- we know the solution (from an oracle) and we just need to verify if the solution exists (the oracle "tells us the way through the algorithm")
@@ -46,7 +46,8 @@
 - to prove that a problem belongs to NP, we just have to prove that the certificate could be verified by a DTM in polynomial time
 	- or, we can build a non-deterministic TM (but that's the hard way)
 - by definition the non-deterministic TM does not have to stop for "no-problems" - it can run forever (or halt in polynomial time exploring all branches (and no branch ends with "yes")) or do anything else (it is just not defined)
-	- for yes-problems, the NTM has to halt in polynomial time $O(n^k)$ where $k$ is a finite number
+	- for yes-instances, the NTM has to halt in polynomial time $O(n^k)$ where $k$ is a finite number
+	- for no-instances, the NTM behavior is not defined
 - we formulate a exist-like question ($\exists$)
 	- then we run an algo (like oracle) which will give us a solution
 	- and we are able to verify this solution (= certificate) in polynomial time
@@ -79,7 +80,6 @@
 	- $\Sigma_2$ problem has a verification in $\Pi_1$ co-problem (which is co-NP class)
 	- $\Pi_1$ co-problem has a verification in $\Sigma_0$ problem (which is P class)
 	- the certificate verification of a $k^{th}$ class is in the $(k-1)^{th}$ co-class
-
 
 - for not-NP problems, certificate cannot be verified in polynomial time
 - PSPACE (polynomial space) - problems solved using polynomial memory (regardless of time)
