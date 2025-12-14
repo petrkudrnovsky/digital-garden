@@ -14,3 +14,5 @@ Vyřešil jsem problémy digitální zahrady s certifikátem a DNS záznamy. Tak
 Menší úpravy po státnicích na základě zpětné vazby. Vymýšlení dalšího směřování digitální zahrady. Zlepšení otázek z AWD, kde jsem dopsal TL;DR shrnutí a lépe uspořádal rozcestníky jednotlivých otázek.
 ### 13. 11. 2025
 Přidání zápisků z kurzu NIE-KOP pro mé spolustudující. Jedná se o první anglické zápisky na webu, protože nyní studuji na anglickém studiu.
+### 14. 12. 2025
+Přidání kompletních zápisků z kurzu NIE-AM1 pro mé spolustudující. 

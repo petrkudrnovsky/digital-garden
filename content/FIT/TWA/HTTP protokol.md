@@ -1,105 +1,169 @@
-= *HyperText Transfer Protocol*
-- sedí na aplikační vrstvě ([[ISO OSI model]]), přenáší soubory mezi klientem a serverem (používá TCP/IP protokol, obvykle port 80/443)
-- to to bezstavový protokol
-	- funguje na principu požadavek -> odpověď
-- šifrovaná varianta: HTTPS (HTTP + SSL/TLS (krytografický protokol pro šifrovanou komunikaci)) - dneska standard, port 443
-- existuje celá řada hlaviček, které se používají
-	- ale mohu k nim mít i svoje vlastní definované (je to otevřené)
-- po hlavičce je prázdný řádek a pak tělo požadavku
-### Request
+## Základní koncepty
+HTTP (*HyperText Transfer Protocol*) je bezstavový protokol sedící na aplikační vrstvě ([[ISO OSI model]]), který přenáší soubory mezi klientem a serverem.
+- Používá [[TCP IP model|TCP/IP]], obvykle port 80 (HTTP) nebo 443 (HTTPS)
+- Funguje na principu požadavek → odpověď
+- Je bezstavový
+### HTTPS (HTTP Secure)
+- HTTP + SSL/TLS (kryptografický protokol pro šifrovanou komunikaci)
+- Dneska standard, port 443
+- Viz [[Bezpečnost webového serveru]]
+### Struktura HTTP zpráv
+- Existuje celá řada hlaviček, které se používají
+- Můžu mít i svoje vlastní definované hlavičky (je to otevřené, jenom musím na aplikační vrstvě zařídit, aby jednotlivé aplikace hlavičkám rozuměly)
+- Po hlavičce je prázdný řádek a pak tělo požadavku
+##### HTTP Request
 ![[Pasted image 20231003113509.png]]
-Kdy použít POST místo GET?
-- když mám filtrování a překročí to maximální délku URL
-- hledání pomocí obrázků
-Kdy použít GET místo POST?
-- nedává to smysl
-GET mění data pouze statistická (počet přístupů apod.)
-##### User-Agent
-- klient, který inicioval požadavek
-- většinou jsou to prohlížeče, editory, roboti apod.
-### Response
+##### HTTP Response
 ![[Pasted image 20231003113531.png]]
-Proč není dobré vrátit 404-like stránku, ale s kódem 200?
-- Protože si při 404 si to prohlížeč nezacachuje a nebude mi to pak nabízet jako oblíbenou stránku
-### Stavové kódy
-[Stavové kódy](https://cs.wikipedia.org/wiki/Stavov%C3%A9_k%C3%B3dy_HTTP) (200 OK, 404 Not Found...)
-- 1xx - informační
-	- 100 - Continue - zpracování pokračuje
-- 2xx - úspěch
-	- 200 - OK
-	- 201 - Created
-	- 204 - No Content
-- 3xx - přesměrování, je nutná další akce pro dokončení
-	- 300 - Multiple Choices - více možností např. u dojednávání obsahu
-	- 301 - Moved Permanently - URL se perm. změnila, měl bych použít jinou
-	- 303 - See Other - zdroj lze najít na jiné URL
-	- 304 - Not Modified - zdroj se nezměnil, použij zacachovanou verzi
-- 4xx - chyba klienta
-	- 400 - Bad Request
-	- 401 - Unauthorized (jsi neauthentifikovaný)
-	- 403 - Forbidden (jsi nautorizovaný)
-	- 404 - Not Found
-	- 405 - Method Not Allowed
-- 5xx - chyba serveru
-	- 500 - Internal Server Error
-	- 501 - Not implemented
-	- 503 - Service Unavailable
-- pokud klient nějakému kódu nerozumí, považuje ho za `x00`, ten základní
-### HTTP/1.1
-- nová povinná hlavička **Host** (což je doména požadavku)
-	- na 1 IP adrese mohlo existovat více domén - ulehčení IPv4
-	- umožňuje využívat [[Virtual Hosting]]
-- odpověď lze posílat ve více částech (chunked encoding)
-	- hlavička `Transfer-Encoding: chunked`, každý blok má na začáku hexadecimálně zapsanou délku toho bloku
-	- ukončí se to tak, že se na konci pošle velikost "0"
-	- pouze v této verzi protokolu
-- podpora trvalého spojení (*Connection: Keep-Alive*)
-- pokročilé cacheování
+##### Otázky
+- Kdy použít POST místo GET?
+	- Když mám filtrování a překročí to maximální délku [[URL, URI, URN, IRI|URL]]
+	- Hledání pomocí obrázků (kdy se jako query posílá obrázek)
+- Kdy použít GET místo POST?
+	- Nedává to smysl (GET by se měl používat pouze pro čtení dat)
+	- GET mění pouze statistická data (počet přístupů, datum přístupu apod.)
+	- `GET /orders/?add=new_order` je špatně
+		- nerespektuje to sémantiku REST a vytváří nekonzistenci
+		- proxy na cestě si to může zacachovat a po čase samo od sebe revalidovat - tímto příkazem se při revalidaci přidá další zdroj (což většinou nechceme)
+- Proč není dobré vrátit 404-like stránku s kódem 200?
+	- Prohlížeč si při standardním kódu 404 nezacachuje stránku a nebude ji nabízet jako oblíbenou
+		- Pokud pošlu kód 200, tak ji prohlížeč bude vnímat jako klasickou stránku a zacachuje si ji
+	- Porušuje to sémantiku HTTP protokolu
+		- Vývojáři v mém týmu či po mně tomu nebudou rozumět
+### User-Agent
+- Klient, který inicioval požadavek
+- Většinou jsou to prohlížeče, editory, roboti apod.
+## Stavové kódy
+- [Stavové kódy na Wikipedii](https://cs.wikipedia.org/wiki/Stavov%C3%A9_k%C3%B3dy_HTTP) (200 OK, 404 Not Found...)
+##### 1xx - Informační
+- **100 Continue** - zpracování pokračuje
+##### 2xx - Úspěch
+- **200 OK** - požadavek byl úspěšný
+- **201 Created** - nový zdroj byl vytvořen
+- **204 No Content** - úspěch, ale žádný obsah k vrácení
+##### 3xx - Přesměrování
+- Je nutná další akce pro dokončení požadavku.
+- **300 Multiple Choices** - více možností, např. u dojednávání obsahu
+- **301 Moved Permanently** - URL se permanentně změnila, měl bych použít jinou
+- **303 See Other** - zdroj lze najít na jiné URL
+- **304 Not Modified** - zdroj se nezměnil, použij zacachovanou verzi
+##### 4xx - Chyba klienta
+- **400 Bad Request** - špatně formulovaný požadavek
+- **401 Unauthorized** - jsi neautentizovaný - [[Autentizace]]
+- **403 Forbidden** - jsi neautorizovaný (nemáš práva) - [[Autorizace]]
+- **404 Not Found** - zdroj nebyl nalezen
+- **405 Method Not Allowed** - HTTP metoda není pro tento zdroj povolena
+- **406 Not Acceptable** - server nemůže serializovat zdroj do požadovaného formátu
+- **412 Precondition Failed** - záleží na implementaci na serveru (někdy to vrátí, zkombinuje to na základě cache, co se upravovalo atd.)
+##### 5xx - Chyba serveru
+- **500 Internal Server Error** - obecná chyba serveru
+- **501 Not Implemented** - server neimplementuje požadovanou funkcionalitu
+- **503 Service Unavailable** - server je dočasně nedostupný
+
+**Poznámka:** Pokud klient nějakému kódu nerozumí, považuje ho za `x00` (základní kód dané kategorie).
+## HTTP verze
+
+#### HTTP/1.1
+**Nové vlastnosti (oproti HTTP/1.0):**
+- Povinná hlavička **Host** (doména požadavku)
+	- Na 1 IP adrese mohlo existovat více domén - ulehčení problémů nedostatku IPv4 adres
+	- Umožňuje využívat [[Virtual Hosting]]
+- Odpověď lze posílat ve více částech (**chunked encoding**)
+	- Hlavička `Transfer-Encoding: chunked`
+	- Každý blok má na začátek hexadecimálně zapsanou délku
+	- Ukončí se velikostí "0"
+	- Pouze v této verzi protokolu
+- Podpora trvalého spojení (`Connection: Keep-Alive`)
+- Pokročilé cacheování
 ### HTTP/2
-- umí posílat CSS, JS a obrázky dopředu bez vyžádání od klienta (rychlejší)
-	- upouští se od toho, protože implementace na straně serveru je složitá
-- je v binární variantě - tedy pro člověka nečitelná
-	- efektivní komprese
+Vytvořena primárně pro zrychlení komunikace a vychytání chyb v HTTP/1.x. Hlavně modifikuje to, jak jsou data reprezentována a přenášena v komunikaci.
+
+**Problémy HTTP/1.x:**
+- Pro dosažení paralelismu musel klient vytvořit více spojení najednou
+- Hlavičky nebyly komprimované
+- Žádná prioritizace zdrojů (všechny měly stejnou váhu a prioritu)
+- To vedlo k zbytečnému síťovému provozu
+
+**Výhody HTTP/2:**
+- Umí posílat relevantní CSS, JS a obrázky dopředu bez vyžádání od klienta (rychlejší)
+	- Jmenuje se to "Server Push"
+	- Na jeden request může server poslat více responses
+	- Ty "dobrovolné" navíc označí pomocí PUSH_PROMISE, aby klient věděl, že budou poslané a nevytvářel duplicitní požadavky
+	- Posílá se jenom, pokud je "idle time", jinak to nemusí být vždy efektivní
+- Umí multiplexovat a posílat požadavky paralelně (není potřeba čekat)
+	- Umí prioritizovat jednotlivé streams
+		- každý stream má určitou váhu a podle toho je prioritizován na prostředcích
+	- Umí prioritizovat jednotlivé assety podle typu, lokace atd.
+	- Umí se "učit" - pokud nějaký asset blokuje stránku (např. JS), zvýší mu prioritu (a tím bude poslaný dříve a bude mít více prostředků a je menší pravděpodobnost, že bude zase dlouho blokovat)
+- Efektivní komprese HTTP hlaviček pomocí Huffmanova kódu
+- Umí flow control (podobně jako u TCP), regulace provozu podle zaneprázdnění příjemce
+
+**Nevýhody HTTP/2:**
+- Závislost na [[TCP protokol]]u (TCP handshakes + TLS handshakes trvají dlouho)
+- TCP vždy znovuposílá ztracené segmenty - to zpomaluje celý přenos
+- Komplexní implementace na straně serveru
+	- Např. klouzavé okénko pro regulaci flow streamu
+
+**Implementační detaily:**
+- Je v **binární variantě** (nečitelná pro člověka, ale to neznamená, že samotné binární kódování zajišťuje bezpečnost)
+- Efektivní komprese
+- Sestaví se TCP Stream pro multiplexování frames (HEADERS frame, DATA frame)
+	- tj. hlavička a data z HTTP/1.1 jsou posílané v jednotlivých HEADERS a DATA frames
+	- stream umožňuje obousměrný provoz
+- Jednotlivé frames jsou součástí Messages (1 response/request = 1 Message)
+	- Message je sekvence jednotlivých frames
+
+**Upgrade na HTTP/2:**
+- Během HTTP/1.1 komunikace lze poslat hlavičku `Upgrade: h2c` společně s `HTTP2-Settings`
+- Pokud příjemce podporuje HTTP/2, přehodí se na lepší verzi
+- Fallback pro HTTP/2 je HTTP/1.1
+- Při inicializaci je požadavek na HTTP/2.0 součástí ClientHello zprávy
 ### HTTP/3
-- umí rychle přecházet mezi např. wi-fi a 5G
-	- protože si posílá ID toho spojení
-- funguje i nad UDP, má paralelní zpracování
-### Nástroje pro komunikaci v protokolu HTTP
-- `ping` - zjištění IP adresy, kontrola spojení
-- `nslookup` nebo `dig` - informace o doméně z [[DNS]]
-- [[nc (Netcat)]]
-- [[telnet]]
-- `ab` - Apache benchmark - statistiky výkonu webového serveru
-- webový prohlížeč - testování uživatelem
-	- pozor na cache (nemusí se ihned projevit změny)
-### Metody HTTP protokolu
-- některé jsou součástí [[REST protokol]]
-	- [[REST protokol#GET]]
-	- [[REST protokol#POST]]
-	- [[REST protokol#PUT]]
-	- [[REST protokol#DELETE]]
-	- [[REST protokol#PATCH]]
-	- [[REST protokol#OPTIONS]]
+**Klíčové vlastnosti:**
+- Umí rychle přecházet mezi sítěmi (např. Wi-Fi a 5G)
+	- Posílá si ID spojení mezi klientem a serverem (nezávislé na zdroji)
+	- U TCP docházelo k Connection timeout při změně sítě a bylo potřeba obnovit spojení
+- Běží nad protokolem **QUIC** (který běží přes [[UDP protokol]])
+	- [[TCP protokol]] blokování při ztrátě packetu bylo limitující
+	- QUIC implementuje packet loss detection, ale blokuje se pouze jedno vlákno (ne celý přenos) - tj. na úrovni jednoho streamu
+	- QUIC handshake je rychlejší než HTTP/2 (TCP + TLS handshake)
+		- Oproti 3xRTT (SYN - SYN ACK - ACK + ClientHello - ServerHello + Cert - šifrovací klíč + FIN - šifrovací klíč + FIN - Data) je jenom 1xRTT (Init + Hello - Init + Hello + Cert - FIN + Data)
+
+## HTTP metody
+- Metody z REST protokolu
+	- [[REST protokol#GET|GET]]
+	- [[REST protokol#POST|POST]]
+	- [[REST protokol#PUT|PUT]]
+	- [[REST protokol#DELETE|DELETE]]
+	- [[REST protokol#PATCH|PATCH]]
+	- [[REST protokol#OPTIONS|OPTIONS]]
+	- [[REST protokol#HEAD|HEAD]]
 #### TRACE
-- je bezpečná (tj. nezmění zdroj či server)
-- slouží k získání informací o změnách provedených na serverech vedoucích k cíli
-	- dělá to tak, že pošle požadavek na server a server mu pošle jeho kopii zpátky (a trackuje, jak se cestou ten požadavek změní a přes které servery to šlo)
+- **Safe metoda** (nezmění zdroj či server)
+- Slouží k získání informací o změnách provedených na serverech vedoucích k cíli
+- Klient pošle požadavek a server vrátí jeho kopii zpátky
+- Trackuje, jak se cestou požadavek změní a přes které servery prošel
 
 > [!danger] Rizika
 > Mnoho serverů ho má zakázaný, protože může odhalit citlivé údaje
-#### CONNECT
-- překládá požadavek na spojení na TCP/IP tunel mezi klientem s serverem
-- tunel znamená, že proxy jenom přeposílá data mezi koncovými body a nezasahuje do nich
-	- jde tak zajistit end-to-end šifrování
-- zásadní pro chod HTTPS přes proxy
-#### HEAD
-- podobné jako [[REST protokol#GET|GET]], ale vrací jenom hlavičky (bez těla odpovědi)
-	- díky tomu se šetří data a šířka pásma (můžu rychle zjistit, jestli se soubor změnil (podle `Last-Modified`a případně už soubor nestahovat znovu))
-***
-### HTTP Autentizace
-- viz [[Autentizace]]
-- při požadavku přes [[Proxy]] server s autentizací je potřeba přidat hlavičku `Proxy-Authorization`
-- formát přihlašovacích údajů je `Basic base64(user:pass)`
+### CONNECT
+- Požádá [[Proxy]] o vytvoření spojení (tunelu) mezi klientem a serverem
+- Pokud se úspěšně vytvoří, proxy pak pouze slepě přeposílá data bez zásahů
+- **Tunel** = proxy pouze přeposílá data mezi koncovými body, nezasahuje do nich
+	- Zajišťuje end-to-end šifrování
+- CONNECT je zásadní pro chod HTTPS přes [[Proxy]]
+## HTTP autentizace
+- Viz [[Autentizace]] či [[Autentizace a autorizace v rámci Apache httpd]]
+- Při požadavku přes [[Proxy]] server s autentizací je potřeba přidat hlavičku `Proxy-Authorization`
+- Formát přihlašovacích údajů: `Basic base64(user:pass)`
 
 > [!warning] Upozornění
-> Base64 je jenom kódování (pro ochranu znaků při přenosu), ale není to šifrování (nemá to bezpečnostní hodnotu) 
+> Base64 je pouze kódování (pro ochranu znaků při přenosu), není to šifrování a nemá bezpečnostní hodnotu
+## Nástroje pro komunikaci v HTTP protokolu
+- **ping** - zjištění IP adresy, kontrola spojení
+- **nslookup** nebo **dig** - informace o doméně z [[DNS]]
+- [[nc (Netcat)]]
+- [[telnet]]
+- **ab** (Apache Benchmark) - statistiky výkonu webového serveru
+- **Webový prohlížeč** - testování uživatelem
+	- Pozor na cache (změny se nemusí ihned projevit

@@ -18,3 +18,19 @@ Komponenty (třídy) mohu mezi sebou propojovat
 	- s tímto je hodně spojené také DI = dependency injection
 		- závislosti jsou injektovány přímo do objektu
 		- constructor-based a setter-based
+### Části interface
+- různé služby (services) v rámci určitého systému si spolu potřebují povídat
+- existuje několik úrovní/částí komunikace mezi services pomocí interface:
+	- data
+		- datový model, který interface používá (např. pro inputy/outputy, reprezentace zdrojů apod.)
+	- funkce
+		- zajišťují jednotlivé operace interface a definují vstupní a výstupní data
+		- každá operace může mít predispozice (které musejí být splněny před spuštěním) a následky (ovlivnění stavu aplikace)
+	- procesy 
+		- popisy, jak jednotlivé funkce/operace používat (taková dokumentace k interface)
+		- definuje validní stavy aplikace a jak se do/z nich dostat
+		- operace/funkce reprezentuje změnu stavu aplikace
+			- k této změně mohou být potřeba splněny nějaké podmínky (predispozice) a pak ta změna má nějaké určité efekty
+	- technické detaily
+		- bezpečnost, SLA dohoda
+		- IP adresy, porty, protokoly apod.

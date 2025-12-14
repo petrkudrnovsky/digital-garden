@@ -9,7 +9,9 @@
 - sem patří i firewally
 - díky forward proxy můžeme řešit i nedostatek IPv4 adres
 - využití
-	- [[Webové technologie#Intranet|Intranet]] může používat díky forward proxy
+	- Intranet může používat díky forward proxy
+		- soukromá síť (většinou ve firmách), ale využívá technologií internetu (prohlížeče, web servery)
+		- součástí je firewall (forward proxy), který takovou síť chrání před nevyžádanými příchozími požadavky + blokuje i nějaké odchozí
 	- anonymita - může skrýt IP adresu klienta
 	- filtrace obsahu a zabezpečení
 	- cacheování

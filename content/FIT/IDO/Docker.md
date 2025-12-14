@@ -1,3 +1,4 @@
+
 > [!tldr] TL;DR
 > Docker je open-source platforma, která umožňuje spouštět aplikace v definovaném prostředí (závislosti, knihovny, konfigurace) nezávisle na zdrojích a infrastruktuře hardware.
 > Jedná se o jednu z forem virtualizace.
@@ -6,14 +7,18 @@
 - obsahuje samotnou aplikaci (s prostředím: závislosti, knihovny, config) a izoluje ji od infrastruktury
 - největší výhoda: lze je přenášet (na mém počítači a na vzdáleném serveru se bude aplikace chovat stejně)
 - technické základy:
-	- Docker používá [namespaces](https://docs.docker.com/engine/security/userns-remap/) pro oddělení jednotlivých kontejnerů (a každý si myslí, že má zdroje jen pro sebe), cgroups pro oddělení a omezení zdrojů pro jednotlivé kontejnery a UnionFS jako abstrakci nad filesystémem, který mu umožňuje vytvářet volumes, mountovat složky do/z kontejneru apod.
+	- Docker používá [Linux namespaces](https://docs.docker.com/engine/security/userns-remap/) pro oddělení jednotlivých kontejnerů (a každý si myslí, že má zdroje jen pro sebe), cgroups pro oddělení a omezení zdrojů pro jednotlivé kontejnery a UnionFS jako abstrakci nad filesystémem, který mu umožňuje vytvářet volumes, mountovat složky do/z kontejneru apod.
 - jsou vrstvené - tvoří se z tzv. předpisu (= Image), který obsahuje instrukce pro vytvoření kontejneru
-	- Image je definovaný v souboru `Dockerfile` - první řádek identifikuje Image ze kterého se má začít
+	- Image je definovaný v textovém souboru `Dockerfile` - první řádek identifikuje Image ze kterého se má začít
 	- jeden řádek v `Dockerfile` je jedna vrstva 
 		- a kontejnery mohou základní vrstvy mezi sebou sdílet (šetří se místem)
 		- a jednotlivé vrstvy se mohou cacheovat, pokud už ji mám, tak se nasdílí místo nového stahování
 	- příkazy instalují balíčky, kopírují soubory, spouští programy, kompilují apod.
 	- mohu definovat proměnné prostředí a rovnou spustit program
+- kontejner je vlastně běžící instance statického image
+	- Dockerfile je takový zdrojový kód pro image
+	- Image je takový zkompilovaný statický program
+	- Kontejner je běžící instance image
 ### Rozdíl proti virtuálním strojům
 - pomocí Dockeru jsme schopni dosáhnout virtualizace stejně jako s virtuálními stroji (VMs)
 - výhoda kontejnerů je to, že "simulují" na aplikační vrstvě - to jim umožňuje oddělit aplikace od sebe, ale zároveň všechny využívají společný OS kernel (každý kontejner běží jako oddělený uživatelský proces)
@@ -34,8 +39,10 @@
 ### Distribuce kontejnerů
 - kontejner Dockeru není jenom forma virtualizace, ale je to i způsob distribuce software
 	- obsahuje všechny závislosti ve správných verzích (někdy obsahuje i celý základ distribuce Linuxu)
+	- kontejnery se distribuují přes tzv. images (což jsou v podstatě takové konfigurační soubory sloužící pro distribuci a následné vytváření samotných kontejnerů)
 	- nahrazuje .tar.gz, .war, .deb, .rpm
 - je možné je distribuovat přes [[#Registry kontejnerů]]
 ### Registry kontejnerů
 - = repozitáře obrazů kontejnerů (images)
+	- nabízejí funkce vyhledávání, nahrávání a stahování jednotlivých images
 - jsou veřejné (Docker Hub, Quay.io, Tutum.co) a na nich je možnost i privátních repozitářů (placené, pro menší firmy)

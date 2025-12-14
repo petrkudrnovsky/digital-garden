@@ -25,12 +25,21 @@ Uživatel:
 ![[Pasted image 20231205143623.png|500]]
 - nativně ve většině prohlížečů
 - POZOR, údaje (i hesla) se posílají jako plaintext - vždy používat HTTPS
-	- jsou zakódované v base64 (to ale není bezpečné šifrování)
+	- jsou zakódované v base64 (to ale není bezpečné šifrování) - je to jenom ochrana znaků před přenosem (ochrana, kdybych používal bůhvíjaké znakové sady)
+- problém odposlechnutí - ostatní se mohou vydávat za mě
 ### HTTP Digest 
 - bezpečnější než [[#HTTP Basic ([MDN](https //developer.mozilla.org/en-US/docs/Web/HTTP/Authentication))|HTTP Basic]]
-- údaje se posílají už zašifrované hashovací funkcí + nonce (ochrana proti 
-[[Bezpečnost webových aplikací#Replay attack|replay]] útokům) a další kontrolní atributy
+- údaje se posílají už zašifrované hashovací funkcí + `nonce` (ochrana proti [[Bezpečnost webových aplikací a různé útoky#Replay attack|replay]] útokům) a další kontrolní atributy
+	- díky `nonce` i když to někdo odposlechne, tak mu to bude k ničemu, protože při dalším požadavku potřebuje jiný `nonce`
+		- nonce mi posílá předtím server (pak si ho pamatuje, aby to mohl porovnat)
 - hashuje se pomocí MD5, takže už také to není bezpečné (je nutné používat HTTPS)
+	- způsob výpočtu:
+```
+H1 = md5(username:realm:password)
+H2 = md5(method:digestURI),
+response = md5(H1:nonce:H2)
+```
+- moc se nepoužívá a není moc podporovaný
 ### Přihlašovací formulář
 - implementace je uzavřená (dělám si ho sám, tak si ho můžu i sám zabezpečit)
 - heslo je potřeba vždy ZASOLIT a ZAHASHOVAT (např. bcrypt)

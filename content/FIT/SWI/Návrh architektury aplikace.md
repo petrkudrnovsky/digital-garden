@@ -2,6 +2,7 @@ Architektura aplikace má 2 významy:
 1) logická
 	- zahrnuje organizaci softwarových tříd do balíčků a jmenných prostorů (aby si stejné názvy nepřekážely + přehlednost)
 	- uspořádání balíčků do vrstev (prezentační, business, datová...) a podsystémů
+		- aby došlo k rozdělení zodpovědností (separation of concerns)
 	- [[#Rozdělení architektur aplikací]] podle vrstev
 	- [[MVC a MVP architektura]]
 2) fyzická
@@ -19,7 +20,7 @@ Chci zajistit hlavně:
 - rozšiřitelnost - změny nesmí ovlivnit nesouvisející část systému
 - udržitelnost aplikace
 
-Hlavní pozornost věnuju místům, kde bude systém v budoucnu rozšiřován - tato místa je potřeba od zbytku aplikace oddělit nějakým zapouzdřením/rozhraním, aby byla snadno rozšiřitelná a zároveň rozšíření neovlivnilo zbytek aplikace.
+Hlavní pozornost věnuju místům, kde bude systém v budoucnu rozšiřován - tato místa je potřeba od zbytku aplikace oddělit nějakým zapouzdřením/rozhraním ([[Rozhraní (Interface)]]), aby byla snadno rozšiřitelná a zároveň rozšíření neovlivnilo zbytek aplikace.
 ### Diagram balíčků
 - definuji jím jak na sobě různé balíčky tříd souvisejí a závisí 
 	- ![[Pasted image 20230521193520.png]]
@@ -40,20 +41,17 @@ Hlavní pozornost věnuju místům, kde bude systém v budoucnu rozšiřován - 
 	- důležité je popsat principy a pravidla, která mají být během implementace dodržována
 
 - vysvětlení značení:
-![[Pasted image 20230521194501.png]]
-
-![[Pasted image 20230521194554.png]]
-
+![[Pasted image 20230521194501.png|400]]
 ### Rozdělení architektur aplikací
-1) monolitická aplikace
+1) monolitická architektura
 2) dvouvrstvá
 3) třívrstvá
 4) vícevrstvá
-#### Monolitická aplikace
+#### Monolitická architektura
 - pro aplikace, které nemají ambici být dlouho v provozu (např. mají jeden účel a po splnění končí)
-- pro prototypy, mají rychlý počáteční vývoj, ale velmi špatně se udržují a rozšiřují
+- všechny vrstvy (prezentační, aplikační, datová) jsou na jednom stroji
+- pro prototypy, mají rychlý počáteční vývoj, ale velmi špatně se udržují, rozšiřují a škálují (je nutné je mít jako celek)
 - velmi dobře se testují
-- problém se škálování -> je nutné je mít jako celek
 #### Dvouvrstvá aplikace
 - naprostý základ, dělení na prezentační a datovou (= zbytek aplikace) vrstvu
 - CRUD aplikace
@@ -62,16 +60,18 @@ Hlavní pozornost věnuju místům, kde bude systém v budoucnu rozšiřován - 
 	- logika je na serveru
 - thick-client / dumb-server
 	- moderní přístup
-	- server = API
+	- server = API (většinou jenom datová vrstva)
 	- aplikace běží na straně klienta
+		- větší zátěž na stroj klienta, nutnost reinstalace u klientů při aktualizaci
 - záleží, jestli je většina logiky na straně klienta nebo serveru
-	- je to v cyklech - co se používá teďko (teďko se to vrací z logiky na FE zpátky na BE)
+	- trend je v cyklech - co se používá teďko (teďko se to vrací z logiky na FE zpátky na BE)
 #### Třívrstvá aplikace
 - větší (enterprise) aplikace
-- vrstvy: 
-1) prezentační - HTML stránky, zpracování požadavků od uživatele, routování, formátování, GUI, API
-2) business (aplikační) - logika, procesy a validace, měla by být nezávislá na prezentační a datové vrstvě
-3) datová - persistence dat
+- vrstvy (každá může být na odděleném serveru): 
+	1) prezentační - HTML stránky, zpracování požadavků od uživatele, routování, formátování, GUI, API
+	2) business (aplikační) - logika, procesy a validace, měla by být nezávislá na prezentační a datové vrstvě
+	3) datová - persistence dat
+	4) přidává se i tzv. "middleware" vrstva, která zajišťuje efektivní, standardizovanou a škálovatelnou komunikaci mezi jednotlivými vrstvami (to může být například [[#Enterprise service bus]])
 - **striktní** - závislost mezi vrstvami jde vždy směrem dolů a pouze o 1 úroveň 
 ![[Pasted image 20230522095603.png|150]]
 - **relaxovaná** - závislost je také směrem dolů, ale přes lib. počet úrovní
@@ -92,21 +92,38 @@ Hlavní pozornost věnuju místům, kde bude systém v budoucnu rozšiřován - 
 #### Enterprise service bus
 - centrální moderátor, který zajišťuje
 	- vyhledávání služeb
-	- zasílání zpráv mezi službami
-	- kontroly stavů
+	- zasílání zpráv mezi službami (services)
+		- dynamické routování pro zprávy 
+		- message enrichment - může jednotlivé zprávy obohacovat o další context od ostatních aplikací zapojených v ESB
+		- je možné komunikovat pomocí více různých protokolů ([[SOAP]], [[HTTP protokol]], FTP, JMS atd.)
+	- load balancing
+	- kontroly stavů jednotlivých aplikací
+	- může dělat session pooling
+		- tj. držet pool otevřených připojení k nějaké aplikaci (u které je vytvoření připojení drahé - např. databáze) a podle potřeby je přiřazovat jednotlivým klientům
+		- jedno spojení tedy může být využito více různými services/klienty
+	- dynamické routování požadavků na základě obsahu jednotlivých messages
 	- mediace [[GoF návrhové vzory#Mediator]]
+	- zachování připojení k legacy aplikacím
 	- zabezpečení
 	- dá se rychle škálovat nasazením další aplikace a připojení do Enterprise service busu
+		- má různé adaptéry pro různé komunikační protokoly a aplikace
+	- nemá v sobě business logiku, je většinou stateless, slouží pro interní účely
 	- nemusím znát jména a konkrétní adresy aplikací - prostě pošlu požadavek a ona ho "nějaká" aplikace obslouží
+- všechny tyto funkcionality pro ESB zajišťují jeho "interní" middleware services
+- aby bylo dobře zajištěná komunikace mezi různými systémy, často je potřeba definovat (a uložit) mapování mezi jednotlivými entitami
+	- např. máme požadavek od zákazníka (a u něj máme uložené jednotlivé přiřazené ID k informacím v CRM systému, pak ID k informacím v OMS systému atd.)
 ![[Pasted image 20240106145557.png|500]]
-#### Microservices (https://microservices.io/)
+#### Microservices
+- https://microservices.io/
 - malé služby, které mají jen jeden účel - umí fungovat samostatně a izolovaně
 	- může každá běžet na vlastním serveru
-- spojuji je do sebe a můžu pro to vytvořit FE
+- spojuji je do sebe (pomocí [[Rozhraní (Interface)]]) a můžu pro to vytvořit FE
+	- jsou loosely integrated (jejich funkcionality se nepřekrývají a nejsou tzv. "hard-wired")
 - dekompozice služeb
 - výborná škálovatelnost
+	- dá se jednoduše horizontálně škálovat
 - jedna funkcionalita = 1 služba
-- dobrý na to je např. [[Python]]
+- dobrý na to je např. [[01 Python|Python]]
 ![[Pasted image 20240106145537.png]]
 #### Hexagonální architektura
 - na levé straně je komunikace s vnějším světem (REST, SOAP, GraphQL atd.)

@@ -13,4 +13,4 @@
 - **Expires**: (Expires=Wed, 09 Jun 2021 10:18:14 GMT) - kdy má vypršet, je to starší metoda, ale stále široce podporována
 - **Secure**: tato cookie se pošle jen pouze, pokud je navázáno spojení HTTPS, vhodné pro zabezpečení dat
 - **HttpOnly**: cookie nebude přístupná skriptovacím jazykům (jako [[Javascript]])
-	- s tím můžu zabránit [[Bezpečnost webových aplikací#Cross-Site Scripting (XSS)|XSS]] - cross site scripting útokům
+	- s tím můžu zabránit [[Bezpečnost webových aplikací a různé útoky#Cross-Site Scripting (XSS)|XSS]] - cross site scripting útokům

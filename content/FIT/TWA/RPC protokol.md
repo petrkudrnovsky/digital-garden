@@ -1,7 +1,35 @@
 Full name: *remote procedure call*
 - posílají se různé zprávy, které reprezentují volání metod na serveru
 - Java ho nativně podporuje
-- gRPC - rozšíření do binární verze, která je vhodná pro [[Návrh architektury aplikace#Microservices (https //microservices.io/)|Microservices]]
-	- když chci, aby mikroservices mezi sebou komunikovali
 - původní účel je pro INTERNÍ komunikaci (mezi jednotlivými microservices a službami)
 - externí napojení je složité a nevyužívá se
+### gRPC protokol
+- gRPC - rozšíření RPC do binární verze, která je vhodná pro [[Návrh architektury aplikace#Microservices (https //microservices.io/)|Microservices]]
+	- když chci, aby microservices mezi sebou efektivně komunikovaly (i když jsou obě v jiných jazycích)
+		- interní service-to-service calls
+	- používá se i pro data streaming (IoT, monitoring)
+	- https://grpc.io/
+	- vyvinuto firmou Google, je open-source
+	- příliš se nehodí pro veřejná API či pro klasické webové aplikace (jelikož ho prohlížeče nativně nepodporují)
+- funguje na [[HTTP protokol#HTTP/2]] protokolu a využívá jeho výhod
+	- server push (pro streaming)
+	- multiplexing
+	- binární frames
+	- header compression
+- Protocol Buffers = mechanismus pro serializování strukturovaných dat (nezávisí na jazyku a na platformě)
+	- vytváří se `.proto` soubor, který definuje strukturu dat
+	- podle tohoto souboru se pak vygenerují a zkompilují třídy (pomocí `protoc`, které pak zajišťují samotné serializování, sdílení a deserializování dat (do binárního formátu)
+	- formát posílaných zpráv je "binary protocol buffer"
+		- je kompaktní, rychlá (de)serializace, silné typování
+##### Service types for gRPC
+- Unary RPC - client sends 1 request and gets 1 response
+	- the traditional function call
+- Server streaming RPC
+	- 1 request from client
+	- stream of responses from the server (e.g. downloading large files, real-time updates...)
+- Client streaming RPC
+	- stream of requests from the client
+	- server returns one response (use case: uploading files, batch operations)
+- Bidirectional RPC
+	- client and server send streams
+	- e.g. chat applications, real-time collaboration
