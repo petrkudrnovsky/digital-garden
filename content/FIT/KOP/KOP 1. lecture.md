@@ -80,3 +80,46 @@
 	- but there could be better algorithm (we only know the upper bound)
 - it could be mathematically proven that a problem is $\Omega(f(n))$, so there is not (even unknown) algorithm solving $\Pi$ with better complexity than $\Omega(f(n))$
 	- after a proof, we know, that the problem cannot be solved faster than $\Omega(f(n))$ 
+***
+## What You Should Know from Lecture 1 (AI summary)
+
+### 1. Difference Between Problem and Algorithm
+- **Problem** = formal specification of task (input, output, constraints, optimization criteria)
+- **Algorithm** = method to solve the problem
+- Many algorithms can solve the same problem with different complexities
+- Problem complexity vs. algorithm complexity
+### 2. Definition of Asymptotic Complexity
+- **O (Big O)** - upper bound, worst case: f(n) = O(g(n)) ⟺ ∃c > 0, ∃n₀: ∀n > n₀: f(n) ≤ c·g(n)
+- **Ω (Big Omega)** - lower bound, best case: f(n) = Ω(g(n)) ⟺ ∃c > 0, ∃n₀: ∀n > n₀: f(n) ≥ c·g(n)
+- **Θ (Big Theta)** - tight bound, real case: f(n) = Θ(g(n)) ⟺ f(n) = O(g(n)) AND f(n) = Ω(g(n))
+- Multiplicative constants are ignored
+- Only behavior for large instances matters
+### 3. Complexity Measures
+**Time complexity measures:**
+- Instance size (n)
+- Characteristic operations (comparisons, swaps, configurations processed, recursive calls)
+
+**Memory complexity measures:**
+- Coarse-grain: number of items (nodes, variables, items)
+- Fine-grain: number of bits needed to encode instance
+
+**Types:**
+- Maximum complexity (worst case)
+- Average complexity (typical case, experimental)
+### 4. Algorithm Complexity vs. Problem Complexity vs. Average Complexity
+**Algorithm complexity:**
+- Complexity of a specific algorithm
+- Can be analyzed theoretically (worst case, best case, average case)
+
+**Problem complexity:**
+- **Upper bound O(g(n)):** If there exists an algorithm solving the problem in O(g(n))
+  - But a better algorithm might exist
+- **Lower bound Ω(g(n)):** If every algorithm (even unknown) requires at least Ω(g(n))
+  - Must be mathematically proven
+  - No better algorithm can exist
+
+**Average complexity:**
+- Must be derived experimentally
+- Shows real-world behavior
+- Can differ significantly from worst-case theoretical bounds
+- More representative of practical performance

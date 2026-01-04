@@ -15,7 +15,6 @@
 - we don't have NPO-Complete problems, the hardest problems from NPO are NPH
 - an optimization problem is NP-hard if it's decision version is NP-hard
 - ![[Pasted image 20251118152531.png|400]]
-- 
 ### Optimization problems
 - optimization of the cost function (also called optimization criterion)
 	- cost function gives us a "cost" or "score" for each admissible solution of the problem
