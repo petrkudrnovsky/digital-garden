@@ -1,3 +1,31 @@
+
+> [!tldr] 20% to remember
+> The majority of algorithms solving combinatorial problems operate in a state space or search space. The state space is a pair of two sets: 1) the set of states and 2) the set of operators. The states are represented by configuration variables and operators allow moves betwenn states (by changing values of configuration variables).
+> 
+> Properties of a state space: 
+> - completeness: when the state space includes all possible and available states for the problem (the encoding of the configuration variables has to be able to capture all states)
+> - continuousness: when we are able to get from any state to another (and back) with defined operators
+>   
+> Search space: state space includes only "full configurations" with concrete values, whereas the search space also includes "partial configurations" with some undecided assignments of configuration variables. 
+> - state space is a subset of the search state
+> 
+> A complete method = will explore the whole state space
+> A systematic method = will always visit each state only once (will not return)
+> 
+> **Local heuristic methods**
+> - they greedily explore only the $k$-neighborhood
+> - heuristic: a function created by human that is driving the algorithm
+> - two different types:
+> 	- **constructive method**: starts from an empty configuration (trivial state) and tries to find a solution by assigning configuration variables (constructing). The number of steps is usually minimized (uses search space)
+> 	- **iterative method**: starts from a given "full" state (can be random) and moves around the state space to find the optimum
+> - examples: 
+> 	- Random Walk, First Improvement, Best-only
+> - they tend to get stuck in the local optimum, how to solve it:
+> 	- backtracking, complete search (bruteforce) etc.
+> 		- extremely time-consuming
+> 	- advanced methods (Simulated annealing, Genetic algorithms...)
+> 		- higher iterative power, can escape local minimum, slower than simple local methods
+
 ### Local vs. global methods
 - global methods do not operate with the state space
 ### State space
@@ -15,7 +43,7 @@
 		- = **continuous**
 	- example of complete, but not continuous state space:
 		- encoding of configuration variables can encode all configurations = states
-		- but in the [[#State graph]] it is not possible to get from each state to another (and back)
+		- but in the [[#State graph]] it is not possible to get from any state to another (and back)
 ### State graph
 - there could be graph loops - but there are useless (they just represent "longer" ways to get from one state to another)
 - move from state to another state is: operation
@@ -28,7 +56,7 @@ slide no. 15 - this state space is not continuous - it's wrong
 slide no. 25 - number of all possible states in TSP is $n!$ 
 - on the slide 25 there are only options starting from A and end in A
 - there is a big difference between instance graph and state space
-### State vs search state
+### State vs search space
 - state space
 	- we know about all states in the state space, each state has a cost, or it could be computed (for optimization problems)
 	- one state = complete configuration (the assignment of conf. variables is complete)
@@ -38,7 +66,7 @@ slide no. 25 - number of all possible states in TSP is $n!$
 - search space
 	- item could have undecided parts of the solution = parts of the state = parts of the configuration
 	- operations
-		- decide (assign a value to undecided )
+		- decide (assign a value to undecided configuration variable)
 		- backtrack = "undecide", go back from assigned to undecided
 			- this is often not used
 	- **state space is a subset of the search space**
@@ -80,12 +108,12 @@ slide no. 47 - if I have a priority queue and all the priorities will be the sam
 	- going through the search state (in most cases) and constructing the solution
 - iterative method = starting from some state
 	- the state could be randomly generated
-	- going purely through the search space and improving the solution
+	- going purely through the state space and improving the solution
 	- they are converging/approaching the optimum
 ### Random walk
 - is finished when all iterations are exhausted or time limit passes
 - any move is taken (no matter the cost)
-	- after each step, the best solution so far is saved
+	- after each step, the best solution found so far is saved
 - not systematic (can visit same states again or go in a loop) and not complete
 ### First improvement
 - somehow choose a new state (by performing an operation)

@@ -1,0 +1,92 @@
+- modularity is one of the most important concepts in engineering
+- why?
+	- hierarchical structure allows for better control and separated development
+	- complexity reduction
+	- reuse of components
+	- evolvability/flexibility
+- why is it bad?
+	- the implementation of a modular structure is not straighforward
+	- changes, extensions to modules or their non-identical replacement can ripple/propagate through the whole artefact and make serious impacts 
+	- in general:
+		- deep issues of evolvability and scalability and they increase with the number of variants and modules
+
+- a modularity is not just something, that lives in the design, the manufacturing process has to adapt for it etc.
+- software program is also an artefact, it constist of the source code artefact and execution code artefact 
+	- it also contains the number of hierarchically structured modules
+
+- variation gain
+	- module variants (for building a chair) grow additive
+	- product/artefact variants grow multiplicative (can be much larger number)
+		- if grows much faster than the number of module variants
+	- so the variation gain can be exponential
+		- the manufacturing process has to be modified as well (be modular and hierarchical as well)
+		- and there should also be integration units for aggregation (putting modules together)
+
+- [[GRASP - Vysoká soudržnost]] - a design principle: High cohesion
+	- separating functions into high-cohesive modules (units of work)
+	- to avoid duplication (by separating the functionality to a single place)
+		- then changes won't be done at many place, but just one place
+	- to be able to easily create more variants and enable support for them
+	- modules are single units of work that have it's "interface", are high-cohesive (all functionality is grouped together)
+		- modules can have variants, we don't have to copy the whole artefact if we add another variant
+		- we get exponential variation gains (which is great, for a relatively small amount of modules and variants, we have a lot of potential artefact variants)
+- [[GRASP - Nízká provázanost]] - a design principle: Low coupling
+	- avoid the propagation of changes to the entire artefact
+		- danger of exponential ripple costs
+	- avoid the impact to the integration at deploy
+	- it is not about not connecting/coupling at all, but carefully thinking about the nature of the connection (if the ripple effects pass through or not)
+		- so only meaningful connections
+
+Beware of unleashing the exponential variation gains (though high cohesion), I have to master the coupling as well, so I don't also get the exponential ripple costs.
+### Cross cutting concerns
+- another dimensions that cut through the whole main hierachical structure
+	- the can impact and create ripple effects across the main structure
+	- they should be in their own dimension and be interconnected to the main hierarchical structure
+- how to integrate them? There are more levels
+	- 1A - embedded dedicated integration
+		- the concern must be embedded and dedicated to each module - it's special for each structure
+			- e.g. a special fireplace for every room in a house
+	- 1B - embedded standardized integration
+		- the concern is embedded in each module - but it's standardized, it could be the same for different structures
+			- e.g. a standardized heaters in every room in a house
+				- the same thing could be cloned to other houses
+	- 2A - relay to dedicated framework
+		- there is one single dedicated module for the functionality and all modules are relaying it's functionality to it
+			- e.g. a special centralized heating system/diesel aggregator/boiler - there does not have to be a fireplace in each room
+	- 2B - relay to standardized framework
+		- the same, but it's standardized framwork for more structures
+		- e.g. the energy system (powerplants, transmission, distribution, consuption)
+			- there is one system for all structures (houses)
+		- we don't have to duplicate
+			- we have a centralized and standardized framework (the internet connection) and it allows playing Spotify, Netflix, Amazon etc.
+				- there is no need to establish a new network for it to work
+	- 2C - relay to framework gateway
+		- there exists a gateway, which provides a dedicated connections for all structures (e.g. houses) and the communicates directly with the standarized framework (and relaying energy, requests etc.)
+		- thanks to the gateway, it's easy for all houses to switch the energy provider (it's not connected directly)
+- how do we inteconnect the concerns to the main structure?
+	- guideline 1: encapsulation
+		- shield the main hierarchical structure from ripple effects caused by the changes in the concern implementation
+		- 1A is not encapsulated, 1B is encapsulated (that's what we want)
+	- guideline 2: interconnection
+		- removing duplications (one changes doesn't have to be made on several places)
+		- goes with the central implementations and interconnecting to them
+			- the relays have to be encapsulated as well, so the change of the concern does not have ripple effects to the main structure
+			- e.g. we can exchange the central heating system without changing the pipes and radiators
+	- guideline 3: downpropagation
+		- the changes in the main hierarchical structure may have impacts on the cross-cutting concerns
+			- e.g. adding one more room also has impact on the central heating system
+		- how limit the impacts?
+			- having separate domains for each cross-cutting concern and handle it on fine-grain level
+			- each module has different layer through which it connects and communicates with other dimensions and concerns
+### Representation framework = Integration Design Matrix
+- this matrix representation facilitates the design a hierarchical architecture with multiple concerns
+- rows = what levels provide the utility
+- columns = what levels consume the utility 
+- ![[Pasted image 20260105185654.png]]
+	- in the lower left corner, we have "production" 
+		- distributed production, collecting and providing resources for the higher levels
+	- encapsulation is discussed on the level of each cell 
+		- is it encapsulated, so the external changes won't affect it?
+- level slices
+	- above the matrix, we have multiple levels of cross-cutting concerns 
+	- we can slice through all planes and see, what is provided at a certain level?

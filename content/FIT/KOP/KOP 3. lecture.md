@@ -1,3 +1,27 @@
+
+> [!tldr] 20% to remember
+> We can transform problems to another problems using reductions. There is no general symmetry in reductions. The problem we are reducing to, must be at least as hard as the original problem. And the original problem must be at most as hard as the new problem.
+> 
+> **Karp reduction** (= polynomial reduction)
+> - transforms one **decision problem** to another in polynomial time on DTM
+> - if we can transform two decision problems both ways, they are **Karp equivalent**
+> 
+> **Turing reduction**
+> - transforms one computable problem to another using subroutines (a problem solver $M_1$ is able to solve problem $\Pi_1$ by calling a subroutine (a solver $M_2$ solving $\Pi_2$)
+> 
+> **Cook's reduction**
+> - = polynomial Turing reduction, the subroutine is called polynomial number of times (the complexity of the subroutine is not considered)
+> 
+> **NP-Hard problems**: problems, that are at least as hard as all problems in NP-class. It's possible to Karp-reduce any NP problem to an NPH problem.
+> 
+> **NP-Complete problems**: NPH problems that belong to the NP class. They form a Karp equivalent class of the hardest problems in NP.
+> - how to prove a problem is NPC?
+> 	- 1) prove, it's in NP: the solution can be verified in polynomial time by a DTM (certificate)
+> 	- 2) prove, it's in NPC: take one known NPC problem and Karp reduce it to my problem (in polynomial time for all instances). This proves that our problem is at least as hard as any other NPC problem.
+> 
+> **NP-Intermediate problems**: no polynomial algorithm is known yet and the NPC is not proven yet as well. If P=NP, then NPI class won't exist.
+> 
+> **Cook's Theorem**: he has proven that SAT problem is NPC (is NP and all problems in NP are Karp-reducible to SAT). This has helped to find other NPC problems more easily.
 ### Reduction of problems
 - this is not about making problems simpler
 - it is a transformation to another problem
@@ -9,7 +33,7 @@
 ### Karp reduction (= polynomial reduction)
 - transforms a decision problem to another in polynomial time on deterministic TM
 - notation: $\Pi_1 \le_P \Pi_2$ 
-- it is only for decision problems, so the result of $\pi_2$ problem is the same as the result of $\pi_1$ problem
+- it is only for decision problems, so the result of $\Pi_2$ problem is the same as the result of $\Pi_1$ problem
 	- it is simply only True/False
 - Karp reduction has property of transitivity
 - there is no reduction symmetry in general (we cannot transform to each other in general)
@@ -33,11 +57,11 @@
 		- Karp-reduction: the NPH and co-NPH are disjoint
 		- Turing reduction: NPH = co-NPH
 ### NP-Complete
-- are NP and at the same time they are NP-Hard (because NP-Hard problem can be outside of NP class)
+- are NP and at the same time they are NP-Hard (because NP-Hard problems can be outside of NP class)
 - definition:
 	- a problem $\Pi$ is NPC iff 
 		- $\Pi$ is in NP
-		- all problems in NP are Karp-reductible to the $\Pi$ 
+		- all problems in NP are Karp-reducible to the $\Pi$ 
 - it is an equivalent class
 	- so any NP-Complete problem can be transformed to any other NP-Complete problem w.r.t. Karp-reduction
 - by an NPC solver, I can solve all NPC problems
@@ -48,7 +72,7 @@
 - how to prove it's in NPC (=> not simpler then NPC)?
 	- we have at least one known problem in NPC
 	- our problem should be solvable by the origin NPC problem solver
-		- so a known NPC problem has to be reductible to our problem (in polynomial time **for all instances**)
+		- so a known NPC problem has to be reducible to our problem (in polynomial time **for all instances**)
 		- in other words: find some NPC problem and prove that it is reducible to our problem in polynomial time for all possible instances
 	- => the problem is as hard as NPC 
 - complete proof
@@ -70,7 +94,7 @@
 - if P=NP, then NPI is empty
 ### Turing reduction
 - for both decision and optimization problems
-- problem $\Pi_1$ is Turing reductible to $\Pi_2$ ($\Pi_1\le_T\Pi_2$) if there exists a TM program $M_1$ solving each instance of $\Pi_1$ by calling a subroutine (which is TM $M_2$ solving $\Pi_2$)
+- problem $\Pi_1$ is Turing reducible to $\Pi_2$ ($\Pi_1\le_T\Pi_2$) if there exists a TM program $M_1$ solving each instance of $\Pi_1$ by calling a subroutine (which is TM $M_2$ solving $\Pi_2$)
 	- subroutines could be called many times + it also considers incomputable problems
 - Karp reduction is the special case of the Turing reduction
 	- subroutine is called exactly once and the complexity is polynomial

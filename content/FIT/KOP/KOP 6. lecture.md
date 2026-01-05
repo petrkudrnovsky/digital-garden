@@ -1,3 +1,19 @@
+
+> [!tldr] 20% to remember
+> Randomized algorithms are just different ways how to solve some problem. They are based on random choice, are mostly iterative, greedy, polynomial and only statistical properties can be guaranteed (e.g. they only have average errors). They are not more powerful than deterministic ones, but in some cases, they can be more efficient. But for every randomized algorithm, we can find a detereministic algorithm doing the same.
+> 
+> There are two major types of randomized algorithms:
+> - Monte Carlo: runtime is constant, the result is random
+> 	- Miller-Rabin primality test, GSAT, Random Walk SAT 
+> - Las Vegas: the result is always optimum, the runtime is random
+> 	- Randomized Quick-sort
+> 
+> Runtime vs. quality trade off = the longer it runs, the better the solution probably is. It depends on you to stop the algorithm.
+> 
+> Derandomization = a process of creating a deterministic algorithm from a randomized one. The time complexity remains polynomial and the relative error is not worse than the average error of the randomized algorithms.
+> 
+> Randomness "from outside", by changing the order of inputs, their encoding or structures, we can change the runtime or results of deterministic algorithms. This is because of using heuristics, hashing by names or using ordering-dependent structures.
+
 - two major types: [[#Monte Carlo]] and [[#Las Vegas]]
 - mostly iterative and greedy algorithms with polynomial time
 - are based on random numbers, only statistical properties can be guaranteed

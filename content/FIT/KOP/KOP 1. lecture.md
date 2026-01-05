@@ -1,3 +1,21 @@
+
+> [!tldr] 20% to remember
+> All combinatorial problems are solvable in finite time by a bruteforce. The problem is that it's not often practical. Therefore, we use local search methods, approximations, heuristics and global methods to speed up the search for the solution.
+> 
+> Each combinatorial problem has:
+> - input variables (the instance)
+> - constraints
+> - configuration (the assignment of configuration variables, the state of the search for the solution)
+> - configuration variables (they encode the configuration, important for calculating the optimization criterion and constraints during the search)
+> 	- there must be a finite number of conf. variables with finite domains
+> - optimization criterion (for optimization problems)
+> - output variables (the solution, has to satisfy the constraints)
+> 	- every solution has a corresponding configuration
+> 
+> We have decision, construction, counting and enumerative combinatorial problems. All of them have the same complexity. The complexity is derived from the instance size, we can measure it in terms of time (elapsed time, iterations...) and memory.
+> 
+> We can compare different algorithms with asymptotic complexity measures (upper-bound, lower-bound). Average complexity is measured experimentally.
+
 ### Problems and algorithms
 - almost all problems could be solved by bruteforce
 	- but that often unfeasible in practice
@@ -34,7 +52,7 @@
 	- decision problem
 		- exists a solution that satisfies constraints for given input variables?
 	- constructive problem
-		- construct a solution that satisfies the constraint for given input variables
+		- construct a solution that satisfies the constraints for given input variables
 	- counting problem
 		- count the number of solutions that ...
 	- enumerative problem
@@ -61,7 +79,7 @@
 - Hamiltonian circuit
 	- a problem of finding a continuous circuit in the graph including all vertices exactly once (all vertices in the subgraph have deg=2)
 	- there does not have to be a solution (input could be a not-complete graph)
-	- optimization criterion could be that the sum of the edge weight has to be minimized
+	- optimization criterion could be that the sum of the edge weights has to be minimized
 ### Complexity
 - is the function of the instance size (for each problem the instance is encoded differently - but it is always derived from the $n$ items)
 - types:

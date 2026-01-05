@@ -19,6 +19,7 @@ Zápisky z jednotlivých předmětů BAKALÁŘ
 Zápisky z jednotlivých předmětů MAGISTR
 - [[KOP - Combinatorial Optimization]] - final lecture notes
 - [[AM1 - Architecture of Middleware 1]] - final lecture notes
+- [[Engineering and design science methodologies]] - final lecture notes
 
 Pro další předměty a popřípadně jiné vysvětlení doporučuji další digitální zahrádku od kolegy na FITu: https://obsidian.jancerny.dev/
 ***

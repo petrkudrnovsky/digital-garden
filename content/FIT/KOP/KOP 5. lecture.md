@@ -1,3 +1,28 @@
+
+> [!tldr] 20% to remember
+> Circuit theory is a different view on the complexity. In P-class, we expect unlimited resources (in theory, meaning polynomial time on unlimited number of parallel processors), but circuit theory asks "what can be computed with limited resources?". Here a problem is converted into a Boolean function (=> combinatorial circuit).
+> 
+> Circuit complexity theory uses basis of gates (AND, XOR etc.) and determines the complexity using two measures:
+> - size complexity (# of gates used)
+> - depth complexity (# of levels, the longest path in the circuit)
+>   
+> All classes belong to the P-class, they are polynomial in size and polylogarithmic in depth with respect to $k$. So the depth is $O(log^k\ n)$, when $k=0$, the depth is constant. 
+>  
+> $NK^k$ (Nick's class), only AND. OR, NOT gates. $k=1$ is capable to solve any Boolean formula
+> 
+> $AC^k$ (Alternating circuits), NOT gates on inputs only. $k=0$ is capable of solving 1st order predicate logic, integer addition/substraction
+> 
+> $ACC^k$ (Alternating circuits with counters), new gate: MOD (modulo), $k=0$ is capable of solving any solvable algebra
+> 
+> $TC^k$ (Threshold circuits), new gate: MAJ (majority), $k=0$ is capable of solving multiplication, division, sorting
+> 
+> Communication complexity: minimum number of bits that A and B must exchange to merge both parts of the function to get the final result $f(A(x), B(y))$.
+> 
+> Kolmogorov complexity: it describes the complexity of some object depending on how to **minimally** describe it
+> - e.g. string "AAAAAAAAAA" can be described as "10xA", which is shorter
+> - string "nksngaiofd" can be described as "nksngaiofd" (cannot be shorter)
+> - so if the object has some kind of structure, it can be effectively compressed and therefore it has low Kolmogorov complexity (compression programs (WinRaR) try to approximate it, because the "perfect" compression is an undecidable problem)
+
 ### Circuit complexity theory
 - "what can be computed with LIMITED resources?"
 - we are converging the combinatorial problem into the Boolean function 
@@ -26,10 +51,13 @@ Basis - the set of gates (which are allowed)
 ### $NK^k$ (Nick's class)
 - polynomial size (polynomial number of processors)
 - polylogarithmic time (depth is logaritmic w.r.t. $k$)
+### $NK^0$ 
+- circuits have polynomial size and constant depth
+- AND, OR, NOR gates with fan-in 2
 ### $NK^1$
 - I am able to compute any combinatorial problem with this class (being converted to Boolean function/formula)
 	- the limitation with the bounded fan-in does not matter - I always can build $n$-input gate from a tree of 2-input ones 
-		- their number is polylogarithmic
+		- their number is polylogarithmic, depth is $O(log\ n)$ 
 ### $AC^0$ 
 - alternating circuits, does not use NOT gates (they are allowed only at the beginning to invert the inputs)
 - first order predicate logic is and extension of propositional logic (Boolean formulas and statements)
@@ -38,7 +66,7 @@ Basis - the set of gates (which are allowed)
 ### $ACC^0$
 - modulo gate is able to substitute the XOR
 	- with modulo we can do the counters 
-
+***
 - all gates (including MOD, MAJ) is considered as one unit (in the size and depth measure)
 	- HW implementation is not considered
 - all NC, AC and ACC are less complex than P class
@@ -74,5 +102,3 @@ Basis - the set of gates (which are allowed)
 		- => the length of a string is the same as the length of a program to print this string
 - it shows us the maximum efficient compression of objects
 	- compression tools are only trying to approximate Kolmogorov complexity, because this complexity is undecidable problem
-***
-# Seminar

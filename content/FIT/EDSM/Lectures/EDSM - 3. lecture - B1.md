@@ -1,0 +1,65 @@
+- designing an artifacts is essentially bridging the functional - construction gap (with designing some artifact, we have to have both perspectives)
+	- functional perspective - black-box approach
+		- financial requirements, management, how does it work in general, how does it help...
+	- construction perspective - white-box approach
+		- how it is constructed in detail
+- we have M requirements/use-cases and N construction parts
+	- it's often an M:N mapping (there is no single construction part for one use-case)
+- engineering knowledge is very domain-specific
+	- there are not many universal techniques and approaches
+### Generalization is good, but it has to stop somewhere
+- generalization is an important concept in design science (but up to the point)
+	- one engine for slow driving, fast driving, reverse etc.
+	- but it cannot be generalized too much
+		- I cannot have the same engine for cars, trucks, ships or planes (but some processes and concepts are the same in all engines)
+
+- Herbert Simon has introduced several concepts in his book The Science of the Artificial: modelling, optimization, mapping, classification and validation
+	- he also says: "design science is the science of the artificial"
+		- meaning, the "normal" science is for nature and natural things (chemistry, physics etc.)
+# General technique: Abstraction of the problem - Modelling
+- solving a real-world problem with modelling it to some abstract model, realize/solve/optimize it there and then interpret the abstraction solution in the real world and validate it
+- the abstract model is a simplification of the real-world, it implies a reduction in complexity and it's crucial in the design process, because
+	- the design is a iterative process and physical rollbacks are not possible in the real world (cannot simply build a wall and then tear it down in the next iteration)
+	- having an abstract model (a technical drawing of a house) simplifies things (the wall is just redrawn)
+- each model has a representation (textual, graphical, symbols, diagrams)
+	- we often need domain knowledge to understand the models completely
+- problems with representations:
+	- there is no universal way to represent something
+	- the represetation itself does not tell me "how to design/build/realize it", it just represents
+	- a big project (a house) often needs more different representations (heating, electricity, walls etc.), the representations are focused on a single concern
+	- different terms mean something else in different ares (e.g. in software or in architecture)
+- next level of abstraction in digital era: simulating
+	- simulating the wind flowing, different forces on materials etc.
+	- it's an extension to abstract modelling - allowing to do some iterations just in the modelling software
+		- but physical experiments are still needed
+# Optimization
+- how to?
+	- model the environment
+		- what is possible, what interactions are allowed, parameters, state space definition
+	- identify the goal of optimization
+		- distance, cost etc.
+		- in reality we have multiple criteria
+			- it's difficult to combine them and it's also difficult to assign weights to respective criteria
+				- it could be economical, political and ethical issue
+	- quantify the model
+		- define cost function
+		- specify the threshold value
+- Simon criticizes that we often do not have the time and resources to find the exact optimums (the traditional "optima" rationality) and in many cases it's sufficient to work with "good enough" approximations
+	- also using heuristic methods
+- extensive use of heuristic techniques
+	 - "rules" for better finding the solution (to avoid completely bad solutions/directions)
+# Mapping
+- = mapping or transformation from a specified source to a specified target
+- examples:
+	- in IT: compilers (mapping source code to CPU instructions), 'use-case' realizations (mapping of high-level use-cases to respective classes and methods)
+- a mapping is basically an invention
+	- once someone comes up with it, it is then used everywhere (e.g. bicycle gears)
+	- it did not exist before (it was "invented")
+# Validation using statistics
+- it is not a technique for inventing or designing
+	- it does not exist yet, so there is nothing to measure
+	- cannot be used for facts needed for the design
+		- e.g. do not survey, which walls hold and which fall down and design my wall according to this information - I have to calculate the pressure, material resistance etc. to be sure that the wall does not fall down
+			- we need causal and structural relationships
+- generative AI = very powerful applied statistics (cannot be trusted completely - things are "not calculated", but estimated as the most probable)
+- the goal is to have a well-validated digital artifact

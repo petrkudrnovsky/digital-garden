@@ -1,3 +1,26 @@
+
+> [!tldr] 20% to remember
+> Combinatorial problems are separated into complexity classes:
+> - P-class: problems solvable by a DTM in polynomial time
+> - NP-class: problems solvable by a **non-deterministic TM** in polynomial time
+> 	- NTM can indefinitely split itself whenever there is a decision in the algorithm
+> 	- it halts (= finds solution), when one of the branches ends in the final state
+> 	- how to prove that a problem belongs to NP?
+> 		- the solution could be verified by a DTM in polynomial time (= certificate)
+> 		- we are able to find a NTM, which solves it in polynomial time (the harder way)
+> 
+> Certificate = a verification of a solution (a proof, that a solution exists).
+> 
+> Co-NP problems = complements of respective NP problems. NP problems answer the $\exists$ questions, Co-NP problems answer the $\forall$ questions.
+> - the difference:
+> 	- NP has to find only one "yes-asnwer" to $\exists$ question to finally answer "yes". It has to find all "no-answers" to finally answer "no" (to verify, there are no "yes-answers")
+> 	- Co-NP has to find only one "no-answer" to $\forall$ question to finally answer "no". It has to find all "yes-answers" to finally answer "yes" (to verify, there are no "no-answers")
+> - hack: if we can verify the answer for the formulated question quickly -> it's a NP problem, if we have to check all possibilities to verify the answer -> it's a Co-NP problem 
+> 
+> Additional notes:
+> - P = NP is not decided yet.
+> - $P \subseteq NP \subseteq PSPACE \subseteq EXPTIME \subseteq EXPSPACE$
+
 - tractable (= poddajný, snadno ovladatelný, řešitelný) problems can be solved with polynomial time
 - intractable problems 
 	- we have good non-polynomial and bad non-polynomial problems
@@ -20,7 +43,7 @@
 		- and different DTMs can solve one problem in a different ways
 ### P-Class
 - decision problems solved in polynomial time by a deterministic Turing machine
-	- the problem is recognised by a DTM in polynomial time
+	- = the problem is recognised by a DTM in polynomial time
 - for each problem in P-Class there exists at least one DTM that solves the problem in polynomial time (meaning in $O(n^k)$ where $k$ is a finite number) for ALL inputs
 - proving P-Class
 	- if I am able to write a program for a normal computer that calculates it in polynomial time
@@ -48,7 +71,7 @@
 - by definition the non-deterministic TM does not have to stop for "no-problems" - it can run forever (or halt in polynomial time exploring all branches (and no branch ends with "yes")) or do anything else (it is just not defined)
 	- for yes-instances, the NTM has to halt in polynomial time $O(n^k)$ where $k$ is a finite number
 	- for no-instances, the NTM behavior is not defined
-- we formulate a exist-like question ($\exists$)
+- we formulate an exist-like question ($\exists$)
 	- then we run an algo (like oracle) which will give us a solution
 	- and we are able to verify this solution (= certificate) in polynomial time
 ##### P = NP?
@@ -59,10 +82,10 @@
 	- each problem has it's complement problem (and the answer is the opposite)
 	- both concrete NP problem and it's co-NP problem have the same sets of instances
 		- but the yes-instances for NP problem are no-instances for a respective co-NP problem and vice versa
-- these problems are same complex as NP Problems, but the difference is:
+- these problems are of the same complexity as NP Problems, but the difference is:
 	- there is no certificate for the yes solution
 		- because if it answers YES, it means nothing and the algorithm has to try all possible instances and get a YES from all of them to get a final YES answer
-	- the algorithm must try ALL configurations to finish to answer "yes" (or to find a counterexample to answer "no")
+	- the algorithm must try ALL configurations to finish with answer "yes" (or to find a counterexample to answer "no")
 - Co-NP problems have verifiable certificates for "no" answers (which are actually "yes" answers in NP problems)
 - differences
 	- [[#NP-Class]] problem definitions start with $\exists$ (does there exists a configuration, such that the constraints are satisfied? And this needs to be verified in polynomial time)
@@ -71,7 +94,7 @@
 			- if the "yes" must be for all configurations -> it's a Co-NP problem
 - how to tell?
 	- from a formulation of a verification question
-		- formulate is in a way, so that the yes-answer is verified "immediately" 
+		- formulate is in a way, so that the yes-answer can be verified "immediately" 
 			- if it is possible in polynomial time => NP
 			- if "yes" has to be answered for all configurations => co-NP
 ### Not NP problems
@@ -114,9 +137,8 @@
 	- how many possibilities? Is there a finite number?
 	- which configurations are valid solutions?
 
-
 - configuration variables - implementation of configuration (which is by itself a really abstract)
 	- they encode the configuration
 - every solution has to have a corresponding configuration (= the results)
 
-- we have an instance of a problem and configuration is a form of  possible solution
+- we have an instance of a problem and configuration is a form of possible solution

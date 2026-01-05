@@ -1,9 +1,27 @@
+
+> [!tldr] 20% to remember
+> This lecture is about optimization problems. Here, having an error is not that big problem as in the e.g. decision/constructing problems. Finding optimum solutions is done by the **optimization criterion** (= cost/score function). We have maximization and minimalization problems.
+> 
+> We have **PO-class** (solution is generated in polynomial time, constraints and **optimization criterion** must be verified also in polynomial time).
+> 
+> **NPO-class**: solutions are generated in polynomial time by a NTM. Proving that a problem belongs to NPO is similar to NP proof. The solution's feasibility and value needs to be verified in polynomial time (both constraint and the optimization criterion).
+> 
+> Approximation algorithms don't provide optimum solutions, but with some defined relative error. $R(n)$- approximation algorithm solves the problem with error at most as $R(n)$-times worse than the optimum. The relative error is calculated by $\varepsilon=1-\frac{1}{R}$. $R$ is the performance guarantee.
+> 
+> **APX-class**: every instances of the optimization problem is solved in polynomial time with finite and constant error. E.g. 2-approximation algorithm. We cannot scale or change the defined error/performance guarantee.
+> 
+> **PTAS**: algorithms, which can find a solution in polynomial time with any given (non-zero) error. The algorithm will run in polynomial time with respect to the instance size, but not with respect to the error size (so the time complexity can grow exponentially with decreasing error)
+> 
+> **FPTAS**: algorithms, which can find a solution in polynomial time with any given (non-zero) error. It will run in polynomial time with respect to both instance size and error.
+> 
+> **AP-reduction**: approximation problems can also be reduced to another problems (e.g. all APX problems could be reduced to APX-Hard problems in polynomial time). The error can be modified by a constant.
+
 - optimization problem classes (with the O appendix - like Optimization)
 ### PO class
 - same as P class, but for optimalization problems
 	- solution size is polynomial with the instance size
 	- the problem solution can be verified in polynomial time
-	- the optimization criterion can be computed in polynomial  time
+	- the optimization criterion can be computed in polynomial time
 	- the solution is generated in polynomial time
 ### NPO class
 - only difference with PO class is that the NPO class problem solutions cannot be generated in polynomial time
