@@ -28,8 +28,8 @@
 	- attributes implementation (to address problems in the previous implementation)
 		- operations have attributes, one operation can have multiple attributes and each attribute can have exactly one Tabu status
 			- so one operation can have more Tabu statues (depending on the number of attributes)
-		- it's simpler to store attributes of the states/solutions (not all operations/states)
-		- when Tabu Search is looking for a new locally best state, it looks at their attributes and if their attribute is in the Tabu list, it cannot select it
+		- it's simpler to store attributes of the operations/solutions (not all the exact operations, one attribute can represent many operations)
+		- when Tabu Search is looking for a new locally best state, it looks at the attributes of the move there and if the attribute is in the Tabu list, it cannot select the state
 		- an attribute could be anything (cost changes, configuration variable changes etc.)
 			- adding/removing item, change the cost to X, cost/weight ratio on Y etc.
 		- attributes then have Tabu status (= is in Tabu list or not)
@@ -38,12 +38,12 @@
 		- static - an operation/attribute is in Tabu list for a constant number of iterations (the number of iterations could be dependent on instance size)
 		- dynamic - it changes in progress of the Search
 - implementation (has to be space-efficient):
-	- instead of remembering whole configurations (which is possible, but it takes up a lot of time)
+	- instead of remembering whole configurations (which is possible, but it takes up a lot of space)
 		- it's better to remeber only the attributes and their values
-			- if there are multiple states with the same attribute value, then we don't care which one of them will be moved/removed/changed
+			- if there are multiple states/operations with the same attribute value, then we don't care which one of them will be moved/removed/changed
 	- Tabu list - the list itself
 	- Tabu state - one element in the Tabu list
-		- could be whole configuration snapshot, structure with attributes, inverse operations etc.
+		- could be whole configuration snapshot, structure with attributes, inverse operation etc.
 	- a operation in Tabu is permitted or penalized
 ##### Size of the Tabu list
 - small tabu-list => intensification (exploitation)
@@ -52,7 +52,7 @@
 	- if too big, too big restrictions, too big explorations of unwanted states (memory and time consuming)
 ### Aspiration criteria
 - they cancel tabus
-- = by recording some information / statistics etc., it decides if to "violate" the tabu rules
+- = by recording some information / statistics etc., it decides if to "violate" the tabu rules or not
 	- these criteria are based on the long-term memory
 	- tabus are sometimes too powerful (restricting all good moves, search leading to overall stagnation)
 - aspiration criteria could also be more general rules

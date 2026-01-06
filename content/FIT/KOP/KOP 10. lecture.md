@@ -9,6 +9,10 @@
 	- it's a good idea to keep them
 	- it's a part of the state space (we are narrowing it by fixing some values)
 ### Schema Theorem
+- $m(S,t+1)\geq m(S,t)*f(S,t)*(1-p)$  
+	- $m(S,t)$ - number of individuals with the schema $S$ in time $t$ 
+	- $f(S,t)$ - a relative fitness of the schema $S$ (relative to the whole population)
+	- $p$ - disruption probability, $(1-p)$ is the survival probability
 - it basically says that schemata with above-average fitness and high survival probability grow in the population, whereas schemata with below-average fitness and lower survival probability shrink
 	- because, if it has lower probability of survival, the right side of the equation is smaller, so the $m(S,t+1)$ could be smaller as well
 - this Theorem is the foundation of the **Building Block Hypothesis**
@@ -21,7 +25,7 @@
 ##### Schema disruption problems
 - if the schema is short (it's length), it will more likely survive crossover and mutation
 	- the longer it is, the more possibilities for cutting it by e.g. one-point crossover are there
-		- I have a schema (a good building block) and it could destroyed by one-point crossover (each part goes to different child)
+		- I have a schema (a good building block) and it could be destroyed by one-point crossover (each part goes to different child)
 	- **Linkage problem**
 		- = the chance of survival does not depend only on the schema order, but on it's length
 			- schema having order = 4 and length = 4 will survive more likely than schema having order = 4 and length = 6
@@ -104,7 +108,7 @@ Population → Selection → Build Model → Sample from Model → New Populatio
 ##### Bayesian network $B$
 - in general
 	- it represents the structure of the problem 
-		- 1) it describes the data
+		- 1) it describes the data (using conditional probabilities)
 		- 2) is used to generate new data of similar properties
 	- are represented in DAG (directed acyclic graph)
 - in BOA
@@ -134,7 +138,7 @@ Population → Selection → Build Model → Sample from Model → New Populatio
 		- reproduction
 			- probabilistically select an individual based on fitness and copy it into new generation (basically elitism)
 		- architecture-altering operations
-			- operations changing subroutines of complicated programs (add/delele iterations, loops, recursions, memory etc.)
+			- operations changing subroutines of complicated programs (add/delete iterations, loops, recursions, memory etc.)
 ### Cartesian Genetic Programming (CGP)
 - this approach is used to evolve logic circuits
 	- using these approaches, we were able to design very effective multipliers
@@ -154,7 +158,7 @@ Population → Selection → Build Model → Sample from Model → New Populatio
 - minimize the logical circuit
 	- the number of gates in the grid is the same, but we want to maximize the number of gates that are not connected
 		- so we want to achieve the desired outputs using the least gates possible
-		- = minimize the number of activery used gates
+		- = minimize the number of actively used gates
 	- we can choose to minimize the size or depth of the circuit
 ### Parallel GA
 - in general: separation of the whole population to multiple CPU's to achieve higher paralellism
@@ -162,15 +166,15 @@ Population → Selection → Build Model → Sample from Model → New Populatio
 	- island models
 		- the population is split into several islands (each island having a subset of individuals)
 		- islands are evolved and processed separetely
-		- occasionally a migration of fittest individuals between islands happens
-			- prevents premature convergence of the islands (degeneration) by bringin new genetic material
+		- occasionally a migration of the fittest individuals between islands happens
+			- prevents premature convergence of the islands (degeneration) by bringing new genetic material
 		- it uses advantage of a big diversity between islands (each is evolving by itself)
 	- cellular GA
-		- each CPU owns only 1 individuals
+		- each CPU owns only 1 individual
 		- thousands of CPUs are organized in a 2D grid
 			- and each individual (on it's CPU) can communicate only with it's neighbors
 			- so crossover happens only with neighbors
-				- the child replaces the old individual on the particular CPU
+				- the child replaces the old individual (it's parent) on the particular CPU
 		- the individuals are isolated the same way as in the islands approach
-			- but the isolation is by distance
+			- but the isolation is done by distance
 - the fitness could also be calculated in parallel

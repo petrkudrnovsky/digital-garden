@@ -62,7 +62,7 @@ simulated_annealing {
 		- tends to be stuck in the local optimum
 	- if $t=0$, SA becomes a First-Improvement approach (not accepting any worse moves)
 	- algorithms for setting the initial temperature
-		- run SA "backwards" from $t=0$ and increase it quickly and observe, how does $\Delta C$ changes (it is instance specific)
+		- run SA "backwards" from $t=0$ and increase it quickly and observe, how does $\Delta C$ change (it is instance specific)
 			- it is able to reflect the "nature" of the current instance
 			- from the beginning the $t=0$ means that only improvements are accepted, as $t$ is gradually increasing, the number of acceptances of "worse" states is also increasing 
 				- when the ratio of accepting worse states reaches 50% (so 50% of worse states are accepted) - we stop the algorithm and record the temperature

@@ -96,7 +96,7 @@
 			- the best individual is selected with probability $p$ 
 			- if not selected, the second best individual is selected with probability $p*(1-p)$
 			- if not selected, the third one with $p*(1-p)^2$ etc. until an individual is selected
-	- this allows for better selection pressure (better than just changing $k$ parameter)
+	- this allows for better selection pressure control (better than just changing $k$ parameter)
 - truncation selection
 	- we specify a threshold $0\lt p \lt 1$
 		- select the $p*N$ fittest individuals
@@ -177,7 +177,7 @@
 	- only part of the population is replaced (from both $x$ parents and $y$ children, select $x$ individuals to the new generation)
 - techniques:
 	- elitism
-		- we simply copy the best individuals (no selection for them)
+		- we simply copy the best individuals (no selection, crossover and mutation for them)
 			- the "fast track" to the next generation
 			- we do not want to accidentally kill them in the process
 		- too much elitism is also bad (can cause degeneration of the population)
