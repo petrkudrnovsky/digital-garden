@@ -2,15 +2,15 @@
 - why is it naive? Because it makes strong (and often unrealistic) assumption the all features are conditionally independent of each other (given the class label $c$)
 	- and it suprisingly works really well
 	- when the features are highly correlated, it may overestimate the class probabilities
-- based on join probability (conditional independence), just a reminder:
+- based on joint probability (conditional independence), just a reminder:
 	- $P(AB) = P(A)*P(A|B) = P(B)*P(B|A)$
 	- $P(AB) = P(A)*P(B)$ if $A$ and $B$ are independent
 - The main formula: ![[Pasted image 20260108172536.png]]
 	- word interpretation:
-		- I can get a probability of class $c$ given the features we have observed ($E$) -> the goal of Naive Bayes is to get probabilities of all values of the target class and then pick the one with the highest probability
-			- so if we got 2 target labels ($c_1$ = Spam, $c_2$ = Not spam), we calculate the probabilities for the set of evidence/features $E$ for both labels and then take the first one
-			- since the $p(E)$ is same for both calculations, we can remove it to simplify the calculations
-		- for prediction, I have got all the features $E$, but not the $c$ label (we need to predict it), so the Naive Bayes will calculate the probability of all labels in the $C$ target feature if the other features/condition/evidence hold
+		- the goal of Naive Bayes is to get probabilities of all available class labels given the current set of features $E$ and then finally predict the class label with the highest probability
+			- example: if we got 2 target labels ($c_1$ = Spam, $c_2$ = Not spam), we calculate the probabilities for the currently given features $E$ for both labels and then take the one with higher probability
+			- the $p(E)$ in both calculations is the same, we can exclude it and simplify the calculations
+		- different wording: for prediction, I have got the given feature set $E$, but not the $c$ label (we need to predict it), so the Naive Bayes will calculate the probability of all labels in the $C$ target feature if this feature set/condition/evidence holds
 	- how do we get $p(E|C=c)$?
 		- Naive Bayes makes the assumption that the evidence/features are independent of each other given class label $c$
 		- $p(E|C=c)=p(e^1|c)*p(e^2|c)*...*p(e^k|c)$ 

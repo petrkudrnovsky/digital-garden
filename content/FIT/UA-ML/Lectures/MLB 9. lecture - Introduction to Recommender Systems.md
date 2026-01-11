@@ -32,7 +32,7 @@
 		- repeatedly skips a song = negative signal
 	- those data are often noisy, they need to be preprocessed
 		- the signals are usually positive only
-			- they are easier to capture, if a user ignores an item, it does not mean that it was not interesting, but there could be another more interesting item present 
+			- they are easier to capture, if a user ignores an item, it does not mean that it was not interesting, but there could have been another more interesting item next to it 
 			- so the negative signals are ofter really noisy or ambiguous
 	- they form "implicit feedback datasets" = full of implicit behavioral signals
 		- opposite are "explicit feedback datasets" = reviews, ratings etc.
@@ -54,8 +54,8 @@
 		- take the other part of their interactions for testing/evaluation
 	- the input for training is the original matrix with the testing interactions hidden (instead of 1 is now 0)
 		- and the model has to learn from the user's behavior (= interactions) which are currently "visible" (the training ones)
-		- and the models has to predict ALL (so even the held-out) ones 
-	- the in the train and test dataset, users are the same, but some of the interactions are hidden (held-out)
+		- and the models has to predict ALL (so even the held-out) interactions 
+	- in the train and test dataset, users and items are the same, but some of the interactions are hidden (held-out)
 	- it's like time-travelling backwards, we pretend that we don't know about some interactions and we are trying to predict them
 - making predictions
 	- they are stored in a predictions matrix (again users vs. items), but now with relevance score (the higher score, the more probability that the user would like the item) for each user-item pair
@@ -74,11 +74,11 @@
 ![[Pasted image 20260109200058.png]]
 - first part: create item representations based on visual and descriptive features
 	- information source -> content analyzer -> represented items
-	- raw data -> extract structured features from data -> saved in structured database
+	- raw data -> extract structured features from data -> save in the structured database
 - second part: we learn a profile for each user by combining their behavioral data with the item representations
 	- feedback represents user's past interactions, which are combined with item descriptions and used for learning the model of what the user likes
 - third (final) part: we select items by filtering based on similarity to the profile
-	- [[MLB 7. lecture - Similarity, Neighbors and Clusters#Cosine similarity]] is often used
+	- [[MLB 7. lecture - Similarity, Neighbors and Clusters#Cosine similarity|Cosine similarity]] is often used
 - advantages:
 	- it's understandable for users 
 	- it does not have a cold start (all saved items are already described, there is no need to learn new data), can recommend immediately
@@ -92,14 +92,14 @@
 - two types:
 	- UserKNN - "what users are the most similar to this particular user"
 	- ItemKNN - "what items are the most similar to his particular item"
-- an item was recommended to me, because similar users (liking the similar set of items) also liked this item
+- an item X was recommended to me, because similar users (liking the similar set of items A, B, C) also liked this item X
 - advantages:
-	- easy data, we don't have to extract and store metadata about the items, just interactions matrix
+	- easy data, we don't have to extract and store metadata about the items, just interaction matrix
 	- collaborative filtering can recommend something unexpected
 - disadvantages:
-	- it is not that transparent, so most users don't understand, why was this particular item recommended to them
+	- it is not that transparent, so most users don't understand, why was this particular item was recommended to them
 	- cold-start, items and users could have insufficient amount of interactions (so the system cannot make accurate predictions)
-	- popularity bias: it biases items, which are popular (a lot of people interact with it)
+	- popularity bias: it biases items, which are already popular (a lot of people interact with them)
 		- it could be a good thing: popular clothes, cars etc.
 		- also a bad thing: a bizarre, controversial news
 # Hybrid methods

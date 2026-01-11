@@ -21,13 +21,13 @@
 - tranformation to feature vectors:
 	- 1) term occurence representation (for each word from corpus, mark 1 as word in this document)
 	- 2) term count/frequency representation (each word has a number of occurences in the document)
-		- can by by absolute numbers or normalized (divided by the total number of words in the document)
+		- it can be by absolute numbers or normalized (divided by the total number of words in the document)
 ### N-gram
 - an extension of bag of words that takes into account the order of words, storing groups of adjacent words 
 - examples:
 	- 1-gram: {The, quick, brown, fox, jumps, over, the, …}
-	- 2-gram: {The quick, quick brown, brown fox, fox jumps, …}
-	- 3-gram: {The quick brown, quick brown fox, brown fox jumps, …}
+	- 2-gram (bigram): {The quick, quick brown, brown fox, fox jumps, …}
+	- 3-gram (trigram): {The quick brown, quick brown fox, brown fox jumps, …}
 - problem: adding N-grams greatly increases the size of the feature set
 	- solution: only add the most important (are frequent and have a high lift) bigrams and trigrams
 ### TF-IDF
@@ -39,34 +39,36 @@
 	- IDF = 1 + log(total number of documents in the corpus / number of documents containing term $t$)
 - final score for term $t$: $TF(t, D)*IDF(t)$ 
 - often the [[MLB 7. lecture - Similarity, Neighbors and Clusters#Cosine similarity|Cosine Similarity]] is used for determining the relevance of the search query to a corpus of documents
-	- each document has a vector if TF-IDF scores for each term in that document
-	- the query also has a TF-IDF vector and the similarity of those vectors is calculated
+	- each document has a vector of TF-IDF scores for each term in that document
+	- the query also has a TF-IDF vector
+	- the cosine similarity of those vectors is calculated
 ### Named entity recognition (NER)
 - we want to identify the named entities (locations, countries, product names, political groups, dates etc) in the text
-	- those terms are often very meaningful
+	- these terms are often very meaningful
 - methods:
 	- expertly maintained entity dictionaries
 	- NER models trained for this purpose (on a labeled training dataset)
 - open-source library for Python: SpaCy
 ### Topic models
-- they form another layer next to documents and terms and they define topics for the whole corpus and then words could be related to some topics, which also enhanced the information quality over the corpus and documents
+- they form another layer next to documents and terms and they define topics for the whole corpus and then words/terms could be related to some topics, which also enhances the information quality over the corpus and documents
 	- usually the corpus deals with a limited number of topics
 - ![[Pasted image 20260109123631.png|600]]
 ### Word embeddings
 - they model words as dense vector representations in a low-dimensional space
 - the idea: words with similar meaning will have a similar representation
-	- therefore, they will be closer together
+	- therefore, they will be closer to each other
 - methods:
 	- Word2Vec, GloVe etc.
 - existing pre-trained word embedding models: BERT, fasttext, GloVe
 	- beware of the biases there 
-	- it often connects men to programmers and women to homemakers 
+		- it often connects e.g. men to programmers and women to homemakers 
 # Association rule mining
 - examples: what products are purchased together, plagiarism detection, related concepts identification etc.
 ### Terminology
 - itemset = a set of items 
 	- which often occur together in individual transactions (also called frequent itemsets)
-	- which are not together in any transaction
+	- could be also items, which are not together in any transaction
+	- or items, which form some kind of rule together
 ### Association rule
 - it indicates an affinity between the antecedent itemset and consequent itemset
 	- affinity = how strongly do these two items occur together
@@ -83,8 +85,9 @@
 	- 3) lift = "how much likely is C when A is present, compared to C occuring randomly?"
 		- measures the level of interestingness of the association rule
 		- the lift(A->C) = confidence(A->C) / support(C)
-		- if lift = 1 -> A and C are independent of each other
-		- if lift > 0 -> C is more frequent in transactions that also contain A
+		- if lift = 1 then A and C are independent of each other
+		- if lift > 1 then C is more frequent in transactions that also contain A (compared to random occurence)
+		- if lift < 1 then C is less frequent in transactions that also contain A (compared to random occurence)
 		- this is not the same lift as in [[MLB 6. lecture - Naive Bayes + Support Vector Machines + Random Trees]]
 ### Apriori algorithm
 - for generating frequent association rules that have support(A->C) $\gt$ minsup and confidence (A->C) $\gt$ minconf

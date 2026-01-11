@@ -20,13 +20,19 @@
 - disadvantages: it is sensitive to outliers and noise (it keeps focusing on outliers, which could be just mislabeled data)
 ### Gradient Boosting
 - examples: XGBoost, CatBoost or LightGBM
-- the final prediction is made from adding weak learners together 
+- the final prediction is made from adding results of the weak learners together 
 	- the weak learners (base estimators) are learned sequentially
 	- instead of reweighting samples, each new model is trained to predict the residual errors of the previous models (the ensemble in progress)
-		- the previous models are gradually added together to create an ensemble
-		- the residual errors form a (negative, we want to decrease, minimize the loss) gradient
+		- first guess is just a number (usually a mean of the values etc.)
+		- the residual errors of the first guess are calculated and the first weak learner is trying to predict these residual errors (to predict, how much to add/subtract from the initial guess to get closer to the real label/target)
+		- then the residual errors of the first guess + the predicted residual error from the first weak learner are calculated
+		- then a second, successive weak learner is trained to predict the residual errors of the sum (we can do supervised training, because, we have previously calculated the real residual errors)
+		- the final prediction is then the sum of the first guess and the sum of the "nudges" of respective weak learners
+			- the previous models are gradually added together to create an ensemble
+		- the residual errors form a gradient (negative, we want to decrease, minimize the loss) 
 		- gradient values are numeric, so in reality, the regression problem is being solved, even for classification
 	- when adding the models together, each is scaled by a shrinkage factor (which is a hyperparameter) which controls how much influence this tree has on the overall model
+		- the shrinkage factor is the same for each model, the values are often 0.1 or 0.01 and this is mainly for slowing the model down, we don't want to "correct" the initial guess by 5 big trees, but rather by 500 small "nudges"
 - beware of easy overfitting, but othewise this is one of the best ML models out there for tabular data
 ### Stacking
 - in this technique, we stack different learning algorithms on top of each other

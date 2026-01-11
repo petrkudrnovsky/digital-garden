@@ -1,4 +1,3 @@
-- chapter to continue: modelling
 - [Google Collab](https://colab.research.google.com/drive/1DG79gBlfI3_rwPX4eL3Jj-7j0fxGdzDq#scrollTo=L2I0R71EdDID) explaining the whole process with code examples
 # What is CRISP-DM process?
 - = Cross-Industry Standard Process for Data Mining
@@ -20,6 +19,7 @@
 - feature engineering (= constructing new features)
 - what are proxy data?
 	- data collected for reasons other than our data science problem or just data collected for no reason at all
+	- those data can help modelling if they are correlated or related to wanted data (which are not available - little data, expensive etc.)
 	- those data are often not in the right form we want it to be -> so a lot of data preparation
 - quality data with labels are often costly
 - dataset preprocessing: sampling, encoding, missing values, outliers
@@ -59,9 +59,12 @@
 	- beware of "high cardinality variables", a nominal variables with a large number of unique values (40+ unique values)
 		- can be tackled with one-hot encoding, but that severaly increases the dimensionality
 		- better solution: convert discrete variables into numeric values
-			- tackled with Weight of Evidence approach
+			- tackled with Weight of Evidence (WoE) approach
 				- it connects the category values with the target values
 				- so if I have a feature with 1000+ cities, for a concrete city = "Prague", I would calculate the occurence of "Prague" with target = 1 and the occurence of "Prague" with target = 0 and divide it inside a logartihm
+					- $WoE=ln(\frac{\%\ of\ Goods}{\%\ of\ Bads})$ 
+						- $WoE=0$, no additional value (the number of Goods/Bad is equal)
+						- $WoE>0$ or $WoE<0$, it has a meaninful information for the classifier whether the "Prague" label correlates more with 0 or 1 values of target label
 					- then I get a useful numerous information instead of X city names
 			- or another approach: Supervised ratio
 				- just the mean of the target variable for this category
@@ -76,7 +79,7 @@
 		- could create bias in the data
 		- the statistical values (mean, median etc.) should be calculated from the training set (not the test set) to avoid data leakage
 	- delete
-		- if the sample/feature has a lot of missing values, delete is
+		- if the sample/feature has a lot of missing values, delete it to reduce noise
 		- results in data loss
 ##### Outliers
 - = values that are outside of the expected range

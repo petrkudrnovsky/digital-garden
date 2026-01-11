@@ -3,14 +3,14 @@
 	- imitates a neuron in the brain
 	- output of the perceptron is a weighted linear combination of inputs passed through a non-linear activation function
 	- inputs: a feature vector
-	- weights: one for each input, are learned
+	- weights: one for each input, they are learned
 	- bias term $w_0$ is a learned offset - it adjusts the position of the decision boundary
 		- it also controls the threshold at which the neuron activates (see activation function)
 		- increases the model's flexibility
 	- activation function
 		- it introduces non-linearities into the network, so if the data are not linearly separable (see [[MLB 6. lecture - Naive Bayes + Support Vector Machines + Random Trees]]), it helps to create a non-linear line/decision boundary to effectively separate classes
 		- it's called an activation function, because it activates at some threshold
-			- if the input (the linear combination of inputs shifted by th bias) exceeds some threshold, the activation function "fires", similarly to a neuron in the brain
+			- if the input (the linear combination of inputs shifted by the $w_0$ bias) exceeds some threshold, the activation function "fires", similarly to a neuron in the brain
 		- examples:
 			- ReLU (Rectified Linear Unit) - fires, when the argument is greater than 0
 				- most used today
@@ -44,7 +44,7 @@
 			- loss stops decreasing meaningfully
 			- loss on validation data goes up (a sign of overfitting)
 - using stochastic gradient descent
-	- forward pass in performed only on a subset of training instances (also called a batch)
+	- forward pass is performed only on a subset of training instances (also called a batch)
 ### Advantages of neural networks
 - capable of generalizing very well
 - are a good universal approximators, they can approximate any continuous function up to given error $E$ (but sometimes it requires an insane amount of neurons)
@@ -59,7 +59,6 @@
 - extract patterns from data using neural networks
 - machine learning uses deep learning techniques to be able to learn without being explicitly programmed, machines can improve at tasks with experience
 - artificial intelligence includes machine learning, which includes deep learning
-- baf
 ### Convolutional Neural Networks (CNNs)
 - used in image processing applications (or any other data represetable in grid-like 2D matrix or a tensor)
 - two main operations:

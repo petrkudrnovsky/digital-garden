@@ -31,16 +31,26 @@
 ##### Entropy
 - measuring the level of impurity (uncertainty) of the subgroup with respect to the label
 - between 0 and 1
+- $\sum{p_i*log(p_i)}$ 
+	- $p_1$ - proportion of label 1
+	- $p_2$ - proportion of label 2 etc.
+	- if $p_1$ = 0.5 and $p_2$ = 0.5, the entropy is 1, meaning the highest level of impurity/uncertainty
 ##### Information gain
 - = measures the change in the entropy between the parent and child nodes
 	- in other words, how much information we gain by splitting the parent into child nodes
 	- weight of each child is proportional to the number of instances in this child
+	- $IG(parent, children) = entropy(parent) - [p(c_1)*entropy(c_1)+p(c_2)*entropy(c_2)]$ 
+		- the entropy of each child is weighted by the proportion of entropy of instances belonging to the child
+			- the split does not have to be of equal lenghts (one child can get more instances, therefore its information gain has to be scaled proportionally)
 - by splitting, we want to maximize the information gain
 ##### GINI impurity
 - alternative to entropy
 	- it is computationally cheaper
 - best split minimizes the weighted average GINI impurity
 - between 0 and 0.5
+- $GINI(node) = 1-\sum_{i=1}^N p_i^2$ 
+- $GINI(split) = p(c_1)*GINI(c_1) + p(c_2)*GINI(c_2)$ 
+	- the goal is to minimize this weighted split GINI impurity
 ### Stopping rule
 - determines, when to stop the recursive splitting the tree in the subgroups
 - more rules apply:
@@ -107,7 +117,9 @@
 	- when the loss on validation data stops decreasing or even start increasing, the technique stops the training and returns the best model (= best weights) found
 ### Regularization
 - techniques that penalize the complexity of the model (which prevents overfitting)
-	- it prevents the model from learning from the noise in the data
+	- it prevents the model from learning from the noise in the data (from using too complex patterns)
 - L1-regularization (Lasso)
+	- adds a sum of current absolute weights multiplied by some $\lambda$ parameter as a penalty
 - L2-regularization (Ridge)
+	- the same, but instead of absolute weights, use squared weights
 - Elastic net (combines L1 and L2)
