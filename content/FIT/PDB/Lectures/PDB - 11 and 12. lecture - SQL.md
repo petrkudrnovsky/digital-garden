@@ -1,0 +1,223 @@
+### Exam topics
+- Principles: motivation (relational algebra operations, naive algorithms, optimization objectives, evaluation plan, database context, system memory, cost estimates); data files (file structure, tuple size, blocks, slots); data file organization (heap file, sorted file, hashed file); index structures (B+ trees, non-clustered/clustered index); access methods (cost estimates, full scan, equality tests, range queries)
+- Algorithms: external sort (basic approach, sort phase, merge phase, algorithms, memory usage, cost estimates, 2-pass setup); nested loops join (binary approach, basic, general, optimized setup, algorithms, memory usage, cost estimates, zig-zag optimization); sort merge join (basic approach, sort phase, join phase, algorithms, memory usage, cost estimates, duplicate handling); hash join (classic hash join, partition hash join, limitations, build phase, probe phase, algorithms, memory usage, cost estimates)
+- Evaluation: evaluation process (query tree, evaluation plan, overall cost, pipelining mechanism, EXPLAIN statements, false assumptions); query optimization: statistical optimization (objectives, available statistics, histograms, size estimates, reduction factor); algebraic optimization (objectives, equivalence rules, SPJ queries); syntactic optimization
+# [[SQL]]
+- related: [[Postgres - optimalizace a tuning]]
+### Short on relational algebra
+- relation algebra was the first language developed for the purpose of the relational schema
+	- there are 6 basic operations to achieve the full expressive power
+	- other operations could be derived from them
+- the expressive power of SQL is bigger than basic relational algebra
+- the SQL statement is translated to the extended-relational algebra tree and then it is evaluated
+	- extended it is because of the bigger expressive power of SQL
+- relational algebra works with sets
+	- SQL does not, so often I need to remove duplicates with DISTINCT
+### Challenges
+- loading data into memory
+	- we cannot use SQL directly to data on hard drives, they need to be loaded to system memory first
+		- HDDs are extremely slow
+		- the data are stored in blocks of data -> we can load them into the system memory and then work with them (but the system memory is not big enough for all data)
+### Objectives of query evaluation
+- query evaluation plan
+	- the planning of queries is important to limit the use of the hard drive and loading data (=> quicker queries)
+	- it needs to be aware of the system memory space limitations and the database context
+		- database context: relational schema, integrity constraints, data organization (the logical data organization inside the files), index structures, available statistics
+		- it determines how many pages (from the hard drive) will be needed for the query
+			- there is a physical limit of pages (given from available memory)
+	- it is really important to any system (with the correct optimization, we can save up a lot of resources and speed up the query evaluation)
+- available system memory
+	- how many pages will be allocated for the execution of the given query
+	- two scenarios:
+		- for a given memory size, estimate the evaluation cost and propose its usage
+		- for a cost expectation, determine the required memory and propose its usage
+- cost estimation
+	- is only estimation (but we want it to be as accurate as possible)
+	- expressed in terms of read/write disk operations
+- available statistics
+	- information about the environment (block size, number of available memory pages...)
+	- for a given relation (=tables):
+		- number of tuples (=rows)
+		- average tuple size
+		- blocking factor = how many rows (tuples) could be saved in one block
+		- number of blocks
+			- we are not measuring the size by the number of rows, but the number of blocks/pages that are needed to load
+				- that is the important number for us
+		- min/max values for an attribute $A$ (= a column), number of distinct values for attribute $A$
+### Evaluation algorithms - Access Methods
+- how to access files from the harddrive
+- the harddrive consists of data blocks and they are further divided into slots
+	- the whole row is saved in one slot
+	- fixed-size slots
+		- they are created in advance and just have their status (represented by 1 bit (occupied/not occupied))
+	- variable-size slots
+		- offsets from the beginning of the block to the beginning of the slot / end of the slot have to be saved
+- 1) Heap file
+	- tuples/rows are put into slots arbitrarily on random
+	- selection costs:
+		- full scans are inevitable
+			- $c=p_R$ (all blocks need to be scanned)
+		- equality test: $c=p_R/2$ on average (uniform distribution of data is assumed and that the values are unique (primary ID))
+			- to find a specific tuple/row, where the value equals $X$
+			- on average, only half of the blocks are scanned
+- 2) Sorted file
+	- tuples are ordered with respect to some attribute (column)
+	- selection costs:
+		- binary search (if the same attribute is queried, othewise, it will be sequential full scan)
+			- $c=log_2\ p_R$ (for unique attribute)
+			- $c=log_2\ p_R + p_R/V_R$ (for a non-unique attribute) a logarithmic binary search plus number of blocks divided by the cardinality of the attribute (the number of distinct values)
+		- equality tests: logarithmic for the unique attribute (used for sorting)
+			- otherwise, linear
+- 3) Hashed file
+	- rows/tuples are put into buckets depending on some hashing function (which takes values from some chosen attribute/column)
+		- a bucket is a logical group of blocks
+	- selection costs:
+		- equality test: depends on the size of the bucket (the hashing function is constant)
+			- for the unique value (used for hashing)
+				- $c=C_R/2$ 
+			- for the non-unique value
+				- $c=C_R$ (the whole bucket needs to be scanned)
+			- where $C_R$ is the average bucket size ($C_R=p_R/H_R$), $H_R$ is the number of buckets
+		- for any other condition, a full-scan is needed
+			- $c=p_R$ , the number of all blocks
+- 4) $B^+$ Tree index
+	- it's a self-balanced search tree (logarithmic height guaranteed), will be more wider than taller
+	- leaf nodes contain the individual nodes and pointers to data tuples in the harddrive
+		- leaf nodes are also interconnected by pointers (so I can "jump" from neighboring leaf node to neighboring leaf node)
+	- inner nodes contain an ordered sequence of dividing values + pointers to child nodes (it represents the sub-intervals that this node "determines")
+	- inner nodes contain different things and have different values 
+	- each node physically corresponds to one index file block (stored on hard drive)
+	- searching: tree traversal from root to leaf node
+	- Non-clustered $B^+$ Tree Index
+		- the order of items/tuples in the leaf node is not the same as in the data file block
+		- e.g. the data file is organized as hash file (see upper notes) or heap file
+		- but in the leaf nodes there are pointers, so it does not matter that much
+		- equality test:
+			- for a unique value: $c=I_R+1$ (the height + 1)
+			- for a non-unique value: $c=I_R+p_R/V_R+min(p_R, n_R/V_R)$ 
+				- the height + number of leaf nodes divided by the cardinality of the attribute $A$ + the minimum from (number of leaf nodes, number of all values/cardinality (unique values))
+	- Clustered $B^+$ Index Tree
+		- equality test:
+			- $c=I_R+1$
+			- $c=I_R+p_R/V_R$ (height + number of leaf nodes divided by the cardinality (the number of all distinct values for the attribute $A$))
+### Evaluation algorithms - External sort
+- how to sort tuples in the data file (on harddrive), because not all data can fit into the memory and we need loaded sorted data for queries with: order by, group by, join (sort-merge join), distinct eliminations atd.
+- if we have B Tree Index on the sorted column, this operation will be cheap
+	- this is also applicable, if we have clustered index or sorted data file
+- sort phase
+	- the groups of input blocks are loaded into the system memory and tuples need to be sorted in these blocks
+		- the sort could be select, insert, bubble sort or merge, heap, quicksort (arbitrary)
+		- the sorted group of blocks is called a run
+	- those runs are then written into a temporary file (to be merged in the second phase)
+- merge phase
+	- groups of runs are loaded into the memory and merged
+	- newly created runs are written back on a hard drive
+### Evaluation algorithms - Nested Loops Join
+- we also need to join data from different tables
+- the universal approach (for all types of joins) is: binary nested loops
+	- idea: outer loop goes through blocks of the first table and inner loop goes through blocks of the second table
+	- smaller tables should be always on the outer loop (saves resources)
+- the basic setup is $(1+1+1)$ 
+	- one block/page from one table, with 1 block/page from the other table (in the inner loop) create a one block/page of output
+	- this is really expensive (repeated loading into buffer and scanning the inner pages multiple times)
+- the general setup is $(M_R, M_S, 1)$ 
+- the standard setup is $(M_R, 1, 1)$ with zig-zag optimization
+	- multiple pages are used just for the outer table
+	- the inner pages are compared to the multiple pages loaded in the buffer at once -> faster, not that many I/O operations
+	- I want to load as much blocks as possible from the first table to the buffer (=meaning to the system memory) and then switch (quickly load the blocks of the second table)
+	- zig-zag, reading the inner table:
+		- odd iterations normally
+		- even iterations in reverse order
+		- it saves one comparison per iteration
+		- the zig-zag is a free of charge optimization, it is not much, but it's honest work
+### Evaluation algorithms - Sort-Merge Join
+- a different approach (for tables with roughly same sizes) - those are more efficient algorithms than repeated scanning in nested loops
+- it's based on value equality only
+	- so the join is based on condition like `R.a = S.b`
+	- if the join is based on inequality like `R.a < R.b`, the nested loops are the only option
+- phases:
+	- sort phase - the external sort (if not sorted yet)
+	- join phase - sorted blocks are joined/merged one by one
+- extended versions can handle duplicate values
+	- in one table
+	- in more both tables (then the algorithm must "look" to other blocks and the size of the buffer does not have to be enough)
+### Evaluation algorithms - Hash Join
+- basic principle:
+	- items from the first table are hashed into the system memory
+	- and items from the second table and attempted to be joined
+- classic hashing:
+	- the blocks from the smaller table are hashed in the memory (build phase)
+	- the blocks from the second, bigger, table are then joined (also based on the hashes for the joining attribute) - probe phase
+		- because the values of the join attribute must have the same hash (if they are equal)
+	- is usable only if the smaller table can be entirely hashed into the memory
+- partition hashing:
+	- both tables are first partitioned and then the corresponding partitions are joined together (using nested loops or a classic hashing)
+# Query evaluation
+- initial query:
+```sql
+SELECT title, actor, character
+FROM Movie
+JOIN Actor
+WHERE (year = 2000) AND (id = movie)
+```
+- the process
+	- 1) scanning
+		- the SQL expression is scanned and lexical analysis is performed
+	- 2) parsing
+		- syntactical analysis (derivation tree is constructed to the SQL grammar)
+	- 3) translation
+		- query tree with relational algebra operations is constructed
+		- query tree structure
+			- leaf nodes = input tables
+			- inner nodes = individual RA operations
+			- root represents the entire query (and the tree is evaluated from bottom up)
+	- 4) validation
+		- semantic validation is checked (if the relation schema comply with intended operations)
+	- 5) optimization
+		- alternative evaluation plans are devised and compared (based on the cost estimates)
+		- in the query tree, statistics for each inner node are calculated, the algorithm is selected (for joining, selection, sorting etc.) and the estimated evaluation cost is calculated
+			- the overall estimated cost is in the root 
+	- 6) code generation
+		- execution code is generated for the chosen plan
+	- 7) execution
+		- intended query is finally evaluated - the user sees the result
+- if the intemediate results are stored into temporary files, they have to be stored to the harddrive, which is very I/O intensive
+- pipelining mechanism
+	- intermediate results are passed between operations directly without the usage of temporary files
+	- some operations are also possible to do in-place
+	- but pipelinig is not always possible
+### Pruning and heuristics
+- it's not possible to find all evaluation plans and estimate their costs 
+- optimization strategies:
+	- algebraic
+		- alternative plans are found be transforming the query tree
+		- the space for all possible plans is really big -> pruning:
+			- for each table select the best access method
+			- select the best join plan for all tables
+		- but it's a NP-complete problem
+	- statistical
+		- estimated costs are found by using statistics
+		- using statistics:
+			- number of tuples, their size, blocking factor
+			- number of pages
+			- for hashed file: number of buckets, bucket size
+			- for B Tree Index: tree height, number of leaf nodes
+			- number of distinct values
+			- min/max values of some attribute
+			- histograms for non-uniform distributions
+		- size estimates for selection
+			- the tuple size remains the same
+				- therefore the blocking factor is also the same
+			- there is a estimated reduction factor (how much will the number of tuples be reduced?)
+		- size estimates for projection
+			- new tuple size will be a sum of projected attributes (the blocking factor will be smaller as well = more tuples will fit in one block)
+			- if DISTINCT is used, at least one of the duplicates will be preserved
+		- size estimates for joins
+			- tuple size will be rougly the sum of attributes from both tables (some attributes may be shared)
+			- the number of tuples will be multiplied (by tuples in each table + by a joining condition (similar to reduction factor))
+	- syntactic
+		- user edits the query to find/reach other evaluation plans
+		- this breaches the principle of declarative querying
+### EXPLAIN statement
+- retrieves the evaluation plan for a given query
+- when ANALYZE is provided - the query is executed and we get the actual runtimes

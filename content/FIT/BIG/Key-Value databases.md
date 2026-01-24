@@ -1,0 +1,26 @@
+- very simple [[NoSQL databáze]]
+	- good for:
+		- temporary data, data accessed via keys
+		- session data, user profiles, preferences, shopping carts, cache etc.
+	- bad for:
+		- data with relations between each other
+		- multi-key data
+		- complex operations with data
+		- need to access specific parts of the value
+- key = id, primary key
+	- keys are:
+		- real-world entities (email, birth number, login name)
+		- automatically generated:
+			- autoincrement - not suitable for peer-to-peer systems (there could be inconsistency issues, there is no central server to manage the increments)
+			- complex keys (combinations of timestamps, node identifiers etc.) - used in practice
+- value = a binary object (a black box for the database system)
+	- it is in general not able to access only some contents of the value (all or nothing)
+- simple model means:
+	- great performance, easy scaling
+	- BUT not for complex queries or complex data/relations
+- works like a hash table
+	- keys and associated values
+- additional functionalities of key-value stores
+	- expiration of key-value pairs (after defined time, objects are automatically removed)
+	- key-value pair could be interconnected via links (and those could be traversed during querying)
+	- collections of values could be stored as well

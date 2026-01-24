@@ -15,7 +15,7 @@
 	- uživatel si může sám vytvořit vlastní Cookies
 	- kvůli tomu se přidávají další bezpečnostní prvky (Referer, User-Agent, IP adresa)
 ### Implementace
-- pomocí souboru, relační databáze nebo [[Key-Value database]]
+- pomocí souboru, relační databáze nebo [[Key-Value databases]]
 ### Proces
 - na první request se server podívá, jestli existuje Session, pokud ne, tak ji vytvoří a klientovi pošle `Set-Cookie` s hodnotou SessionID
 - klient si pak uloží hodnotu SessionID u sebe v paměti a pak ji posílá společně s každým dalším requestem

@@ -1,0 +1,25 @@
+### Exam requirements
+- Data model (column families, rows, columns), query patterns, use cases, representatives
+- Cassandra: data model (keyspaces, tables, rows, columns), primary keys (partition key, clustering columns), column values (missing; empty; native data types, tuples, user-defined types; collections: lists, sets, maps; frozen mode), additional data (TTL, timestamp); CQL language: DDL statements: CREATE KEYSPACE (replication strategies), DROP KEYSPACE, USE keyspace, CREATE TABLE (column definitions, usage of types, primary key), DROP TABLE, TRUNCATE TABLE; native data types (int, varint, double, boolean, text, timestamp, …); literals (atomic, collections, …); DML statements: SELECT statements (SELECT, FROM, WHERE, GROUP BY, ORDER BY, and LIMIT clauses; DISTINCT modifier; selectors; non/filtering queries, ALLOW FILTERING mode; filtering relations; aggregates; restrictions on sorting and aggregation), INSERT statements (update parameters: TTL, TIMESTAMP), UPDATE statements (assignments; modification of collections: additions, removals), DELETE statements (deletion of rows, removal of columns, removal of items from collections)
+# [[Apache Cassandra]]
+- [[Sloupcové databáze]]
+- [[Apache Cassandra - cheatsheet]]
+- additional notes from the lecture
+	- row is a collection of columns
+		- a column is a pair of column name and value (+ additional metadata like TTL, timestamp))
+		- additional data are associated with atomic values and also with **each** element of collection values
+	- even tuples and UDT (user defined types) are considered atomic
+	- frozen mode = the nested collections are not accesible directly
+		- e.g. for nested collections in maps, sets and lists (their values are not accessible directly)
+		- for example, when the UDT or a collection is a part of primary key, it needs to be frozen (= saved as one blob, not as a sequence of elements/properties)
+			- so the internal parts cannot be edited, just the whole UDT/collection could be replaced/deleted
+	- there are no foreign keys
+		- we can simulate them with our application logic (just store unique values that act as IDs)
+	- TTL is implemented in various NoSQL systems
+		- it could be turned off to keep the data forever
+		- but it has a lot of use-cases
+	- expressive power of CQL is lower than MongoDB, but higher than KV stores
+	- Cassandra works even with multiple datacenters that exists on different geographic locations
+		- and allows for different replication factors for each data center
+		- NetworkTopology replication strategy 
+	- important is the primary key options (column-level primary keys etc.)

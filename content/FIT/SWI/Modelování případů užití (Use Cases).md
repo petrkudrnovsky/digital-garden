@@ -3,7 +3,7 @@
 - podklady pro akceptační testy
 - vyjasnění si požadavků se zákazníkem
 - zadání pro programátory
-- PDF [zde](https://moodle-vyuka.cvut.cz/pluginfile.php/898716/mod_resource/content/1/Use%20Case%20Model.pdf) (pouze po ČVUT ověření)
+![[Use_Case_Model.pdf]]
 - Případy užití už mohou být formou zadání pro programátory (už vidím aktéry, jaké přesně dělají činnosti apod.)
 - Tvoří základ pro tvorbu uživatelské příručky a také slouží jako podklad k tvorbě akceptačních testů
 
@@ -13,19 +13,15 @@ Skládá se z:
 3) Seznam případů užití (popis a slovní rozšíření diagramu případů užití)
 	- zde lze nadefinovat hlavní a alternativní scénáře + různé výjimky
 	- také musím specifikovat podmínky provedení
-
 ![[Pasted image 20230520212811.png]]
-==čas je také jeden z aktérů== - v aplikaci mohu mít automaticky spouštěné úlohy na základně nějaké časové události
-
+- ==čas je také jeden z aktérů== - v aplikaci mohu mít automaticky spouštěné úlohy na základně nějaké časové události
 ### \<\<include\>\>
 - když mám nějakou část použitou v několika případech užití, tak ji mohu vyjmout, udělat z ní samostatný případ užití a pak ji "naincludovat" do původních případů užití (využití DRY principu)
 - povinné zahrnutí případu užití
 ![[Pasted image 20230520213559.png]]
-
 ### \<\<extends\>\>
 - používá se, pokud je vyčleněná část scénáře nepovinná
 ![[Pasted image 20230520213617.png]]
-
 ### Doporučení při tvorbě
 - popisuj, co má systém dělat, ne JAK to má dělat
 - nerozepisuj se u "nezajímavých" UC
@@ -39,4 +35,4 @@ Skládá se z:
 - pokud je výsledkem projektu nějaký framework či knihovna, tak je třeba zvážit, jestli je potřeba takový diagram vůbec vytvářet
 
 ![[Pasted image 20230520214623.png]]
-\+ každý případ užití musí mít svého aktéra
+- \+ každý případ užití musí mít svého aktéra

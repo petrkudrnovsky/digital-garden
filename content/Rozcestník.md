@@ -6,10 +6,10 @@ Dále uvádím kompletní seznam vypracovaných státnicových otázek pro webov
 ### [[SZZ otázky]]
 
 Zápisky z jednotlivých předmětů BAKALÁŘ
-- [[AWD - administrace webového a databázového serveru]] komplet
-- [[BIG - technologie pro Big data]] komplet
+- [[AWD - Administrace webového a databázového systému]] komplet
+- [[BIG - Technologie pro Big data]] komplet
 - [[IDO - Úvod do DevOps]] pouze na SZZ
-- [[SWI - softwarové inženýrství]] komplet
+- [[SWI - Softwarové inženýrství]] komplet
 - [[TUR - Tvorba uživatelských rozhraní]] komplet
 - [[TWA - tvorba webových aplikací]] komplet
 - [[VWM - Vyhledávání na webu a v multimediálních databázích]] pouze na SZZ
@@ -21,6 +21,7 @@ Zápisky z jednotlivých předmětů MAGISTR
 - [[AM1 - Architecture of Middleware 1]] - final lecture notes
 - [[Engineering and design science methodologies]] - final lecture notes
 - [[Machine learning for business]] - final lecture and tutorial notes
+- [[PDB - Advanced Database Systems]] - final lecture notes + tutorial cheatsheets
 
 Pro další předměty a popřípadně jiné vysvětlení doporučuji další digitální zahrádku od kolegy na FITu: https://obsidian.jancerny.dev/
 ***

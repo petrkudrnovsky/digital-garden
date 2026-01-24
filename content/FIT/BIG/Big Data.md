@@ -4,16 +4,30 @@
 	- hlavně pak třeba nástroje jako [[Hadoop]] a [[Apache Spark]]
 
 > NoSQL = Not only SQL
-- nějaký NoSQL databáze vychází z SQL jazyka
+- nějaký NoSQL databáze vychází z SQL jazyka či se jím inspirují
 # 5 V - charakteristika Big Data
-- volume (objem) - obrovské množství dat (petabyty, exabyty)
-- velocity - generování dat je velmi rychlé a stejně rychle se musí i zpracovávat
-- variety (různorodost) - data nemusí být vždy konzistentní, čistá a strukturovaná
+- volume (objem, scale) - obrovské množství dat (petabyty, exabyty)
+- velocity (speed) - generování dat je velmi rychlé a stejně rychle se musí i zpracovávat
+- variety (různorodost, complexity) - data nemusí být vždy konzistentní, čistá a strukturovaná
 	- máme i nestrukturovaná a semi-strukturovaná data (XML, JSON)
-	- jsou z různých zdrojů
-- veracity (důvěryhodnost) - při vysokém množství dat může klesat jejich věrohodnost
+	- jsou z různých zdrojů, různé typy a různé struktury
+- veracity (důvěryhodnost, uncertainty) - při vysokém množství dat může klesat jejich věrohodnost
 	- důležitý je i původ a kvalita dat
+	- neboli "uncertainty" due to inconsistency, incompleteness, latency, ambiguities or approximations
 - value - přidanou hodnotu datům dáme tak, že je analyzujeme, agregujeme, vizualizujeme
+	- the business value has to be found/revealed in the data
+- validity - the data must be valid and accurate with respect to their intended use
+	- also includes data governance
+- volatility - a period of time when the data is valid and should be maintained
+	- after some time, the data can become invalid
+- variability - the data sources can develop and the data can differ
+- venue - different data from different sources (on "one venue")
+- vocabulary - includes "how to describe" the data, data models, semantics
+- vagueness - the meaning of some big data patterns could be confusing, vague
+- there are also C-characteristics:
+	- cardinality
+	- continuity
+	- complexity
 # Data mají svůj životní cyklus
 1) sběr - nejdřív data nasbíráme (monitoring, scraping) - např. Apache Kafka
 2) organizace dat - definování struktury, jmenných konvencí
@@ -26,10 +40,11 @@
 - jak jsme schopni navyšovat výkon a objem
 - vertikální škálování (*do výšky*)
 	- vylepšování HW komponent pro lepší výkon, drahé, HW limity
-	- hlavně pro relační databáze
+	- nevýhodou je také tzv. manufacturer vendor lock-in (jenom pár výrobců na světě dělá opravdu výkonné komponenty a nedá se jen tak přejít od jednoho ke druhému) + downtime, když se upgraduje
+	- hlavně pro relační databáze (a pro [[Grafové databáze]])
 - horizontální škálování (*do šířky*)
 	- přidávání dalších uzlů (další počítače, další servery), levnější
-	- využití v cloudu, problémem je síť
+	- využití v cloudu, problémem je síť a větší složitost systému jako celku
 	- je to více flexibilní - jde jednoduše přiidávat/odebírat podle potřeby
 ### Distribuce
 - většinou chci mít více než jeden uzel (počítač/server), abych mohl zvládat větší objemy

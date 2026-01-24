@@ -1,0 +1,6 @@
+### Exam topics
+- Data model (documents), query patterns, use cases, representatives
+- MongoDB: data model (databases, collections, JSON/BSON documents, field name restrictions), document identifiers (\_id fields, features, ObjectId), data modeling (embedded documents, references); insertOne and insertMany operations (management of identifiers); replaceOne operation: upsert mode; updateOne and updateMany operations: update operators (field: $set, $rename, $inc, …; array: $push, $pop, …), upsert mode; deleteOne and deleteMany operations; find operation: query conditions (value equality vs. query operators), query operators (comparison: $eq, $ne, …; element: $exists; evaluation: $regex, …; logical: $and, $or, $not; array: $all, $elemMatch, …), dot notation (embedded fields, array items), querying of arrays, projection (positive, negative), projection operators (array: $slice, $elemMatch), modifiers (sort, skip, limit); MapReduce (map function, reduce function, options: query, sort, limit, out); primary and secondary index structures (index types: value, hashed, …; forms; properties: unique, partial, sparse, TTL)
+### [[Dokumentově orientovaná databáze]]
+### [[MongoDB]]
+- [[MongoDB - cheatsheet]]

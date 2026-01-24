@@ -1,4 +1,4 @@
-
+### Otázky
 > [!question]- Jak funguje výpočet na distribuovaném systému? Co je distribuovaný systém?
 > - to se dozvím postupně v [[MapReduce]], [[Hadoop]] a pak v [[Apache Spark]]
 
@@ -7,3 +7,16 @@
 
 > [!question]- Jak funguje Elasticstack? Jaké má součásti a jaké jsou principy distribuované indexace?
 > [[Elasticstack]], [[Elasticsearch]]
+
+### Témata:
+- [[Apache Spark]]
+- [[MapReduce]]
+- [[Hadoop]]
+- [[Big Data#Distribuce]] a [[Big Data#Principy distribuovaných systémů]]
+- [[Elasticstack]]
+	- [[Elasticsearch]]
+	- [[Logstash]]
+
+Celkově témata předmětu BIG:
+- [[BIG - Technologie pro Big data]]
+- [[Big Data]]

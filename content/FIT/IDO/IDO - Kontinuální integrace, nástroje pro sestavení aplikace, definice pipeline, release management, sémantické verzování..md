@@ -1,16 +1,13 @@
-Doplnění otázky: správa prostředí, přínosy kontejnerizace a používané nástroje.
-
-[[Continuous Integration (CI) a Continuous Delivery (CD)]]
+- doplnění otázky: nasazení aplikace, správa prostředí, přínosy kontejnerizace a používané nástroje
+### [[Continuous Integration (CI) a Continuous Delivery (CD)]]
 - CI/CD
 - Nástroje pro sestavení aplikace
 - Pipeline
-
-[[Release a nasazení aplikace]] 
+### [[Release a nasazení aplikace]] 
 - release management
 - nasazení aplikace
 - správa prostředí
-
-[[Virtualizace]]
+### [[Virtualizace]]
 - výhody konsolidace serverů (tedy virtualizace)
 	- úspora energie, zlepšení využití serverů
 	- vyšší flexibilita při různých úrovních využití aplikace
@@ -25,9 +22,7 @@ Doplnění otázky: správa prostředí, přínosy kontejnerizace a používané
 		- pro nasazování aplikací na server, na cloud
 		- obsahují pouze 1 proces (a jeho potomky)
 		- [[Docker]]
-	
-[[Docker]]
+### [[Docker]]
 - přínosy kontejnerizace (a rozdíly oproti VMs)
-
-[[Balíčkovací systémy a sémantické verzování]]
+### [[Balíčkovací systémy a sémantické verzování]]
 - sémantické verzování

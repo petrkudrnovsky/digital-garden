@@ -1,5 +1,5 @@
 Obecně o UML zde: [[UML]], Diagram aktivit patří do skupiny diagramů chování (*behavioral diagrams*)
-- PDF [zde](https://moodle-vyuka.cvut.cz/pluginfile.php/898710/mod_resource/content/4/Activity%20Diagram.pdf ) (pouze po ČVUT ověření)
+![[Activity_Diagram.pdf]]
 
 ![[Pasted image 20230519165900.png]]
 ![[Pasted image 20230519165907.png]]
@@ -20,13 +20,9 @@ Obecně o UML zde: [[UML]], Diagram aktivit patří do skupiny diagramů chován
 
 ![[Pasted image 20230519170842.png]]
 - pokud token projde "bleskem", tak se zruší všechny akce vykonané v tom regionu
-
-
 ### Chyby v diagramu aktivit
 
-
 ![[Pasted image 20230519171037.png]]
-
 ![[Pasted image 20230519171049.png]]
 - z chyb si beru také to, že z akce vychází jen jedna šipka, veškeré rozdělování zajišťují kosočtverce a plošky
 	- do akce může vcházet více tokenů, ale samotná akce se spustí až tehdy, když jsou na všech vstupech tokeny

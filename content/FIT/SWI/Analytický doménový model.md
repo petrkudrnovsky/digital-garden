@@ -1,4 +1,4 @@
-PDF [zde](https://moodle-vyuka.cvut.cz/pluginfile.php/898721/mod_resource/content/2/Class%20Diagram%20Domain%20Model.pdf) (pouze po ČVUT ověření)
+![[Class_Diagram_Domain_Model.pdf]]
 ### Co je cílem doménového modelu?
 - popsat data, se kterými se bude pracovat
 - popis významů termínů - aby jim každý rozumněl  
@@ -20,10 +20,10 @@ Vztah mezi entitami by měl mít vždycky popis:
 
 Třídy (entity) jsou předměty, objekty z reálného světa, či podstatná jména z [[Modelování obchodních procesů|business modelů]], [[Modelování případů užití (Use Cases)|UC modelu]] či slovníčku pojmů (= glosáře, viz TUR)
 ### Násobnosti
-0..1
-0..*
-1..1 nebo jenom 1
-1..*
+- 0..1
+- 0..*
+- 1..1 nebo jenom 1
+- 1..*
 ### Modelování stavů entit
 - proč? 
 	- chci porozumět tomu, jak jednotlivé entity mění stavy (jejich životní cyklus)

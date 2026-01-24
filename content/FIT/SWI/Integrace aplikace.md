@@ -1,15 +1,12 @@
 = propojení izolovaných aplikací, které umožňuje sdílet/vyměňovat data a funkce
-
 ### Proč to zákazník dělá
 - chce využít toho, že už nějaké aplikace, které dělají nějakou práci, má (investoval do nich)
 - chce sjednocení a unifikaci dat a procesů napříč celou organizací
-
 ### Na jaké problémy můžeme narazit
 - nespolehlivá či pomalá síť/komunikace
 - různé datové formáty
 - různé jazyky
 - při změně jedné aplikace to může mít velké dopady na celou skupinu propojených aplikací
-
 ### Styly integrace
 **Přenos souborů** - sdílená data se uloží do souboru a pošlou se konzumentovi
 - možnost integrovat aplikace v různých jazycích a na různých platformách
@@ -34,13 +31,15 @@
 ### Technologie pro standardizované sdílení mezi aplikacemi
 #### SOAP (Simple Object Access Protokol)
 - průmyslový standard
-- XSD popisuje formát přenášených dat
+	- má mnoho podpůrných standardů a je typicky používán pro integraci podnikových aplikací
 - přenášená data jsou v XML
-- má mnoho podpůrných standardů a je typicky používán pro integraci podnikových aplikací
-- XML má výhodu v XSD (což je XML schéma - popisuje formáty dat)
+	- zprávy jsou obalené v tzv. "Envelope", která má Header, Body (v XML formátu) a Attachment (zbývající data, která nemohou být serializovaná v XML, např. binární soubory)
+- XML má výhodu v XSD (což je XML schéma - popisuje formát přenášených dat)
 	- XSLT - transformace do dalších formátů
 	- XPath / XQuery - dotazování
-
+- WSDL = Web Service Description Language
+	- popis webové služby v XML formátu, který klientovi poskytuje všechny potřebné informace pro připojení a používání jejích služeb/funkcí
+	    - popisuje operace služby, vstupní data, formát výstupu, umístění služby apod.
 #### REST (Representational State Transfer)
 - alternativa k SOAP
 - každý zdroj je identifikován svým URI

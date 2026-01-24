@@ -1,5 +1,4 @@
 + doplnění otázky: (principy řešení spolupráce, hlavní přínosy, používané nástroje)
-
 # Přehled nástrojů pro podporu tvorby SW
 - [[#Wiki nástroje]] - pro efektivní sdílení důležitých informací k projektu na jednom místě
 - [[#Správa úkolů, požadavků a chyb]]

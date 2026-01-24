@@ -1,5 +1,7 @@
 Narozdíl od řádkových (= klasické relační) databází ukládají jednotlivé záznamy po sloupcích. To je výhodné, když potřebuji zpracovávat a analyzovat opravdu velké množství dat.
 
+Místo tabulek mají tzv. "Column families", což jsou kolekce "podobných" řádků, jeden řádek nemusí mít všechny sloupce. Řádek tedy obsahuje kolekci sloupců (prostě data a hodnoty, které k sobě patří). Každý řádek má svůj unikátní row key.
+
 V podstatě to funguje tak, že jednotlivé hodnoty ze stejného sloupce jsou uloženy na disku sekvenčně vedle sebe - tedy se k nim dá velmi rychle dostat.
 
 *Pořád je logicky struktura dat po řádcích, akorát rozdíl je ve způsobu ukládání dat, který je výhodnější právě pro určité úlohy a každý řádek může mít rozdílný počet sloupců*
@@ -25,8 +27,12 @@ Existují "super sloupce", které jsou složené z více sloupců
 - když mám složité dotazy, tak jsou méně flexibilní
 ### Kdy chci použít sloupcovou databázi?
 - když mám velké objemy dat, které se moc nemusí měnit (aktualizovat)
+- mám strukturovaná data s podobným schématem
 - když chci analyzovat data pomocí agregačních funkcí
+### Kdy nechci použít sloupcovou databázi?
+- když ještě hodně prototypuju, tj. schéma databáze se často mění
+- když potřebuji striktně [[ACID]] transakce
 ### Příklady
-[[Apache Cassandra]]
-Amazon DynamoDB
-Apache Hbase
+- [[Apache Cassandra]]
+- [[Apache Hbase]]
+- Google Bigtable

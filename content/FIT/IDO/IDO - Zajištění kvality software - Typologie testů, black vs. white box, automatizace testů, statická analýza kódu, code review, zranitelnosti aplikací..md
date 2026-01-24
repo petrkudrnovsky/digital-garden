@@ -10,7 +10,7 @@
 - provádí se až po [[Statická analýza kódu]] - pro uspoření času kontrolujícího člověka
 - je možné vkládat komentáře, navrhovat změny a označovat si zkontrolované soubory
 ## Zranitelnost aplikací
-- OWASP TOP 10 - 10 nejzávažnějších bezpečnostních chyb, které se objevují ve webových aplikacích -> [[Bezpečnost webových aplikací]]
+- OWASP TOP 10 - 10 nejzávažnějších bezpečnostních chyb, které se objevují ve webových aplikacích -> [[Bezpečnost webových aplikací a různé útoky]]
 - další bezpečnostní rizika
 	- broken access control
 		- tím, že změním URL se dostanu tam, kam nemám a zjistím to, co nemám
@@ -18,7 +18,7 @@
 		- citlivá data se posílají přes nešifrované kanály (http)
 		- neověřuje se platnost [[Bezpečnost webového serveru#Certifikáty a řetězec důvěry|certifikátu]] 
 		- zálohy jsou uložené nešifrovaně
-	- [[Bezpečnost webových aplikací#SQL Injection|SQL injection]]
+	- [[Bezpečnost webových aplikací a různé útoky#SQL Injection|SQL injection]]
 	- injection
 		- generuje se HTML, kam může uživatel něco vložit - škodlivý skript
 	- insecure design

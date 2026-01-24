@@ -1,12 +1,12 @@
-[[Projektové řízení]]
-[[Metodiky vývoje SW]]
+Informace bokem:
+- [[Projektové řízení]]
+- [[Metodiky vývoje SW]]
 ***
 ### Definice projektu
 - časově ohraničená činnost/úsilí
 - směřuje k vytvoření unikátního produktu / služby
 - pomocí projektu se snažím dosáhnout nějaké změny
 - projekt není nějaká dlouhodobá kontinuální práce
-
 ### Jak zahájit projekt jako projektový manažer?
 1) musím celý projekt naplánovat 
 	- kolik bude potřeba času
@@ -28,7 +28,6 @@
 	- popsání dat, se kterými zákazník pracuje
 		- [[Analytický doménový model|doménový model]]
 - výsledkem je **analytická dokumentace**
-
 ### Mám všechno zanalyzované, mohu se pustit do návrhu
 - samotný návrh provádí tzv. Solution Architect
 - výsledkem je **návrhová dokumentace**
@@ -60,7 +59,6 @@
 	- předávané informace do okolí
 	- scénáře spolupráce
 5) realizace [[Modelování případů užití (Use Cases)|případů užití]]
-
 ### Samotná implementace
 - architektonické vzory
 	- je potřeba správně přidělovat zodpovědnosti (= závaznost něco dělat nebo něco vědět)
@@ -78,14 +76,12 @@
 - [[Objektové paradigma]]
 - [[Základní pravidla pro implementaci SW]]
 - [[Refaktoring kódu]] - když potřebuji změnit vnitřní strukturu kódu bez změny jeho vnějšího chování
-
 ### Kontrola své práce
 Samozřejme nechci odevzdat zákazníkovi nekvalitní projekt/kód.
 [[Quality Assurance - zajištění kvality]]
 - tam si stanovím cíle, jakých zavedení QA chci dosáhnout
 	- pozor, nemohu si dát všechny cíle - splnění nějakých cílů může znamenat zhoršení v jiných cílech aplikace
 - jedním ze způsobů, jak udržovat kvalitu aplikace je [[Testování aplikace|psaní testů]].
-
 ### Nasazení aplikace
 - provádí se se specializovanými nástroji (Maven, Gradle, npm...)
 - typicky:
@@ -96,11 +92,9 @@ Samozřejme nechci odevzdat zákazníkovi nekvalitní projekt/kód.
 	5) generování dokumentace
 - nasadit můžeme manuálně (je potřeba to celé připravit, konfigurace prostředí administrátorem), nastavování atd. -> celkem háklivé na chybu
 	- nebo automatické nasazování
-
 ### Podpora a údržba aplikace
 - je to služba pro uživatele systému a umožňuje řešit a reportovat problémy, které se během používání objeví
 - [[Podpora a údržba systému]]
-
 ### Integrace
 - samozřejmě, že zákazník chce, aby mohl zapojit novou aplikaci mezi ostatní v jeho organizaci - aby si mohly vyměňovat data a funkce
 - [[Integrace aplikace]]

@@ -1,0 +1,6 @@
+### Exam topics
+- Data model (property graphs), use cases, representatives
+- Neo4j: data model (graph, nodes, relationships, directions, labels, types, properties), property types, structural types, composite types (lists, maps), properties (fields, atomic values, arrays); Cypher language: graph matching (solutions, variable bindings); query sub/clauses (read, write, general), chaining; path patterns, node patterns (variable, labels, properties), relationship patterns (variable, types, properties, variable length), graph patterns (uniqueness requirement); MATCH clause (path patterns, OPTIONAL mode), WHERE conditions (comparisons, IS NULL predicate, IN predicate, string matching, regular expressions, path pattern predicate, existential subquery, quantifiers, logical connectives); RETURN clause (DISTINCT modifier, ORDER BY, LIMIT, and SKIP subclauses), aggregation (grouping, aggregate functions); WITH clause (motivation, subclauses); query structure (chaining of clauses, query parts, restrictions), UNION operation, map operations (static and dynamic lookup), list operations (subscript, slice, list comprehension, pattern comprehension)
+### [[Grafové databáze]]
+### [[Neo4j]]
+- [[Neo4j - cheatsheet]]

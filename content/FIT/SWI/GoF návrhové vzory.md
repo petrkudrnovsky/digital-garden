@@ -50,6 +50,7 @@ Hezky popsáno zde: https://refactoring.guru/design-patterns
 ##### [Adapter](https://refactoring.guru/design-patterns/adapter)
 - propojuje různé třídy s různým rozhraním (dodržení kompatibility mezi dvěma rozhraními)
 - konvertuje rozhraní jedné třídy na rozhraní druhé třídy
+- například core aplikace pracuje s XML formátem a potřebuji to propojit s knihovnou, která ale umí pracovat pouze s JSON
 ##### [Bridge](https://refactoring.guru/design-patterns/bridge) 
 - oddělení abstrakce od implementace, aby se mohly vyvíjet samostatně
 - abstrakce se zajímá např. o to, jaké GUI komponenty se budou používat, ale o konkrétní implementaci se nezajímá - to pak řeší ona "propojená" část - to se pak dá vyvíjet samostatně a často měnit
@@ -67,7 +68,7 @@ Hezky popsáno zde: https://refactoring.guru/design-patterns
 - obohacuje funkcionality objektů aniž by měnil jejich skutečnou implementaci
 - obalí je do jiiných objektů s přidanou funkcionalitou
 	- tímhle způsobem mohu kombinovat více funkcionalit dohromady na základě preferencí uživatele (aniž bych v kódu měl vytvořené všechny možné kombinace - to by bylo neúnosné)
-- hodně se používají v [[Python|Pythonu]]
+- hodně se používají v [[01 Python|Pythonu]]
 ##### [Flyweight](https://refactoring.guru/design-patterns/flyweight)
 - podobný jako multiton
 - nezabývá se vytvářením objektů

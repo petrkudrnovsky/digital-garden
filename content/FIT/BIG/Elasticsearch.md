@@ -4,7 +4,7 @@
 
 Obsahuje a podporuje různé textové analyzéry (včetně toho českého - rozumí skloňování) out of the box
 
-Komunikuje pomocí [[REST protokol]]ful API a přes [[HTTP protokol]]
+Komunikuje pomocí [[REST protokol]]ful API a přes [[04 Svět znalostí/IT related/Webařina/Další témata/HTTP protokol]]
 ## Principy distribuované indexace
 ##### Index
 - je to taková kolekce souvisejících dokumentů -  "tabulka jednotlivých dokumentů"

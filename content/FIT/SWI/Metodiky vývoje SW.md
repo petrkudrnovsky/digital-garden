@@ -14,7 +14,6 @@ K tomu existují i metodiky, které tyhle pracovní postupy standardizují.
 Žádná metodika není nejlepší. Je hodně potřeba ji přizpůsobit projektu. Nelze však vynechávat části, které metodika považuje za povinné.
 
 A pozor na přehnanou důvěru v metodiku, není to žádná garance úspěchu projektu.
-
 #### Klasické
 - důraz na tvorbu dokumentace
 - jsou propracovanější a složitější (někdy přidělávají až moc práce)

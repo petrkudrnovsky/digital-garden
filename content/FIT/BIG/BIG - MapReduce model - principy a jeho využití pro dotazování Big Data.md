@@ -1,5 +1,5 @@
-[[MapReduce]]
-
+### Hlavní teorie: [[MapReduce]]
+### Otázky
 > [!question]- Co je MapReduce model, kde vznikl a k čemu je dobrý?
 > Jedná se o programovací paradigma pro zpracování velkých objemů dat v distribuovaných systémech. Jeho síla je v rozdělování složitých úloh do menších, paralelně zpracovatelných částí.
 > 
@@ -19,3 +19,7 @@
 > [[Apache Spark]]
 > Přístup MapReduce není dělaný na výpočty, kde je potřeba hodně opakovaných iterací (např. strojové učení) - na to je lepší Apache Spark
 > Apache Spark je vylepšená verze Apach MapReduce + nemusí běžet na [[Hadoop#HDFS]]
+
+Celkově témata předmětu BIG:
+- [[BIG - Technologie pro Big data]]
+- [[Big Data]]

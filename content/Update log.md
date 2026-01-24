@@ -16,3 +16,9 @@ Menší úpravy po státnicích na základě zpětné vazby. Vymýšlení dalš�
 Přidání zápisků z kurzu NIE-KOP pro mé spolustudující. Jedná se o první anglické zápisky na webu, protože nyní studuji na anglickém studiu.
 ### 14. 12. 2025
 Přidání kompletních zápisků z kurzu NIE-AM1 pro mé spolustudující. 
+### 24. 1. 2026
+V průběhu konce semestru a Vánoc jsem postupně aktualizoval zahrádku následovně:
+- přidání poznámek z distančního studia UAntwerp: Machine Learning for Business a Engineering Methodologies
+- komplet NIE-PDB poznámky
+- aktualizace NIE-KOP poznámek
+Zároveň dalším mým cílem je aktualizovat jednotlivé poznámky ke státnicím z Webového inženýrství - chci poznámky sjednotit, zlepšit vizuální dojem z nich a poštelovat lepší zobrazování. 

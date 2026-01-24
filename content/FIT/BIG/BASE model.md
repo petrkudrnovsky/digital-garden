@@ -1,15 +1,17 @@
 > Basically Available, Soft State, Eventually Consistent
 
-Je to alternativa k [[ACID]] modelu v distribuovaných systémech a [[NoSQL databáze]] a [[Big Data]]
+Je to alternativa k [[ACID]] modelu v distribuovaných systémech a [[NoSQL databáze]] a [[Big Data]], jedná se spíše o vágní termín, nemá přesnou definici. 
 
 Hlavní důraz je tedy na dostupnost a toleranci vůči výpadkům před striktní konzistencí
 - viz [[CAP teorém]]
 ### Součásti
 1) Basic Availability (základní dostupnost) - pokud přijde výpadek, systém bude dál dostupný
 	- místo chyby vyhodí částečný výsledek či neaktuální data
+	- the system works basically all the time
 2) Soft State - stav databáze může být **dočasně** nekonzistentní
 	- to způsobuje např. asynchronní replikace nebo výpadky
 	- konzistence se obnovuje, ale v delším časovým horizontu (viz bod 3)
+	- systém je v nestabilním, nedeterministickým stavu
 3) Eventual Consistency - eventuelně se data sesynchronizují
 
 ### BASE vs. [[ACID]]

@@ -1,4 +1,4 @@
-- je open-source, původně od Facebooku, nyní vyvíjí Apache Software Foundation
+- je open-source, původně od Facebooku, nyní vyvíjí Apache Software Foundation, implementována v Javě
 ## Architektura
 - používá se **masterless ring architektura** (peer-to-peer) - tedy neexistuje žádný hlavní uzel, všechny uzly jsou si rovnocenné (narozdíl od **master-slave** přístupu, kde odolnost stojí a padá na master uzlu)
 	- tato architektura je velmi odolná vůči výpadku uzlu (žádný SPoF = single point of failure)
@@ -19,6 +19,7 @@
 	- hodnota *phi* udává pravděpodobnost, že je uzel mrtvý
 ##### Replikace
 - replikují se na základě **replikačního faktoru**
+- typ replikace se určuje při vytváření Keyspace
 - existuje komponenta "Partitioner", která daná data rozděluje podle dané replikační strategie
 - 2 replikační strategie:
 	- SimpleStrategy - spíš jenom na testovací účely - pro data v 1 datovém centru
@@ -44,18 +45,52 @@
 	- Column family (tabulka v relačních)
 		- definuje strukturu dat
 		- pokud chci nějaká data číst společně, je vhodné na to vytvořit column family
+		- počet sloupců je libovolný pro každý řádek, ale primary key musí být vždy přítomný
 	- Row - nemá pevnou strukturu, každý řádek může obsahovat jiný počet sloupců
+		- je to kolekce sloupců
+		- každý řádek má unikátní row key
 	- Column
+		- a pair of column name + column value (+ possible additional metadata)
+			- metadata: TTL (pro dočasná data), timestamp (last modified)
+		- může mít hodnoty:
+			- null, atomické hodnoty (text, čísla, datum, tuples, UDT (user-defined type))
+			- kolekce (lists, sets and maps)
 	- Super Column = tabulka v tabulce
 		- objekt rozšiřujeme o další vnořený objekt (časté využití)
 ![[Pasted image 20241208190156.png]]
 - primární klíč
 	- složený z partition klíče a jednoho či více clustering klíčů
-		- partition - definuje, na jakém uzlu se data uloží (na základě hashové hodnoty)
-		- clustering - určuje pořadí dat na daném uzlu
-##### CQL - Cassandra Query Language
-- je to SQLko bez joinů
-- je možné definovat svoje uživatelské datové typy
+		- partition - definuje, na jakém uzlu/shardu se data uloží (na základě hashové hodnoty)
+		- clustering - určuje pořadí dat na daném uzlu, podle něj se implicitně sortí
+- zajímavé datové typy:
+	- varint - integer s libovolnou přesností 
+	- counter - 8B signed integer
+		- podporuje pouze operace inkrement/dekrement, nemůže být součástí primárního klíče, TTL není podporováno a buď jsou všechny sloupce v tabulce countery nebo žádný z nich (to plyne z interní implementace)
+		- také se jedné o CRDT (podobně jako v [[PDB - 7. lecture - RiakKV#RiakKV|RiakKV]])
+	- sets and maps
+		- are internally sorted
+### CQL - Cassandra Query Language
+- je to SQLko bez joinů (je také deklarativní)
+- je možné definovat svoje uživatelské datové typy (UDTs)
+- lze používat v CQLSH, což je interaktivní command line shell pro práci s Apache Cassandra
+##### Selekce
+- WHERE má poměrně striktní pravidla (která plynou z architektury a distribuované povahy databáze)
+	- podmínky mohu klást jenom na partition keys (pokud nepovolím ALLOW FILTERING)
+	- pokud použiji cluster columns, musím je použít v tom pořadí, ve kterém jsou definované (a nesmím nějaké přeskočit)
+	- pokud chci podmínky i na non-key sloupcích, musím používat sekundární indexy nebo ALLOW FILTERING
+- v Apache Cassandra se struktura databáze designuje na budoucí strukturu dotazů (tj. je to trochu opačně než u např. relačních databází) - každá tabulka se pak optimalizuje tak, aby co nejvíce vyhovovala (nejčastějším) dotazům
+- ORDER BY - pouze podle clustering keys/columns
+- GROUP BY - pouze podle partition key columns
+- ALLOW FILTERING
+	- provede se sken jednotlivých partitions a vyhledá se hledaná hodnota
+	- toto může být velmi neefektivní na velkých tabulkách, proto se to v produkci příliš nepoužívá
+##### Insert
+- vždy musí být vloženy alespoň hodnoty partition key sloupce/sloupců a (pokud je mám definované) cluster key values (protože dohromady pak formují kompletní primary key)
+- Cassandra nikdy automaticky negeneruje primary keys
+##### Update
+- pokud aktualizovaný záznam v tabulce není, je vložen
+##### Delete
+- může smazat celý řádek, pouze nějaké sloupce, elementy kolekcí a nebo pole v UDTs
 ## Distribuce dat
 - data se dělí pomocí Partition key (rozděluje se na základě hashování, aby byla data konzistentně rozdělená mezi uzly)
 - replikační faktor 3 = data budou uložena na 3 uzlech
@@ -65,6 +100,7 @@
 	- ALL: všechny repliky musí odpovědět
 - kvůli distribuci dat Cassandra nativně nepodporuje operace, které vyžadují iteraci přes všechny hodnoty v jednom sloupci - jednotlivé části dat jsou po různých částech systému (díky partition keys), takže proiterovat je všechny by bylo velmi výpočetně náročné
 	- lepší jsou agregační funkce, které jsou dobře zacílené (na jeden partition)
+	- a já tedy (stejně jako designuju celou databázi podle toho, jaké chci mít hlavní dotazy), tak designuju i partition key tak, aby data, která chci mít ve shardu společně byly ve shardu společně (používá se konzistentní hashování, takže to jde)
 ## CAP teorém
 Základní nastavení (AP):
 ![[Pasted image 20241208191630.png]]
