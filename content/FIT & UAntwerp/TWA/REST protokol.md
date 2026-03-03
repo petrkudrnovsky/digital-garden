@@ -60,7 +60,7 @@ Konečný počet operací - požadavek na REST.
 	- Tak stejně funguje HATEOAS
 ##### Atom Syndication format
 - Jeden ze způsobů, jak reprezentovat odkazy, které v rámci HATEOAS chodí s response
-- Jedná se o standardizovaný formát (původně využívaný na RSS), založený na [[XML]]
+- Jedná se o standardizovaný formát (původně využívaný na RSS), založený na [[FIT & UAntwerp/MDF/XML]]
 - Je standardizovaný, ale už se tolik nepoužívá (spíš HAL a JSON-LD se teď používají)
 	- `rel` - název odkazu, který většinou sémanticky ukazuje smysl/operaci daného linku
 		- např. pro navigaci může mít `rel` hodnoty: next, previous, self

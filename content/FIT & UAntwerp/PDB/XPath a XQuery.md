@@ -10,7 +10,7 @@
 	- = ordered collection of nodes and/or literals
 	- the values are automatically flattened (I won't see the original hierarchical structure, just results), duplicate items are allowed, can be empty `()` 
 # XPath
-- umí vybírat části [[XML]] dokumentu na základě hierarchické cesty
+- umí vybírat části [[FIT & UAntwerp/PDB/XML]] dokumentu na základě hierarchické cesty
 - příklady:
 	- absolutní cesta:
 		- `/` nebo `/movies` nebo `/movies/movie/actor`
@@ -102,9 +102,9 @@
 	- avg() - průměr
 	- count() - počet nodů
 	- string-join() - spojování textových hodnot
-- je to stavební kámen pro [[#XQuery]] a [[XML#XSLT|XSLT]]
+- je to stavební kámen pro [[#XQuery]] a [[FIT & UAntwerp/PDB/XML#XSLT|XSLT]]
 # XQuery
-- dotazovací jazyk pro [[XML]]
+- dotazovací jazyk pro [[FIT & UAntwerp/PDB/XML]]
 - umožňuje vybírat části XML (pomocí [[#XPath]])
 - umí dělat transformace a výpočty nad XML daty
 - umí vytvářet nové XML dokumenty (podle dotazu či transformace)

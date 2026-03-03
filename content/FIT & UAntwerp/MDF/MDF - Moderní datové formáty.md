@@ -19,7 +19,7 @@
 - tabulky - relační modely
 ##### Datové formáty
 - jak jsou data v rámci daného [[#Datové modely|datového modelu]] serializovaná v souborech, jak jsou reprezentovaná
-- např. DOM je reprezentovaný v [[XML]] či [[HTML]]
+- např. DOM je reprezentovaný v [[FIT & UAntwerp/MDF/XML]] či [[HTML]]
 	- relační data v CSV či SQL dump
 	- grafová [[RDF]] data jsou v:
 		- textové formě: N-Triples, N-Quads, Turtle, TriG, RDF/XML, JSON-LD, RDFa

@@ -44,7 +44,7 @@ Předmět je rozdělen na dvě hlavní části:
 	- [[Postgres - záloha a obnovení]]
 - [[Neo4j]]
 	- [[Big Data - Proč používat něco jiného než RDBMS]] - komentář od Valenty
-	- propojení na předmět [[BIG - Technologie pro Big data]]
+	- propojení na předmět [[BIG - technologie pro Big data]]
 ***
 # SZZ otázky
 

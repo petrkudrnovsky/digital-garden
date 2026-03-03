@@ -11,5 +11,5 @@
 > [[NoSQL databáze]] - v každé poznámce je vztah k CAP teorému
 
 Celkově témata předmětu BIG:
-- [[BIG - Technologie pro Big data]]
+- [[BIG - technologie pro Big data]]
 - [[Big Data]]

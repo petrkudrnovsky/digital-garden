@@ -5,23 +5,24 @@ Zde najdete jednotlivé předměty bakalářského studia na FITu - zápisky zde
 Dále uvádím kompletní seznam vypracovaných státnicových otázek pro webové inženýrství:
 ### [[SZZ otázky]]
 
-Zápisky z jednotlivých předmětů BAKALÁŘ
+Zápisky z jednotlivých předmětů BAKALÁŘ (specializace Webové inženýrství)
 - [[AWD - Administrace webového a databázového systému]] komplet
-- [[BIG - Technologie pro Big data]] komplet
+- [[BIG - technologie pro Big data]] komplet
 - [[IDO - Úvod do DevOps]] pouze na SZZ
-- [[SWI - Softwarové inženýrství]] komplet
+- [[SWI - softwarové inženýrství]] komplet
 - [[TUR - Tvorba uživatelských rozhraní]] komplet
 - [[TWA - tvorba webových aplikací]] komplet
 - [[VWM - Vyhledávání na webu a v multimediálních databázích]] pouze na SZZ
 - [[MDF - Moderní datové formáty]] pouze na SZZ
 - [[Javascript|PJS - Programování v Javascriptu]] komplet
 
-Zápisky z jednotlivých předmětů MAGISTR
+Zápisky z jednotlivých předmětů MAGISTR (specializace Digital business engineering)
 - [[KOP - Combinatorial Optimization]] - final lecture notes
 - [[AM1 - Architecture of Middleware 1]] - final lecture notes
-- [[Engineering and design science methodologies]] - final lecture notes
-- [[Machine learning for business]] - final lecture and tutorial notes
 - [[PDB - Advanced Database Systems]] - final lecture notes + tutorial cheatsheets
+- UAntwerp courses:
+	- [[Engineering and design science methodologies]] - final lecture notes
+	- [[Machine learning for business]] - final lecture and tutorial notes
 
 Pro další předměty a popřípadně jiné vysvětlení doporučuji další digitální zahrádku od kolegy na FITu: https://obsidian.jancerny.dev/
 ***

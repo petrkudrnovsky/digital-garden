@@ -34,5 +34,5 @@ Existují "super sloupce", které jsou složené z více sloupců
 - když potřebuji striktně [[ACID]] transakce
 ### Příklady
 - [[Apache Cassandra]]
-- [[Apache Hbase]]
+- [[Apache HBase]]
 - Google Bigtable

@@ -12,5 +12,5 @@
 	- [[Hadoop#YARN|YARN]] - spravuje zdroje v clusteru, které potřebují aplikace jako je [[Apache Spark]] a [[Apache HBase]]
 
 Celkově témata předmětu BIG:
-- [[BIG - Technologie pro Big data]]
+- [[BIG - technologie pro Big data]]
 - [[Big Data]]

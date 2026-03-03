@@ -1,5 +1,5 @@
 - = Simple Object Access Protocol
-- posílání strukturovaných zpráv je pomocí [[XML]] přes [[HTTP protokol]] (či jiné protokoly (SMTP, JMS))
+- posílání strukturovaných zpráv je pomocí [[FIT & UAntwerp/MDF/XML]] přes [[HTTP protokol]] (či jiné protokoly (SMTP, JMS))
 - zajišťuje komunikaci mezi komponentami systému
 - hodně balastu kolem, je to hodně strikně typované (není to kvůli tomu tolik oblíbené)
 	- díky tomu oblíbené ve státní správě a bankovnictví -> je to spolehlivé

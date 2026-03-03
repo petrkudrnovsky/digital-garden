@@ -54,4 +54,4 @@
 ##### Pattern mining
 - for finding patterns, associations, relationships in large datasets
 - e.g. finding items that are often purchased together
-- [[MLB 8. lecture - Text and Association rules mining#Association rule mining]]
+- [[MLB 8. lecture - Text and Association rules Mining#Association rule mining]]

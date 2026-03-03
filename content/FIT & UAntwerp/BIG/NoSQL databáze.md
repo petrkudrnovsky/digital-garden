@@ -38,7 +38,7 @@ Další druhy mohou být:
 	- dokumenty jsou v kolekcích (podobně jako v [[Dokumentově orientovaná databáze]])
 	- stromová struktura (XML), nested elements, attributes, text values
 	- Sedna, Tamino, MarkLogic
-	- [[XML]]
+	- [[FIT & UAntwerp/MDF/XML]]
 - [[RDF]] databáze (případ grafových databází)
 	- dotazovací jazyk [[SPARQL]]
 	- triples (subject, predicate, object) can be viewed as graphs

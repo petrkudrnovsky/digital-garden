@@ -21,5 +21,5 @@
 > Apache Spark je vylepšená verze Apach MapReduce + nemusí běžet na [[Hadoop#HDFS]]
 
 Celkově témata předmětu BIG:
-- [[BIG - Technologie pro Big data]]
+- [[BIG - technologie pro Big data]]
 - [[Big Data]]

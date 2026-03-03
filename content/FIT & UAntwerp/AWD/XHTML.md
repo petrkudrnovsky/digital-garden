@@ -1,6 +1,6 @@
 *Extensible Hyper Text Markup Language*
 
-Je to "přísnější" verze [[HTML]], je to HTML postavené na [[XML]] pravidlech. Měla sloužit k tomu, že jak pak byla syntakticky správně, tak pak se s tím dál strojově lépe pracovalo.
+Je to "přísnější" verze [[HTML]], je to HTML postavené na [[FIT & UAntwerp/MDF/XML]] pravidlech. Měla sloužit k tomu, že jak pak byla syntakticky správně, tak pak se s tím dál strojově lépe pracovalo.
 
 > [!warning] Nepoužívá se
 > Už se nepoužívá, nahradilo ho [[HTML#HTML5|HTML 5]], které umožňuje XML-like syntax a je flexibilnější 

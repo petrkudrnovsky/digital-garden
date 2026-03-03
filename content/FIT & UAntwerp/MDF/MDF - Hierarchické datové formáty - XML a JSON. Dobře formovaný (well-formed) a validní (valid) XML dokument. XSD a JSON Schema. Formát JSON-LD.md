@@ -3,9 +3,9 @@
 - takový formát, který ukládá data do určité hierarchie, stromu
 - tedy taková data mají kořen, rodičovské a potomkové uzly
 - data můžeme vnořovat do sebe
-- příklady: [[XML]], [[JSON]], YAML
+- příklady: [[FIT & UAntwerp/MDF/XML]], [[JSON]], YAML
 
-- [[XML]]
+- [[FIT & UAntwerp/MDF/XML]]
 - [[JSON]]
 
 ***

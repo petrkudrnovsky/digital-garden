@@ -4,7 +4,7 @@ Všechno důležité najdu zde na [MDN Web Docs](https://developer.mozilla.org/e
 - není to programovací jazyk, pouze značkovací jazyk, který udává strukturu dokumentu a propojuje stránky pomocí odkazů
 - povinná deklarace: `<!DOCTYPE html>` (povinná od verze 4)
 	- [[Problém hlavičky HTML v kontextu HTTP protokolu]]
-- podobný [[XML]] - existuje [[XHTML]]
+- podobný [[FIT & UAntwerp/MDF/XML]] - existuje [[XHTML]]
 - meta data: autor - člověk, který je zodpovědný za tu stránku
 	- `<meta name="author" content="Jan Novák">`
 

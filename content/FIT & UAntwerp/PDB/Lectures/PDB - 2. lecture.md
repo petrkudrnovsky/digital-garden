@@ -2,7 +2,7 @@
 - XML: constructs (element, attribute, text, …), content model (empty, text, elements, mixed), entities, well-formedness; document and data oriented XML
 - JSON: constructs (object, array, value), types of values (strings, numbers, …); BSON: document structure (elements, type selectors, property names and values)
 - RDF: data model (resources, referents, values), triples (subject, predicate, object), statements, blank nodes, IRI identifiers, literals (types, language tags); graph representation (vertices, edges); N-Triples notation (RDF file, statements, triple components, literals, IRI references); Turtle notation (TTL file, prefix definitions, triples, object and predicate-object lists, blank nodes, prefixed names, literals)
-# [[XML]]
+# [[FIT & UAntwerp/MDF/XML]]
 - tips:
 	- empty elements are abbreviated: `<actors />` instead of `<actors></actors>`
 	- it's preffered to use double quotes only
