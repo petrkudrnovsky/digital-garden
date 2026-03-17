@@ -1,4 +1,4 @@
-Here are complete notes from all lectures presented at the Machine learning for business and UAntwerp. The information from tutorial slides are already included in the lecture notes.
+Here are complete notes from all lectures presented at the Machine learning for business at UAntwerp. The information from tutorial slides are already included in the lecture notes.
 ### Lectures
 - [[MLB 1. lecture - Intro to Machine Learning]]
 - [[MLB 2. lecture - CRISP-DM]]
