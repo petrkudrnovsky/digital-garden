@@ -21,4 +21,6 @@ V průběhu konce semestru a Vánoc jsem postupně aktualizoval zahrádku násle
 - přidání poznámek z distančního studia UAntwerp: Machine Learning for Business a Engineering Methodologies
 - komplet NIE-PDB poznámky
 - aktualizace NIE-KOP poznámek
-Zároveň dalším mým cílem je aktualizovat jednotlivé poznámky ke státnicím z Webového inženýrství - chci poznámky sjednotit, zlepšit vizuální dojem z nich a poštelovat lepší zobrazování. 
+Zároveň dalším mým cílem je aktualizovat jednotlivé poznámky ke státnicím z Webového inženýrství - chci poznámky sjednotit, zlepšit vizuální dojem z nich a poštelovat lepší zobrazování.
+### 18. 3. 2026
+Další aktualizace poznámek, teď už z letního semestru (NIE-NSS a Empirical Research in MIS) pro mé kolegy a kohokoliv dalšího, kdo si je bude chtít přečíst.

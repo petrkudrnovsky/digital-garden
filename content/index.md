@@ -6,7 +6,7 @@ description: Toto je úvodní poznámka do mé digitální zahrady. Všichni jst
 aliases:
 ---
 Zde jsou hlavní odkazy:
-# [[Rozcestník]]
+# [[Rozcestník]] poznámek
 # [[Blog]]
 
 ***

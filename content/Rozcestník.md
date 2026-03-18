@@ -20,6 +20,7 @@ Zápisky z jednotlivých předmětů MAGISTR (specializace Digital business engi
 - [[KOP - Combinatorial Optimization]] - final lecture notes
 - [[AM1 - Architecture of Middleware 1]] - final lecture notes
 - [[PDB - Advanced Database Systems]] - final lecture notes + tutorial cheatsheets
+- [[NS]]
 - UAntwerp courses:
 	- [[Engineering and design science methodologies]] - final lecture notes
 	- [[Machine learning for business]] - final lecture and tutorial notes
