@@ -6,9 +6,9 @@
 ### Mixed methods
 - they are about using multiple different methods to study the phenomena, collect data, analyze data, interpret data etc.
 	- combining qualitative and quantitative methods within one study to get better picture of what, how much and also why and how of the research
-- all methods are based in one starting Research question and they all finish in meta-inference
+- all methods are based in one Research question and they all finish in meta-inference
 	- meta-inference is the overall conclusion drawn from integrating conclusions from all methods used
-		- do they complement each other, contradict, or converge (they strengthen each other)
+		- they complement each other, contradict, or converge (they strengthen each other)
 - types:
 	- sequential mixed method design
 	- conversion mixed method design
@@ -25,6 +25,6 @@
 - difficult for a single researcher to carry out both approaches, especially concurrently
 - the researcher must learn multiple methods and how to mix them appropriately
 - methodological purists argue one should always work within a single paradigm
-- more resource-intensive and time-consuming than single-method research
+- it is more resource-intensive and time-consuming than single-method research
 - some methodological details are still debated (paradigm mixing, how to analyze quantitative data qualitatively, interpreting conflicting results)
 - can be difficult to publish due to requiring more space

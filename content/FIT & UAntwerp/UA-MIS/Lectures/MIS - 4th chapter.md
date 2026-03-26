@@ -12,7 +12,7 @@
 		- prediction
 		- design
 		- list of hypotheses (they need to be grounded and justified)
-	- theory is not ideografic (= explanation of a single situation)
+	- theory is not ideografic (= explanation of a single, specific situation)
 ### Key building block of a theory
 - Constructs ("What?")
 	- they can have different roles: independent/dependent/mediating and moderating constructs
@@ -43,9 +43,9 @@
 ##### IV. Explanation and prediction (EP)
 - Says what is, how, why, when, where, and what will be. Provides predictions and has both testable propositions and causal explanations.
 ##### V. Design and action
-- Says how to do something. The theory gives explicit prescriptions (e.g., methods, techniques, principles of form and function) for constructing an artifact.
+- Says how to do something. The theory gives explicit prescriptions (e.g., methods, techniques, principles of form and function) for constructing an artefact.
 - Aimed for designing an artefact
 - Design Science Research
 ##### Relationships between theory types
-- we usually move from the analysi upwards (according to the diagram)
+- we usually move from the analysis upwards (according to the diagram)
 ![[Pasted image 20260316192528.png]]

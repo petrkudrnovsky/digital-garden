@@ -8,6 +8,8 @@ Complete notes from the lectures at the Empirical Research in MIS course at UAnt
 - [[MIS - 5th chapter - Qualitative research methods]]
 - [[MIS - 5th chapter- Mixed methods and Design science]]
 ### Other resources
+- AI summary of the course from notes: [[MIS - course summary]]
+- AI generated multichoice exam: [[MIS - multichoice exam prep]]
 - All theories in IS research described: https://is.theorizeit.org/wiki/Main_Page
 - IS research methodologies: https://aisnet.org/page/ISResearch
 - Paper summaries:

@@ -13,16 +13,17 @@
 		- 2) independent variables
 		- 3) confounders - a variable that is related to both the dependent and independent variable (at least partially)
 			- why to notice them?
-				- because if we don't take them into account, we can think that there is a relationship between A and B (but there is a confounder C driving/influencing them both)
+				- because if we don't take them into account, we can think that there is a relationship between A and B (but there is actually a confounder C driving/influencing them both)
 				- e.g. "IT investments" (independent) -> "company performance"
 					- the confounder is the company's size (because different sizes of companies have different IT investments, different scenarios, and different performance drivers)
 			- we can control them by using control variables
 		- 4) control variables
 			- a) keeping the confounder constant in the study (e.g. study only companies of the same/similar size)
+				- one way of eliminating the impact of the confounder is to identify it and freeze it at some constant value
 			- b) measure them and include them in the statistical model (e.g. add the company size as variable to the regression - this way I can isolate the effect of IT investment on company's performance after accounting for the company size)
 				- = testing the hypothesis over all possible values of the confounder
 		- 5) mediator variables
-			- mediator variables "sit" in between independent variable and dependent variable (A influences the mediator and the mediator influence the B)
+			- mediator variables "sit" in between independent variable and dependent variable (A influences the mediator and the mediator influences B)
 			- there are two types of mediation:
 				- full mediation
 					- e.g. IT governance -> business/IT alignment -> business value from IT
@@ -39,17 +40,17 @@
 			- binary vs. polytomous (more than two categories)
 			- useful is frequency analysis (e.g. how many subjects in each category)
 		- quantitative variables
-			- on the level of interval and ratio measurement levels
+			- on the level of interval and ratio measurement levels (see below)
 			- a lot of statistical analyses can be performed
 ### Quality criteria
 - 1) reliability
-	- if we find consistent results if we replicate the study
+	- if we replicate the study, we can find consistent results
 - 2) validity
 	- if the conclusions based on the study are true
 	- a) construct validity = the methods are really measuring and manipulating the properties that we intend them to, this is a prerequisite for internal and external validity
-	- b) internal validity = to observed effect is actually due to the hypothesized cause 
-		- what we meant that will cause X to happen, was actually caused by X
-		- the risk here are confounders (they may affect the variables, so X happens as well, but not because of what we meant will cause it)
+	- b) internal validity = the observed effect is actually due to the hypothesized cause 
+		- what we meant that will cause X to happen, was actually really caused by Y
+		- the risk here are confounders (they may affect the variables, so X happens as well, but not because of Y (what we meant will cause it))
 	- c) external validity = the hypothesized relationship also holds in other settings (e.g. other groups, industries, times etc.)
 ### Measurement
 - what is operationalization? 
@@ -64,7 +65,7 @@
 		- it has a meaningful zero point (zero means "none of this thing exist")
 			- e.g. 0 °C does not mean that temperature does not exist, it cannot be relatively compared to different temperatures, and the relational ratios change when converting to Fahrenheit
 			- but 0 cm means no length at all, in every unit system
-				- meaninful zero also means we can do relative ratios (10 cm is twice as much as 20 cm, which holds in every unit system)
+				- meaninful zero also means we can do relative ratios (20 cm is twice as much as 10 cm, which holds in every unit system)
 	- according to the reached level of measurement, we can choose a correct statistical tool to get interesting insights
 - measurement reliability and validity:
 	- validity = the choosen instrument is measuring the construct we intended to measure
@@ -99,7 +100,7 @@
 		- c) stratified random sampling (divide population into mutually exclusive strata and then do simple random sampling from each strata)
 	- non-probability sampling:
 		- some elements have zero probability of being selected or their probability is unknown (we cannot claim a representative sample)
-		- a) convenience sampling (selected elements are easy to get, e.g. in the case study)
+		- a) convenience sampling (elements are easy/convenient to get are selected, e.g. in the case study)
 		- b) snowball sampling (small group is selected, then they are asked to get other participants)
 			- e.g. Delphi study and focus groups
 		- c) purposive sampling - elements are chosen based on the judgement of the researcher
@@ -109,14 +110,14 @@
 - regression analysis - test of the relationship between independent variables and one dependent variable
 	- e.g. if the IT investment predicts the company's performance
 - tests of mean differences:
-	- Independent samples t-test (difference between two groups on single, continuous dependent variable)
-		- $H_0$ = means of the group are equal
+	- Independent samples t-test (difference between two groups on single, continuous and dependent variable)
+		- $H_0$ = means of the groups are equal
 		- e.g. measuring differences between companies adopting COBIT or not on their performance
 	- Independent samples z-test (difference between two groups on a single proportion)
 		- $H_0$ = proportions (percentages) are equal
 	- ANOVA (difference between more than two groups on a single, continuous variable)
 		- test if all means are equal ($H_0$)
-		- the idea is not to run multiple t-tests, but run the on all groups simultaneously
+		- the idea is not to run multiple t-tests, but run the test on all groups simultaneously
 		- if the test is significant, it also finds where the differences are (some post-hoc tests are used to find out)
 	- ANCOVA (extension of ANOVA which controls the effect of covariates on the dependent variable)
 		- it just handles the confounders statistically
@@ -128,19 +129,24 @@
 		- when sample is divided into two or more independent groups and we are measuring differences in more than two time-points
 		- e.g. measure business/IT alignment before, during, and after COBIT 5 adoption in small and large organizations
 ### Latent constructs/models
-- variables like age are directly measured, variables like happiness and indirectly inferred through observed variables
+- variables like age are measured directly, variables like happiness and indirectly inferred through observed variables (we need to observe multiple variables to infer the latent construct/variable)
 - factor analysis = look how observed variables cluster under latent dimensions
 	- exploratory factor analysis (exploring the underlying factor structure and try to explain it theoretically)
-		- e.g. "I like people", "I don't mind presenting", "I am often in the center of attention" will cluster in a cluster, which we could label "extraversion"
-		- I can run survey without strong theoretical basis and to see, which clusters show
+		- e.g. "I like people", "I don't mind presenting", "I am often in the center of attention" will cluster in a cluster/factor, which we could label "extraversion"
+		- the factor analysis looks at the correlations between all variables and "discovers" that some variables highly correlate with each other (they are probably driven by a common underlying factor)
+			- the factor themselves cannot be directly measured, they have to be inferred from other measured variables (that's why they are "latent")
+			- the researcher can then label the factor (according to his justification)
+		- I can run survey without strong theoretical basis and see, which clusters show up
 	- confirmatory factor analysis (formally testing the hypothesis of a specific factor structure)
 		- we can test test variable "extraversion" with the new dataset
 		- it takes the clusters from the exploratory factor analysis and tests them as hypothesis against a new dataset to see, if the data patterns actually fit
-	- structural equation modelling (regression with latent variables)
+	- structural equation modelling - SEM (regression with latent variables)
 		- we can assess the effect of extraversion on hapiness (measuring causal relationships between latent constructs)
 - two types:
 	- reflective latent constructs
 		- the hypothesis is that the reflective latent construct influences/causes changes in all the indicators
+		- e.g. I score high on "I like parties" because I am extraverted (the latent construct "extraversion" causes the variables)
 	- formative latent constructs
 		- the hypothesis is that the all the indicators represent some part of the formative latent construct (their changes cause changes in to latent construct)
+		- e.g. my education, the income etc. variables form my latent variable "socioeconomic status"
 	- ![[Pasted image 20260317182755.png]]

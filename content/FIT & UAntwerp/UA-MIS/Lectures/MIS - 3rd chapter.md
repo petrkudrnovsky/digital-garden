@@ -74,7 +74,7 @@
 > [!summary] Systematic literature review (SLR)
 > There are actually 2 ways how to get information from existing literature.
 > 1) ad-hoc literature review = just going through papers and books for the first research proposal, to see, what is available, where are the gaps etc. 
-> 	- that is good, but it is not systematic and often it does not lead you anywhere in the actual research
+> 	- that is good for initial research, but it is not systematic and organized (= one of the properties of a proper scientific method), so it cannot be repeated
 > 2) SLR = a whole theory (research strategy) about doing the literature review "the right way", so I can formulate my research question properly and build the theoretical foundations needed to position my research correctly
 > 	- it should be unbiased and rigorous
 > 	- it has to be properly documented, so it is clear, what was done and how (which books were included, which not and why)

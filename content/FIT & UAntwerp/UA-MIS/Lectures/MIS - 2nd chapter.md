@@ -1,6 +1,6 @@
 MIS = Management Information Systems
 # What is science?
-- long answer is here: [[Engineering and design science methodologies]] and specifically [[EDSM - 1. lecture - A1]]
+- long answer is here: [[Engineering and design science methodologies - hub]] and specifically [[EDSM - 1. lecture - A1]]
 - it's about getting facts through proper science methods in a systematic and organized way
 	- it has to be falzifiable, questionable, done through defined and repeatable experiments etc.
 - we create a "body of knowledge" and by doing scientific research, we contribute to it
@@ -27,6 +27,6 @@ MIS = Management Information Systems
 			- more on constructs and variables in [[MIS - 5th chapter - Quantitative research methods]]
 
 > [!tldr] IS research is a science
-> IS research is a "Design Science", which is a bit different kind of science from the classical science (like physics, mathematics), natural sciences (biology, chemistry) and social science (sociology, psychology).
+> IS research is a "Design Science", which is a bit different kind of science from the classical science (like physics, mathematics), natural science (biology, chemistry) and social science (sociology, psychology).
 > 
-> As [[EDSM - 2. lecture - A2#Design science in Information Systems]] says, it combines science approaches (rigor, replicability, knowledge base, falsification) and engineering principles (learning by doing, evaluating and testing, prototypes etc.). IS research cycle consists of two main loops: 1) Environment loop (meeting the needs of the real world) and 2) Knowledge base loop (storing new information, principles, methods from experience from prototyping and feedback)
+> As [[EDSM - 2. lecture - A2#Design science in Information Systems]] says, it combines science approaches (rigor, replicability, knowledge base, falsification) and engineering principles (learning by doing, evaluating and testing, prototypes etc.). IS research cycle consists of two main loops: 1) Environment loop (meeting the needs of the real world) and 2) Knowledge base loop (storing new information, principles, methods from experience from prototyping and feedback). And then the central Design cycle loops through improving the artefact and testing/evaluating it.

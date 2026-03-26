@@ -16,12 +16,12 @@
 	- possible inaccuracy (poor answers), bias
 ### Observation
 - direct observation (researcher is not involved)
-	- sitting in meetings, observing, how people work, take notes, do not participate
+	- sitting in meetings, observing how people work, taking notes, not participating
 - participant observation (researcher is involved)
 	- researcher participates, which gives a better insight, but the participation influences, what happens
 ### Documentation
 - analyzing documents as data sources (meeting minutes, policy documents, emails, project reports, system logs etc.)
-- documents are valuable, because they were not created for the research, so they don't suffer from reflexivity
+- documents are valuable, because they were not created for the research, so they don't suffer from reflexivity (inteviews do suffer from it)
 - types of documents
 	- structured (financial reports)
 	- semi-structured  
@@ -35,6 +35,7 @@
 	- theories (different theoretical lenses)
 # Data analysis techniques
 - coding = assigning labels to chunks of data
+- coding has a process:
 	- 1) open coding = uncovering concepts with data, then labelling them with higher-level categories
 		- going line by line and labelling what I see
 	- 2) axial coding = organizing concepts into causal relationships
@@ -43,7 +44,7 @@
 		- out of used codes and relationships -> central points
 - memoing = subjective reflection about what was happening
 	- useful for guiding the future research
-	- e.g. when doing coding => write the researchers inside thoughts, interesting connections, relations with other researches etc.
+	- e.g. when doing coding => the researcher writes his inside thoughts, interesting connections, relations with other researches etc.
 - critical incidents
 	- identify and examine series of events (to explore relationships between constructs)
 	- not analyzing everything, only the critical points
@@ -68,7 +69,7 @@
 - benefits:
 	- richness, depth, real-world context, new emerging concepts
 - drawbacks:
-	- problems with (controlled deduction, replicability, control mechanisms)
+	- problems with controlled deduction, replicability, control mechanisms
 - ![[Pasted image 20260317190838.png]]
 # Action research
 - introducing changes or interventions to some context and studying the effects 
@@ -77,6 +78,8 @@
 	- actually making my hands dirty distinguishes this method from pure consulting
 	- we can use the experience in another cycle (building knowledge base)
 - ![[Pasted image 20260317191103.png]]
+- podobný proces jako the Lean startup ([[HCM - 7. přednáška]])
+	- ![[Pasted image 20251107111630.png|400]]
 # Grounded theory
 - a new theory, which is inductively generated based on (grounded in) qualitative data that is systematically collected and analysed
 	- we do not start with theory or with a strong theoretical framework
