@@ -6,12 +6,13 @@ description: Toto je úvodní poznámka do mé digitální zahrady. Všichni jst
 aliases:
 ---
 Zde jsou hlavní odkazy:
-# [[Rozcestník]] poznámek
-# [[Blog]]
+- [[Rozcestník]] všech poznámek
+- Můj [[Blog]]
+- Moje [webová stránka](https://www.petrkudrnovsky.cz/) 
 
 ***
 ### Úvodní slovo
-Jmenuji se Petr, je mi 24 let a rád zkouším nové věci! A tohle je moje digitální zahrada, malinký fragment mého mozku, který si tady na internetu pěstuji. Budu moc rád, když zabrouzdáte do mých poznámek, přečtete si ty, které Vás zajímají a pokud Vám nějak pomůžou či Vás nějak inspirují, tak budu mít velkou radost.
+Jmenuji se Petr a rád zkouším nové věci! A tohle je moje digitální zahrada, malinký fragment mého mozku, který si tady na internetu pěstuji. Budu moc rád, když zabrouzdáte do mých poznámek, přečtete si ty, které Vás zajímají a pokud Vám nějak pomůžou či Vás nějak inspirují, tak budu mít velkou radost.
 
 Chci vyzkoušet a zkombinovat několik metod a způsobů, o kterých jsem v posledních měsících zakopl. Jak funguje metoda *Learning in public*? Funguje opravdu *Zettelkasten*? Jak si nejlépe uspořádat poznámky tak, abych se k nim rád vracel a měly pro mě hodnotu i v budoucnosti?
 

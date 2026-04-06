@@ -1,4 +1,3 @@
-![[Class_Diagram_Domain_Model.pdf]]
 ### Co je cílem doménového modelu?
 - popsat data, se kterými se bude pracovat
 - popis významů termínů - aby jim každý rozumněl  

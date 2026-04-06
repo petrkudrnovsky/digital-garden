@@ -3,20 +3,13 @@
 - fungující SW > dokumentace
 - spolupráce se zákazníkem > vyjednávání o smlouvě
 - reagování na změny > dodržování plánu
-
 ### Principy
-Největší priorita je vyhovět zákazníkovi častým dodáváním hodnotného softwaru. Změny v požadavcích v pozdějších fázích vývoje nejsou takový problém.
-
-Lidé z businessu a vývoje musí na projektu spolupracovat denně a po celou dobu projektu. 
-
-Vytváří se prostředí pro jednotlivce, podporujeme je a důvěřujeme jim, že odvedou dobrou práci. 
-
-Nejúčinnější a nejefektivnější způsob sdělování informací je **osobní konverzace**.
-
-Měřítko pokroku je fungující software.
-
-Tým se pravidelně zamýšlí nad tím, jak se stát efektivnější a následně tak koriguje svoje chování a zvyklosti.
-
+- Největší priorita je vyhovět zákazníkovi častým dodáváním hodnotného softwaru. Změny v požadavcích v pozdějších fázích vývoje nejsou takový problém.
+- Lidé z businessu a vývoje musí na projektu spolupracovat denně a po celou dobu projektu. 
+- Vytváří se prostředí pro jednotlivce, podporujeme je a důvěřujeme jim, že odvedou dobrou práci. 
+- Nejúčinnější a nejefektivnější způsob sdělování informací je **osobní konverzace**.
+- Měřítko pokroku je fungující software.
+- Tým se pravidelně zamýšlí nad tím, jak se stát efektivnější a následně tak koriguje svoje chování a zvyklosti.
 ### Výhody
 - rychlejší dodávky - iterativní vývoj - iterace je zkrácena na minimální dobu
 - vhodné i pro menší projekty
@@ -25,13 +18,11 @@ Tým se pravidelně zamýšlí nad tím, jak se stát efektivnější a následn
 - klíčový je spolupracující zákazník
 	- zde se to může seknout, zákazník nemusí mít tolik času
 	- rozsah není předem vymezený smlouvou, to se nějakým nelíbí
-
 ### Problémy
 - u velkých týmů
 - zákazník není schopen denně spolupracovat a zástupce zákazníka nemá odpovídající pravomoci
 - důvěra, že i bez smlouvy se dodá očekávaný systém
 - slovo "agilní" dost často funguje jako buzzword je to jenom marketing
-
 ### SCRUM
 Pojmy:
 - Scrum Team (do 10 členů)
@@ -59,7 +50,6 @@ Pojmy:
 - Scrum - iterace uvnitř sprintu, trvá jeden den
 	- Scrum meeting na 15min na začátku
 	- Otázky pro člena: Co jsi udělal včera? Co uděláš dnes? Máš blockery?
-
 Fáze:
 1) předehra 
 	1) plánování - sestavení Product Backlogu a odhadování pracnosti

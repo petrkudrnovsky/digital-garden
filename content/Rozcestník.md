@@ -16,6 +16,8 @@ Zápisky z jednotlivých předmětů BAKALÁŘ (specializace Webové inženýrst
 - [[MDF - Moderní datové formáty]] pouze na SZZ
 - [[Javascript|PJS - Programování v Javascriptu]] komplet
 
+Zápisky z jednotlivých předmětů BAKALÁŘ ()
+
 Zápisky z jednotlivých předmětů MAGISTR (specializace Digital business engineering)
 - [[KOP - Combinatorial Optimization]] - final lecture notes
 - [[AM1 - Architecture of Middleware 1]] - final lecture notes

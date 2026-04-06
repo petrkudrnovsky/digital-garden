@@ -34,11 +34,6 @@ Typescript, Coffeescript, Dart... se kompilují do Javascriptu
 ```js
 "use strict";
 ```
-
-# Frameworky
-[[Node.js]]
-- [[Node.js, NPM, NVM]]
-
 # Vanilla JS
 ### [[Javascript - knihovny, zdroje]]
 

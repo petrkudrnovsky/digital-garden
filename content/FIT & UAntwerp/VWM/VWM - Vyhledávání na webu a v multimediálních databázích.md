@@ -1,5 +1,4 @@
 - web se dá procházet (crawling), indexovat (indexing) a vyhledávat v něm (searching)
-
 ### Základní pojmy
 ##### Rozdíl search X browse
 - search - hledám konkrétní věc
@@ -13,7 +12,6 @@
 - je to out-link z webové stránky
 
 Meta search engine - vyhledávač, který agreguje výsledky z dalších vyhledávačů
-
 #### Historie
 - dříve se používalo full-textové vyhledávání, ještě před tím existovaly jenom seznamy stránek (o které se starali lidé manuálně) a pokud člověk neměl svoji stránku na takovém seznamu, tak byla velmi těžko dohledatelná
 - velký boom způsobil Google s [[Page Rank a HITS|PageRank]] algoritmem
@@ -23,13 +21,11 @@ Meta search engine - vyhledávač, který agreguje výsledky z dalších vyhled�
 	-  od roku 2004, rychlé připojení
 	- sociální sítě, blogy, informační společnost, orientace na generování obsahu uživateli
 	- další zařízení mimo PCs
-
 ##### Typické části vyhledávání
 1) crawling - stahování obsahu (webové stránky)
 2) indexing - procesování obsahu do formy vhodné pro vyhledávání
 	1) díky indexování už procházím malinkou část obsahu a ne celé univerzum ve full podobě
 3) searching - získávání relevantního obsahu pomocí dotazu
-
 ##### Tradiční vyhledávače
 1) full-text indexování a analýza linků
 	1) dotazy jsou klíčová slova či full-text
@@ -37,10 +33,8 @@ Meta search engine - vyhledávač, který agreguje výsledky z dalších vyhled�
 	1) dotaz obsahující pouze pár klíčových slov
 3) full-text query
 	1) celý full-text zparsovaný do keyword query
-
 ##### Multimediální vyhledávače
 1) content-based queries (navíc ke keyword query)
-
 ##### Obecné způsoby získávání informací
 1) dotaz (query)
 	- uživatel je schopný specifikovat svůj záměr
@@ -66,15 +60,12 @@ Pro vyřešení toho problému se začaly analyzovat linky (in-links a out-links
 Díky analýze linků můžeme relativně snadno najít a zmapovat celé komunity na webu. Existuje několik typických schémat propojení v rámci takových komunit.
 
 Popularita stránky se tedy měří hlavně podle počtu inlinků. Algoritmus [[Page Rank a HITS]].
-
 ### [[Search engine ranking a SEO]]
 - pro lepší výsledky stránek ve vyhledávačích
-
 ### [[Sémantický web]] 
 - aby i stroje pochopily o co na tom webu jde
 
 Když už nějaký uživatel na naši stránku přijde, tak ho chceme udržet co nejdéle a ideálně ho proměnit v peníze :) => [[Doporučování a sociální kontext na webu]]
-
 ## [[Získávání informací z multimédií]]
 
 ### Aproximované podobnostní hledání
@@ -87,14 +78,12 @@ Early fusion - jeden deskriptor per objekt, všechny modely jsou agregovány v j
 - multi-metric model
 Late fusion - každý model je reprezentován (dotazován a indexován) individuálně
 - skyline operator - dotazy obsahující více příkladů
-
 #### Permutační indexy
 - mám pivoty a pivotovou tabulku (tabulka vzdáleností)
 	- místo takové tabulky vytvořím pro každou databází permutaci pivotů jednotlivých objektů reprezentovanou seřazenou množinou pivotů
 	- nejsou tam uložené žádné vzdálenosti, jenom pořadí pivotů
 - taková tabulka je menší co se týče zabraného místa
 - používají se jiné algoritmy, které s tímto umí pracovat - rychlost je vesměs stejná
-
 #### FastMap
 - je to metoda pro rychlé mapování vysoko-dimenzionálních prostorů (obecných metrických dat) do euklidovského prostoru. Umí si poradit i s množinami, které nesplňují běžná pravidla geometrie 
 ### Státnicové okruhy

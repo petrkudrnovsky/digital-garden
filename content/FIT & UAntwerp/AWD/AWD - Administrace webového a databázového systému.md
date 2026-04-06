@@ -1,7 +1,8 @@
+# Obsah předmětu
 Předmět je rozdělen na dvě hlavní části: 
 - [[#Webová část]]
 - [[#Databázová část]]
-# Webová část
+### Webová část
 - [[Apache httpd]]
 	- [[Zpracování požadavku od klienta na Apache httpd]]
 	- [[Konfigurace Apache httpd]]
@@ -11,7 +12,7 @@ Předmět je rozdělen na dvě hlavní části:
 	- [[Generování a úprava obsahu v Apache httpd]]
 	- [[Autentizace a autorizace v rámci Apache httpd]]
 	- [[Bezpečnost webového serveru]]
-#### Tématické a doplňující okruhy
+##### Tématické a doplňující okruhy
 - [[HTML]]
 	- [[XHTML]]
 	- [[Problém hlavičky HTML v kontextu HTTP protokolu]]
@@ -25,13 +26,13 @@ Předmět je rozdělen na dvě hlavní části:
 - [[Virtual Hosting]]
 - [[htaccess soubor]]
 - [[MIME type]]
-#### Nástroje
+##### Nástroje
 - [[curl (Client URL)]]
 - [[nc (Netcat)]]
 - [[telnet]]
 - [[wget (web get)]]
 ***
-# Databázová část
+### Databázová část
 - [[Databázová administrace]]
 - [[Jak funguje databázový systém]]
 - [[PostgreSQL]]
