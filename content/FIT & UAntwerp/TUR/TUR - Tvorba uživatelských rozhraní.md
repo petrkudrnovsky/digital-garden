@@ -21,3 +21,8 @@ Zastřešující téma: [[HCI (Human Computer Interaction)]]
 - [[HIGs a UX]]
 
 [[Vzorce chování uživatelů]]
+# SZZ otázky
+| [[TUR - Tvorba uživatelských rozhraní\|TUR]] | [[TUR - Metody návrhu uživatelského rozhraní, modely, prototypování uživatelských rozhraní.]]                             |
+| -------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------- |
+|                                              | [[TUR - Prediktivní a interpretativní metody vyhodnocování a testování uživatelských rozhraní. Testování použitelnosti.]] |
+|                                              | [[TUR - Průzkum uživatelů, doménová a kontextová analýza.]]                                                               |

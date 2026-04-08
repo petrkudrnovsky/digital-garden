@@ -51,4 +51,7 @@ Typescript, Coffeescript, Dart... se kompilují do Javascriptu
 ### [[Javascript - Iterátory a Generátory]]
 
 ### [[AJAX]]
-
+# SZZ otázky
+| [[Javascript\|PJS]]                                               | [[PJS - Objektově orientované programování v Javascriptu - prototype, class, this. Koncept dědičnosti]]                                                                                           |
+| ----------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+|                                                                   | [[PJS - Asynchronní programování v Javascriptu - event loop, promise, async a await. Koncept generátorů]]                                                                                         |

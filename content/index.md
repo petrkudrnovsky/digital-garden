@@ -7,7 +7,7 @@ aliases:
 ---
 Zde jsou hlavní odkazy:
 - [[Rozcestník]] všech poznámek
-- Můj [[Blog]]
+- Můj [[Blog|blog]]
 - Moje [webová stránka](https://www.petrkudrnovsky.cz/) 
 
 ***
