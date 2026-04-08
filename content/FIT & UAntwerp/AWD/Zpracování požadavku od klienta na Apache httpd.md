@@ -13,7 +13,17 @@
 9) zaslání požadovaných dat klientovi (s příslušnými hlavičkami)
 10) zalogování přístupu (požadavku a výsledku)
 
-![[Pasted image 20250111190627.png]]
+```mermaid
+flowchart LR
+    A[Přijetí požadavku] --> B([Předběžné zpracování])
+    B --> C([...])
+    C --> D[Generování obsahu]
+    D --> E([Logování])
+    E --> F[ZPRACOVÁNÍ]
+
+    VF([Vstupní filtry]) -->|DATA nahoru| D
+    D -->|DATA dolů| VYF([Výstupní filtry])
+```
 ## Handlery
 - když chci specifikovat custom chování pro různé požadavky/obsah (jakým způsobem bude požadavek zpracován a jak bude vygenerován obsah)
 - je to mechanismus nebo funkce, která zpracuje tělo požadavku

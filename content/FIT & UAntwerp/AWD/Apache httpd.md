@@ -3,7 +3,29 @@ Open-source, je zdarma a je to takový "švýcarský nůž" na webové servery
 - v jednotlivých směrech většinou není nejlepší (existuje lepší víceúčelový nástroj)
 - je univerzální a nemusím se pořád učit něco nového a jiného
 ## Architektura
-![[Pasted image 20250108190103.png]]
+### Schéma architektury
+
+```mermaid
+flowchart TD
+    MOD["MODULE (mod_x.so)"]
+    APACHE["APACHE HIGH LEVEL /usr/sbin/httpd"]
+    APR["APR HIGH LEVEL + APR-UTIL"]
+    LIBC["LIBC /usr/lib/libc.so"]
+
+    MOD --> APACHE
+    MOD --> APR
+    MOD --> LIBC
+    APACHE --> APR
+    APACHE --> LIBC
+    APR --> LIBC
+```
+
+Architektura se skládá ze čtyř vrstev:
+- modul (`mod_x.so`) je na nejvyšší úrovni a při kompilaci používá podmíněné direktivy `#ifdef HAVE_*` a `#ifdef APR_HAVE_*`
+- Apache high level (`/usr/sbin/httpd`) závisí na APR a přímo i na LIBC
+- APR high level a APR-UTIL (`/usr/lib/libapr-1.so`) využívají hlavičky jako `HAVE_TIME_H` a `APR_HAVE_UNISTD_H` a závisí na LIBC
+- LIBC (`/usr/lib/libc.so`) je základní vrstva, na které závisí všechny ostatní komponenty
+
 APR (Apache Portable Runtime) neboli prostředí pro běh serveru
 - mezivrstva mezi Apachem a konkrétním operačním systémem
 - nemusím řešit JAK posílat packety, jak navázat spojení atd. - což je na každém OS jiný

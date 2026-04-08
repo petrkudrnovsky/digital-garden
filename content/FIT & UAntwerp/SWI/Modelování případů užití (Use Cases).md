@@ -12,15 +12,59 @@ Skládá se z:
 3) Seznam případů užití (popis a slovní rozšíření diagramu případů užití)
 	- zde lze nadefinovat hlavní a alternativní scénáře + různé výjimky
 	- také musím specifikovat podmínky provedení
-![[Pasted image 20230520212811.png]]
+
+```mermaid
+flowchart BT
+    Knihovník --> Čtenář
+```
+- generalizace/dědičnost mezi účastníky (účastník může v systému spouštět i všechny případy svého rodiče)
 - ==čas je také jeden z aktérů== - v aplikaci mohu mít automaticky spouštěné úlohy na základně nějaké časové události
 ### \<\<include\>\>
 - když mám nějakou část použitou v několika případech užití, tak ji mohu vyjmout, udělat z ní samostatný případ užití a pak ji "naincludovat" do původních případů užití (využití DRY principu)
 - povinné zahrnutí případu užití
-![[Pasted image 20230520213559.png]]
+##### Zobrazit seznam knih
+Scénář ukazuje postup při zobrazení seznamu knih:
+1. Systém zobrazí seznam knih
+2. Uživatel jednu knihu vybere
+3. Systém ...
+4. Uživatel ...
+
+Případ užití "Zobrazit seznam knih" je zahrnut (include) jak z případu "Upravit údaje o knize", tak z případu "Odstranit knihu". Aktérem je Knihovník.
+
+```mermaid
+flowchart LR
+    actor([Knihovník])
+    upravit(Upravit údaje o knize)
+    odstranit(Odstranit knihu)
+    zobrazit(Zobrazit seznam knih)
+
+    actor --> upravit
+    actor --> odstranit
+    upravit -->|«include»| zobrazit
+    odstranit -->|«include»| zobrazit
+```
 ### \<\<extends\>\>
 - používá se, pokud je vyčleněná část scénáře nepovinná
-![[Pasted image 20230520213617.png]]
+
+```mermaid
+flowchart TD
+    actor([Knihovník])
+    UC1([Upravit údaje o knize])
+    UC2([Vyhledat knihu])
+    UC3([Odstranit knihu])
+
+    actor --> UC1
+    actor --> UC3
+    UC1 -->|«include»| UC2
+    UC3 -->|«extend» zobrazení seznamu| UC2
+```
+
+##### Scénář - Odstranit knihu
+1. UC začíná, když ....
+2. Volitelný krok: zobrazení seznamu knih (toto je rozšiřující část, proto «extend»)
+3. Systém odstraní zvolenou knihu
+
+Krok zobrazení seznamu je nepovinný - proto je modelován pomocí «extend», nikoli «include».
 ### Doporučení při tvorbě
 - popisuj, co má systém dělat, ne JAK to má dělat
 - nerozepisuj se u "nezajímavých" UC
@@ -32,6 +76,13 @@ Skládá se z:
 
 - pokud je analytický tým oddělený od vývojového, tak je nutné minimalizovat nutnou komunikaci (právě fakt dobrým a podrobným diagramem užití)
 - pokud je výsledkem projektu nějaký framework či knihovna, tak je třeba zvážit, jestli je potřeba takový diagram vůbec vytvářet
+# Chyby v modelu
 
-![[Pasted image 20230520214623.png]]
-- \+ každý případ užití musí mít svého aktéra
+Diagram případů užití nezobrazuje tok událostí. K tomuto účelu slouží jiné nástroje:
+- textové scénáře
+- diagram aktivit
+- stavový diagram
+
+Diagram případů užití také nezobrazuje datová úložiště ani paměti systému.
+
+Plus každý případ užití musí mít svého aktéra

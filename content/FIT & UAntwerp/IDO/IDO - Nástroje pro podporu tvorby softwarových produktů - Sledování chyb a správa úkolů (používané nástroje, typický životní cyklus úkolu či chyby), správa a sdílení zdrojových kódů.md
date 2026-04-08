@@ -42,7 +42,24 @@
 - vykazování skutečně odpracovaného času (time tracking)
 - stav (podle životního cyklu projektu)
 ###### Životní cyklus úkolu
-![[Pasted image 20250331150444.png]]
+
+```mermaid
+stateDiagram-v2
+    [*] --> Nový : Vytvoření úkolu vedoucím projektu (Team leader/Project manager), nahlášení objevené chyby
+
+    Nový --> Přiřazený : Přiřazení úkolu řešiteli (Team leader), převzetí úkolu řešitelem
+
+    Přiřazený --> Vyřešený : Dokončení úkolu
+
+    Vyřešený --> Uzavřený : Potvrzení vyřešení reportérem
+
+    Vyřešený --> Znovuotevřený : Reportér nesouhlasí s řešením
+
+    Znovuotevřený --> Přiřazený : Přiřazení úkolu jinému řešiteli
+
+    Znovuotevřený --> Vyřešený : Dokončení úkolu
+```
+
 - úkol může být vyřešen různými způsoby:
 	- Hotovo/opraveno (fixed)
 	- Duplikace (duplicate)

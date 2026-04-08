@@ -12,9 +12,43 @@ HTTP (*HyperText Transfer Protocol*) je bezstavový protokol sedící na aplika�
 - Můžu mít i svoje vlastní definované hlavičky (je to otevřené, jenom musím na aplikační vrstvě zařídit, aby jednotlivé aplikace hlavičkám rozuměly)
 - Po hlavičce je prázdný řádek a pak tělo požadavku
 ##### HTTP Request
-![[Pasted image 20231003113509.png]]
+```
+Request     ::= RequestLine (Header CRLF)* CRLF [body]
+RequestLine ::= Method RequestUri HTTPVersion CRLF
+Header      ::= Host | Accept | ...
+Method      ::= GET | HEAD | ...
+```
+Požadavek reprezentuje akci uživatele, přičemž:
+- metoda určuje, o jakou "akci" se jedná
+- URL adresa určuje "cíl" dané akce
+### Příklad požadavku
+```
+GET /profile/140f269cb240 HTTP/1.1
+Host: usermap.cvut.cz
+Accept: text/html
+```
 ##### HTTP Response
-![[Pasted image 20231003113531.png]]
+Odpověď se skládá ze stavové řádky, následované nula nebo více hlavičkami (každá zakončená CRLF), prázdnou řádkou (CRLF) a volitelným tělem:
+
+```
+Response   ::= StatusLine (Header CRLF)* CRLF [body]
+StatusLine ::= HTTPVersion Status CRLF
+Status     ::= StatusCode ReasonPhrase
+Header     ::= Content-Type | ...
+```
+### Ukázka konkrétní odpovědi
+Příklad skutečné HTTP odpovědi vypadá takto - nejprve stavová řádka s verzí protokolu a kódem 200 OK, poté hlavičky s datem, délkou obsahu a typem obsahu, a nakonec samotné HTML tělo:
+
+```
+HTTP/1.1 200 OK
+Date: Sun, 5 Jul 2020 16:46:06 GMT
+Content-Length: 39
+Content-Type: text/html
+
+<html>
+    <body>Ahoj svete!</body>
+</html>
+```
 ##### Otázky
 - Kdy použít POST místo GET?
 	- Když mám filtrování a překročí to maximální délku [[URL, URI, URN, IRI|URL]]

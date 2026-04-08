@@ -23,9 +23,23 @@ Chci zajistit hlavně:
 Hlavní pozornost věnuju místům, kde bude systém v budoucnu rozšiřován - tato místa je potřeba od zbytku aplikace oddělit nějakým zapouzdřením/rozhraním ([[Rozhraní (Interface)]]), aby byla snadno rozšiřitelná a zároveň rozšíření neovlivnilo zbytek aplikace.
 ### Diagram balíčků
 - definuji jím jak na sobě různé balíčky tříd souvisejí a závisí 
-	- ![[Pasted image 20230521193520.png]]
-		- zde ta horní relace je: A je závislý na B
-		- dolní relace je: C je uvnitř B (vnoření)
+
+```mermaid
+flowchart TD
+    A["Balíček A"]
+    B["Balíček B"]
+    C["Balíček C"]
+
+    A -. závislost .-> B
+    B -- sloučení --- merge((⊕))
+    merge --- C
+```
+
+Diagram znázorňuje vztahy mezi třemi balíčky:
+- Balíček A závisí na Balíčku B (zobrazeno přerušovanou šipkou)
+- Balíček B je spojen s Balíčkem C prostřednictvím sloučení (symbol ⊕), které naznačuje kombinaci nebo merge balíčků
+- zde ta horní relace je: A je závislý na B
+- dolní relace je: C je uvnitř B (vnoření)
 - obecně se chci snažit nemít cykly v diagramu balíčků
 	- pokud se tak stane, tak můžu 1) přesunout problémovou třídu, 2) vyčlenit třídy do nového balíčku a 3) vytvořit rozhraní (dependency inversion)
 ### Návrhový model tříd
@@ -73,12 +87,31 @@ Hlavní pozornost věnuju místům, kde bude systém v budoucnu rozšiřován - 
 	3) datová - persistence dat
 	4) přidává se i tzv. "middleware" vrstva, která zajišťuje efektivní, standardizovanou a škálovatelnou komunikaci mezi jednotlivými vrstvami (to může být například [[#Enterprise service bus]])
 - **striktní** - závislost mezi vrstvami jde vždy směrem dolů a pouze o 1 úroveň 
-![[Pasted image 20230522095603.png|150]]
+```mermaid
+flowchart TD
+    subgraph pkg["pkg Třívrstvá architektura"]
+        P[Prezentační]
+        B[Business]
+        D[Datová]
+        P -.-> B
+        B -.-> D
+    end
+```
 - **relaxovaná** - závislost je také směrem dolů, ale přes lib. počet úrovní
 	- nejvíce používaná
 	- nenutí mě všechno rvát přes business (když chci zobrazit raw data z databáze, tak si pro ně mohu sáhnout hned)
 		- ve striktní bych musel používat wrappery v business třídě (což je někdy zbytečnost navíc)
-![[Pasted image 20230522095829.png|150]]
+```mermaid
+flowchart TD
+    subgraph pkg["pkg Třívrstvá architektura"]
+        P[Prezentační]
+        B[Business]
+        D[Datová]
+        P -.-> B
+        B -.-> D
+        P -.-> D
+    end
+```
 - výhody třívrstvé architektury: 
 	- oddělení business logiky od prezentační (narozdíl od dvouvrstvé)
 	- snadná výměna vrstev
@@ -88,7 +121,6 @@ Hlavní pozornost věnuju místům, kde bude systém v budoucnu rozšiřován - 
 #### Point-to-point architektura
 - špagetové propojení
 - mash-up aplikace, jsou těžko udržitelné
-![[Pasted image 20240106145405.png]]
 #### Enterprise service bus
 - centrální moderátor, který zajišťuje
 	- vyhledávání služeb
@@ -124,7 +156,28 @@ Hlavní pozornost věnuju místům, kde bude systém v budoucnu rozšiřován - 
 	- dá se jednoduše horizontálně škálovat
 - jedna funkcionalita = 1 služba
 - dobrý na to je např. [[01 Python|Python]]
-![[Pasted image 20240106145537.png]]
+
+```mermaid
+flowchart LR
+    Mobile([Mobile App])
+    Browser([Browser])
+
+    Mobile -->|REST| GW[API Gateway]
+    Browser -->|Web| SF[Storefront WebApp]
+
+    GW -->|REST| AS[Account Service]
+    GW -->|REST| INV[Inventory Service]
+    GW -->|REST| SH[Shipping Service]
+
+    SF -->|REST| AS
+    SF -->|REST| INV
+    SF -->|REST| SH
+
+    AS --> ADB[(Account DB)]
+    INV --> IDB[(Inventory DB)]
+    SH --> SDB[(Shipping DB)]
+```
+
 #### Hexagonální architektura
 - na levé straně je komunikace s vnějším světem (REST, SOAP, GraphQL atd.)
 - z pravé straně jsou interní systémy (databáze, repozitáře atd.)

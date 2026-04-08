@@ -1,4 +1,37 @@
-![[Pasted image 20241104144215.png]]
+```mermaid
+flowchart TD
+    subgraph INTERNET
+        CLIENT["CLIENT(LIB)"]
+        QUERIES["SQL / Cypher / XQuery / ..."]
+    end
+
+    subgraph INSTANCE_CLUSTER["INSTANCE / CLUSTER"]
+        PORT["PORT / TCP-IP"]
+        subgraph MEMORY["Memory Structures"]
+            DBBUF["DB Buffer"]
+            JOURNAL["Journal"]
+            SRVMEM["Server Process Memory"]
+            MORE["..."]
+        end
+        subgraph PROCESSES["Processes"]
+            P1(( )) 
+            P2(( ))
+            P3(( ))
+            P4(( ))
+            P5(( ))
+            P6(( ))
+        end
+    end
+
+    subgraph DATABASE["DATABASE"]
+        STORAGE["Backup | Data | Metadata | Statistics | Journal Log | Indexes | Temp | Config"]
+    end
+
+    CLIENT -- "sends queries via" --> PORT
+    QUERIES --> PORT
+    PORT --> SRVMEM
+    INSTANCE_CLUSTER --> DATABASE
+```
 - na DB serveru (fyzický/virtuální) běží Linux/UNIX a tam je nainstalovaný databázový server
 	- občas se ten OS musí nakonfigurovat (např. pro Oracle se musí zvětšit nějaké paramentry, protože má větší nároky)
 - komunikuje se hlavně přes TCP/IP (jiné možnosti jsou, ale moc se nepoužívají)

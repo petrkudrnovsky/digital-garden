@@ -18,4 +18,19 @@ Při přenášení souborů chceme s nimi mít i informaci, jak tyto soubory zpr
 	- mohu je přidávat pomocí `AddType image/gif .gif`
 - můžeme i forcovat MIME types
 ### Prioritizace
-![[Pasted image 20250111185836.png]]
+The diagram shows how Apache determines the MIME type for three example files (`index`, `index.abc`, `index.html`) as each directive is applied in sequence.
+
+```mermaid
+flowchart TD
+    A[DefaultType] --> B[TypesConfig]
+    B --> C[AddType]
+    C --> D[ForceType]
+```
+
+The resolution works layer by layer, with each directive potentially overriding the previous result:
+- DefaultType - sets a fallback of `text/plain` for all files; `image/gif` is shown as an inherited default
+- TypesConfig - loads `/etc/mime.type`, which maps `.html` files to `text/html`, while `index` and `index.abc` remain `image/gif`
+- AddType - applies `audio/mpeg` to `.abc` and `.html` extensions, so `index.abc` and `index.html` both become `audio/mpeg`; `index` stays as `image/gif`
+- ForceType - overrides everything with `image/jpeg`, so all three files (`index`, `index.abc`, `index.html`) end up as `image/jpeg`
+
+The arrows in each column indicate which directives actively change the MIME type for that particular filename, while unchanged types carry forward from the previous step.

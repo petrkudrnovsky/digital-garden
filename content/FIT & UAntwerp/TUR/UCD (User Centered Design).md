@@ -58,7 +58,23 @@ V UCD se zaměřuji hlavně na použitelnost a užitečnost aplikace, jak definu
 - artefakt by měl být **sociálně přijatelný** - aby se lidem, kteří s ním pracují, pracovalo dobře, aby nikdo nebyl diskriminován 
 
 ### Koloběh návrhu
-![[Pasted image 20230613223036.png]]
+Profesionální přístup v HCI nahrazuje návrhářovu introspekci (ta je označena jako nevhodná) systematickými metodami. Proces zahrnuje několik klíčových kroků:
+
+```mermaid
+flowchart LR
+    U1["uživatelé, nepodobní návrháři"] -- poptávka --> N["návrhář"]
+    N -- návrh --> A["artefakt"]
+    A -- užití --> U2["uživatelé"]
+    U2 -- zpětná vazba --> N
+    U1 -. vědomé poznání metodami HCI, formativní fáze .-> N
+    U1 -. vědomé ověření metodami HCI, sumativní fáze .-> N
+```
+
+Návrh probíhá ve dvou fázích výzkumu uživatelů:
+- formativní fáze - vědomé poznání uživatelů a jejich potřeb pomocí metod HCI (probíhá před návrhem)
+- sumativní fáze - vědomé ověření výsledného řešení metodami HCI (probíhá po návrhu)
+
+Klíčovým rozdílem oproti neprofesionálnímu přístupu je, že návrhář nespoléhá na vlastní introspekci (tedy na představu, že sám reprezentuje uživatele), ale aktivně zkoumá skutečné uživatele, kteří se od návrháře mohou výrazně lišit.
 - nejjednodušší práce pro návrháře je navrhovat artefakty pro lidi jim podobné, kdy návrháři mají určité znalosti o uživatelích, mají zkušenosti
 	- využijí introspekci - prostě návrh udělají tak, jak by vyhovoval jim samotným
 		- introspekce = pohled od sebe, pohled dovnitř

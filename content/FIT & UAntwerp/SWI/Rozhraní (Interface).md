@@ -1,12 +1,16 @@
 - rozhraní - odděluje specifikaci od implementace
 	- snižuje provázanost ([[GRASP - Nízká provázanost]])
-![[Pasted image 20230522114329.png]]
+
+```mermaid
+flowchart TD
+    RI1(( )) -- Rozhraní --> A[Komponenta A]
+    RI2[[ ]] -- Rozhraní --> B[Komponenta B]
+    C[Komponenta C] --> RI3(( ))
+    RI3 --> D[Komponenta D]
+```
+
 - Komponenta A nabízí rozhraní (nějakou funkcionalitu)
-- Komponenta B potřebuje rozhraní
-
-![[Pasted image 20230522114511.png|Implementace rozhraní]]
-
-![[Pasted image 20230522114547.png]]
+- Komponenta B vyžaduje rozhraní
 
 Komponenty (třídy) mohu mezi sebou propojovat
 - manuálně ve zdrojovém kódu

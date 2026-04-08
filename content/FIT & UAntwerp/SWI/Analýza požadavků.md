@@ -6,7 +6,11 @@ Proč ji děláme?
 
 Požadavky mají 2 hlavní kategorie: [[#1) Funkční požadavky]] a [[#2) Obecné (nefunkční) požadavky]]
 Jiná kategorizace požadavků (FURPS):
-![[Pasted image 20230520200231.png]]
+- F (functionality) - funkčnost
+- U (usability) - použitelnost
+- R (reliability) - spolehlivost
+- P (performance) - výkon
+- S (supportability) - podporovatelnost / rozšiřitelnost
 ### 1) Funkční požadavky
 - požadavky ohledně funkčnosti aplikace, co bude všechno umět a splňovat
 ### 2) Obecné (nefunkční) požadavky
