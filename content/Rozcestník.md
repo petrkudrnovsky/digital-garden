@@ -16,8 +16,6 @@ Zápisky z jednotlivých předmětů BAKALÁŘ (specializace Webové inženýrst
 - [[MDF - Moderní datové formáty]] pouze na SZZ
 - [[Javascript|PJS - Programování v Javascriptu]] komplet
 
-Zápisky z jednotlivých předmětů BAKALÁŘ ()
-
 Zápisky z jednotlivých předmětů MAGISTR (specializace Digital business engineering)
 - [[KOP - Combinatorial Optimization]] - final lecture notes
 - [[AM1 - Architecture of Middleware 1]] - final lecture notes
@@ -28,7 +26,7 @@ Zápisky z jednotlivých předmětů MAGISTR (specializace Digital business engi
 	- [[Engineering and design science methodologies]] - final lecture notes
 	- [[Machine learning for business]] - final lecture and tutorial notes
 	- [[Empirical Research in MIS]] - final lecture notes
-	- [[Digital Risk & Security]]
+	- [[Digital Risk & Security]] - final lecture notes
 
 Pro další předměty a popřípadně jiné vysvětlení doporučuji další digitální zahrádku od kolegy na FITu: https://obsidian.jancerny.dev/
 ***

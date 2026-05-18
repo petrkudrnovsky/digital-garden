@@ -1,4 +1,4 @@
-Dělá mi obrovskou radost, když dostávám zpětnou vazbu od okolí, jak jim moje poznámky pomohly v nějakém předmětu na FITu. Mám v plánu sem přidávat další a další obsah a průběžně aktualizovat ten stávající. Myslím si, že pro (nejenom) studenta na FITu je tohle velká přidaná hodnota a rozhodně ji nechci schovávat za nějaký paywall - je to můj způsob, jak dál rozvíjet komunitu kolem FITu a taky do ní něco vrátit, protože mi během mých studií moc pomohla.
+Dělá mi obrovskou radost, když dostávám zpětnou vazbu od okolí, jak jim moje poznámky pomohly v nějakém předmětu na FITu. Mám v plánu sem přidávat další a další obsah a průběžně aktualizovat ten stávající. Myslím si, že pro (nejenom) studenta na FITu je tohle velká přidaná hodnota a rozhodně ji nechci schovávat za nějakou paywall - je to můj způsob, jak dál rozvíjet komunitu kolem FITu a taky do ní něco vrátit, protože mi během mých studií moc pomohla.
 
 Pokud se vám můj obsah líbí nebo vám nějakým způsobem pomohl a chtěli byste mě nějakým způsobem podpořit, budu vám neskutečně vděčný. Podpoříte moji tvorbu a dáte mi skvělou zpětnou vazbu, že to, co tady tvořím, má smysl. Díky moc!
 
