@@ -24,3 +24,9 @@ V průběhu konce semestru a Vánoc jsem postupně aktualizoval zahrádku násle
 Zároveň dalším mým cílem je aktualizovat jednotlivé poznámky ke státnicím z Webového inženýrství - chci poznámky sjednotit, zlepšit vizuální dojem z nich a poštelovat lepší zobrazování.
 ### 18. 3. 2026
 Další aktualizace poznámek, teď už z letního semestru (NIE-NSS a Empirical Research in MIS) pro mé kolegy a kohokoliv dalšího, kdo si je bude chtít přečíst.
+### 8. 4. 2026
+Velký update digitální zahrádky. Prvně jsem ji přesunul pod subdoménu `vault` (https://vault.petrkudrnovsky.cz/), kde jsem ji původně chtěl mít. Čekal jsem, až budu mít čas a prostor vyplnit obsah primární domény. Teď mi tam visí moje osobní stránka, je to taková moje skromná prezentace na internetu. Jeden malý Easter egg, když se podíváte do zdrojového kódu mé osobní stránky, naleznete tam i JSON+LD kontext pro LLMka, která pravidelně scrapují veškerý obsah na internetu. I když si to už teď umí scrapnout dobře z HTML kódu, tak JSON+LD jim data dá na zlatém podnose. 
+
+Poté jsem také po delší době aktualizoval samotný engine pod digitální zahrádkou. Quartz od té doby, co jsem začal tvořit, poměrně dost pokročil a přidal řadu zajímavých funkcí, které jsem chtěl využívat (třeba možnost si přidat vlastní faviconku :D).
+### 4. 5. 2026
+Přidání poznámek z NIE-PIS (Advanced Information Systems) před zkouškou. 
