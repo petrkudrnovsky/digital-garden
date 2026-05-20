@@ -1,3 +1,28 @@
+
+> [!tldr] First 5 minutes of hell
+> APRAM (Asynchronous PRAM) is also a abstract computational model for parallel computers. Apart from same-clock-synchronous PRAM, here each one of the $p$ processors has it's own clock ("own speed"). 
+> 
+> The operations are the same as in PRAM (global read, local computation and global write). 
+> 
+> APRAM computation = a sequence of global phases in which Ps work asynchronously and which are separated by barrier synchronizations. 
+> - two processors cannot access the same memory cell within one global phase (if at least one performs a write operation into it - concurrent reads are allowed)
+> - conflicting writes must be separated by barriers
+> - barrier needs to be in between the producer (a processor writing something) and a consumer (a processor reading it) 
+> 	- this way the value will always be written before it is read
+> 
+> Barrier synchronization takes $B(p)$ time, where $B(p)$ is non-decreasing function (with more Ps, the delay in the computation increases or stays the same).
+> 
+> Barrier implementations (having incoming and outgoing phase):
+> - central counter
+> 	- the counter is initiated to 0 and each incoming processor must increase it
+> 	- $B(p) = \Theta(dp)$ - the increments are linear, since they are mutually exclusive
+> 	- once the counter is equal to the number of processors, all are woken up and release (in the outgoing phase)
+> - binary reduction tree
+> 	- $B(p)=\Theta(d\ log(p))$  - because of the logarithmic organization of the processors (the three is "pre-allocated" and the processors sit in the leaves of the binary tree), so both reduction and activation take logarithmic time instead of linear time
+> - trade-off:
+> 	- central counter is significantly slow for large $p$, but memory allocation is only $O(1)$ - only one atomic counter
+> 	- binary reduction tree is more complex, is faster for large $p$ and takes up 
+
 -  = Asynchronous Parallel Random Access Machine
 - PRAM assumes that all processors execute synchronously under a global clock, but real systems (clusters, multi-core CPUs...) are asynchronous (each computational unit has it's own clock) - this is handled by APRAM (while still abstracting over a shared memory)
 ### Operations
@@ -23,7 +48,7 @@ Every barrier introduces idle time - the fastest processor must wait for the slo
 	- assumptions: `2 ≤ d ≤ B(p) ≤ dp`
 - the consecutive $k$ operations (Rs and Ws pipelined) have a additive complexity (not multiplicative)
 	- complexity: $d+k-1$ 
-	- istead of $k * d$, which would make logical sense ($k$ operations with the length of $d$)
+	- instead of $k * d$, which would make logical sense ($k$ operations with the length of $d$)
 	- why?
 		- memory buses in the real world are pipelined, allowing the consecutive accesses to overlap in the pipeline, so each pipelined operation adds only 1 cycle instead of the full $d$ 
 ### Barrier implementation
@@ -42,6 +67,16 @@ Every barrier introduces idle time - the fastest processor must wait for the slo
 - time complexity: $B(p)=\Theta(d\ log(p))$ 
 	- accessing each level of the logarithmic-depth-tree costs $d$ 
 	- trade-off for the better time complexity: it takes up more space ($O(p)$ memory and is more complex 
+- how it works:
+	- arriving processor sits in the first available leaf and signals his parent that he is there and is idle
+	- the parent waits for both children to be full and then it also signals to it's parent that "he is full"
+	- it goes like this all the way up to the root -> if root gets the signal that both of his direct children are "full", it signals that the barrier is full and could be released
+	- $B(p)=\Theta(d\ log(p))$ 
+		- the signal has to travel log(p) levels and d is the cost of the operation in the global time model
+	- the outgoing phase:
+		- the root flips the signal to release, signaling it to his children, those children signal it to its children (all the way up to leaves - which is logarithmic)
+			- so this way it could be logarithmic (each flag of the inner node is written in a different memory location, so they could be switched and read in parallel)
+		- "the root does not call 1000 processors one after another, it calls two inner nodes, which call their two inner nodes etc. and the number of calls is log_2(1000) is roughly 10 - huge difference"
 
 - both barriers have incoming/outgoing flags
 	- if the barrier is in the incoming phase, the processes keep coming and waiting on others (idling)

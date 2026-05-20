@@ -1,3 +1,39 @@
+
+> [!tldr] The first 5 minutes of hell
+> SpMVM (= Sparse Matrix Vector Multiplication) is a way to multiply a large and sparse `n x n` matrix with a vector using special formats (saving the whole matrix, having majority of elements zero) would be memory-inefficient. SpMVM operations are common in linear algebra operations.
+> 
+> SpMVM is a memory-bound operation with sequential complexity of $O(N)$, where $N$ denotes the number of non-zero elements in the matrix. It is memory-bound, because each one of the $N$ non-zero elements loaded from the memory are used exactly once.
+> 
+> The multiplication has the form: `y=Ax`.
+> 
+> The Coordinate (COO) format for representing the sparse matrices:
+> - 3 arrays to represent the sparse matrix:
+> 	- RowIndexes
+> 	- ColumnIndexes
+> 	- ElementValues
+> - for each element in the ElementValues, we fetch it's the row index and column index (it's on the same position $k$)
+> 	- we multiply the `ElementValue(k)` with `x[ColumnIndex(k)]` (we need to pick to corresponding value in the `x` array) and add it into `y[RowIndex(k)]` (matrix multiplication)
+> 		- addition is needed, since there could be multiple non-zero elements in the matrix row
+> - parallelization is not much efficient here
+> 	- since different non-zero values in the same row has to add up to the same memory location in the result vector `y`, atomic update has to be used (overhead)
+> 	- false sharing can occur depending on the actual data (how are the non-zero values distributed)
+> 
+> The Compressed Sparse Row (CSR) format:
+> - 3 arrays to represent the sparse matrix:
+> 	- ColumnIndexes
+> 	- ElementValues
+> 	- RowStart - contains indexes to ColumnIndexes / ElementValues arrays indicating where the column indexes / values for each row begin
+> - the benefit of this approach is that the values are organized and calculated row-wise, so the treads can work on different rows of the matrix (therefore writing into different parts of the result `y` array)
+> - parallelization options (depends mainly on the scheduling):
+> 	- `schedule(static)`, each thread gets `n/p` rows, but there could be arbitrary number of non-zero elements in each row, so this could be imbalanced
+> 	- `schedule(static, 1)`, each thread gets cyclically one row and the problem of imbalance remains + false sharing effect (a group of threads share one cache block)
+> 		- we could have a chunk size aligned with the cache block
+> 	- `schedule(dynamic, K)`, each thread gets a dynamically computed $K$ number of rows (based on the number of non-zero values in them)
+> 		- improves load balance, but dynamic schedule has a higher overhead
+> 		- if $K$ are multiples of the number of non-zero elements, we can eliminate false sharing
+> 	- load-balanced SpMVM: split the matrix into $p$ disjoint row bands so they all contain roughly the same number of non-zeros (and then distribute them statically)
+> 		- the idea is to use binary search on the RowStart array, calculate the perfect splits, align into whole rows and then each thread should have the same amount of work
+
 ### Problem definition
 
 Consider a computation `y = Ax` where `A` is an input sparse matrix of order `n × n` with `A = (a_{i,j})`, `x` is an input vector of order `n`, and `y` is the output vector of order `n`. The number of nonzero elements in `A` is denoted by `N`. **Sparsity assumption:** `1 ≪ n ≤ N ≪ n²`. In practice, `N` is typically of order `n` rather than `n²`, meaning each row has a roughly constant number of nonzeros on average. This is why special `O(N)` storage formats are needed - storing the full `n × n` array would waste memory on zeros. For matrices with `n` in the hundreds of millions, the dense format would exhaust memory. **SpMVM** (Sparse Matrix-Vector Multiplication) is the most common operation in numeric linear algebra, needed in iterative solvers of systems of linear equations, conjugate-gradient methods, and many others.
@@ -138,10 +174,12 @@ No atomic operations are needed regardless of scheduling, because each iteration
 ##### Variant 1: `schedule(static)` - block distribution
 
 Rows are distributed block-wise: each thread gets `n/p` contiguous rows. Write regions are disjoint and false sharing can be eliminated through cache block alignment. However, the number of nonzeros per row can be arbitrarily irregular, leading to potentially severe load imbalance. For example, a matrix with a dense horizontal band will overload the thread that receives that band.
+![[Pasted image 20260520124840.png]]
 
 ##### Variant 2: `schedule(static, 1)` - cyclic distribution
 
 Rows are distributed cyclically (round-robin). This provides somewhat better load balancing by sampling rows from different parts of the matrix. However, false sharing is introduced because adjacent threads write to adjacent `y` elements sharing cache blocks. A group of `X` threads (where `X = cache_line_size / sizeof(float)`) share one cache block. This is clearly worse than plain `static` - it adds false sharing while the load imbalance problem persists.
+![[Pasted image 20260520124848.png]]
 
 ##### Variant 3: `schedule(static, 16)` - chunk-cyclic distribution
 

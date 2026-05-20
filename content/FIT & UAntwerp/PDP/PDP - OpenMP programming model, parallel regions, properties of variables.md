@@ -1,3 +1,25 @@
+
+> [!tldr] First 5 minutes of hell
+> OpenMP is a high-level API for shared-memory parallel programming (runs in each node, handles communication). It uses parametrized directives for the compiler, global variables and library of the system operations to parallelize the program run.
+> 
+> OpenMP utilizes the fork-join programming model: the program starts with one initial thread that runs sequentially (other threads are initiated and waiting in the thread pool). The program run then consists of multiple parallel regions, where specified teams of threads are forked from the main thread, run the computations and then are joined back at the end (by an implicit barrier). 
+> - if some of the threads fails prematurely, then all threads are terminated, resulting in the program's failure
+> - the programmer is fully in control and is responsible for handling all parallelism challenges
+> 
+> OpenMP supports loop (data) and functional (task) parallelism model + it supports a relaxed consistence memory model (= threads can keep local values in their cache and not write-through them to the main memory immediately, explicitly, we can use `flush()`)
+>
+>Parallel region is defined by the `#pragma omp parallel (parameters)`, which uses the OpenMP API to wake up the `num_treads(n)` threads, run the parallel block of code and then go back to sleep in the thread pool.
+>- the number of threads is fixed during the parallel region
+>- the regions could be nested 
+>
+>Properties of variables (each variable gets an OpenMP property):
+>- shared: are shared (visible) among threads
+>- private: private, uninitialized variables for each thread
+>- firstprivate: private, but initialized to the master's value before going into parallel region
+>- default: set a default for all unspecified variables 
+>- reduction: the variable is private to each thread, each thread populates it separately and then at the end of the parallel region, all results are reduced into one variable using the specified reduction operator (+, -, \*, etc.)
+>- threadprivate: this defines "private" on the global level, each thread has it's own copy that is persisted across parallel regions
+>- the properties of pointers apply to the pointers, not underlying objects
 ### POSIX threads vs. OpenMP - why OpenMP exists?
 - the standard for the multi-threaded programming: POSIX
 	- low-level, requires expertise, complicated to learn/debug
@@ -79,11 +101,15 @@ master ──●──[fork]──┬──thread 0──┬──●──[fork
 - there are two reduction implementations:
 	- linear (sequential): the result from each array is reduced one by one (using the reduction operator) - this is used by OpenMP
 	- logarithmic - it has fewer operations, but the synchronization barriers are required in every parallel step, which causes huge overhead -> linear is used in OpenMP (as $p$ is usually much smaller than $p$, so the linear time is negligible)
+- cannot be combined with task directive
 ### Threadprivate property
 - for implementing a counter or other accumulative variable across multiple parallel regions
 	- something like `private(list)` property, but on the global scope, the values are not destroyed at the end of the parallel region, but they persist through multiple parallel regions
 	- in all following parallel regions there must be the same amount of threads in each
 	- the property definition must precede all parallel regions
+- as in the private(list) property, the values in the first parallel region are undefined
+	- on the local level, this is handled by firstprivate()
+	- on the threadprivate level (global level), this is handled by the `copyin` clause (which basically copies some master-thread value into each thread)
 ### OpenMP memory model
 OpenMP supports a **relaxed consistency memory model**. Threads can keep **local copies** of shared variables in cache memory and are **not forced** to write-through every local update immediately into shared memory.
 

@@ -1,3 +1,22 @@
+
+> [!tldr] First 5 minutes of hell
+> Functional (task) parallelism utilizes tasks (= units of parallel computation) to enable effective parallelization of recursive algorithms. When a thread (producer) encounters the `#pragma omp task` directive, it generates a new child task and stores it into the task pool. The task will wait there until picked up by another free thread (consumer) which will execute it.
+> 
+> The `#pragma omp task` must be inside a parallel region (so there are multiple threads to pick up the tasks), otherwise all tasks would be done by one thread only (so sequentially with additional overhead)
+> 
+> `#pragma omp taskwait`
+> - the parent task must wait for all child tasks to complete before continuing
+> 
+> `#pragma omp single`
+> - this directive ensures that the code will be executed by just one thread (out of $n$ threads ready - OS decides, which thread) to avoid running multiple and identical recursion trees in parallel
+> 	- other threads skip the code block, but they must wait at the end (implicit barrier)
+> 	- and there would also be increased overhead due to access conflicts to the shared memory (and more cache misses)
+> 
+> Important clauses:
+> - if condition - whether the producer thread should create a task or run the task code directly (and then continue with it's work)
+> - final(expression) - if the expression is true, then this task is final and no further explicit tasks will be created
+> - priority(expression) - assigns a priority to the child task
+
 - ideal for parallelizing recursive algorithms (Divide and conquer)
 ### The `task` directive - syntax and semantics
 ```c

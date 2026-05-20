@@ -1,7 +1,42 @@
+
+> [!tldr] First 5 minutes of hell
+> Parallel time:
+> - $T(n, p)$ = a total time elapsed, consists of two parts:
+> 	- computation time = time spent on actual computation
+> 	- communication and synchronization time = overhead (e.g. distributing data partitions onto all processors)
+> 
+> Parallel cost:
+> - $C(n, p) = p \cdot T(n, p)$ = total cost of the parallel computation
+> 	- the cost is optimal if it is asymptotically the same as the sequential time (so the $T(n, p)$ is p-times faster)
+> 	- the sequential time is also a lowerbound for the parallel cost, because if the cost would be less than sequential time, that would mean finding better sequential algorithm (by just simulating the parallel one sequentially)
+> 
+> Parallel speedup:
+> - $S(n, p) = \frac{SU(n)}{T(n, p)}$ = how much faster the parallel algorithm is?
+> 	- if $T(n, p)\gt SU(n)$, the parallel algorithm does not make sense (it is slower than sequential solution)
+> 	- the ideal speedup is $p$: if I use $p$ processors, the parallel algorithm will be p-times faster than sequential
+> 	- the goal is linear speedup: if $p$ increases $k$ times, the total computation time ($T(n,p)$) should decrease $k$ times
+> 	- superlinear speedup ($S(n, p)\gt p$): can occur, when:
+> 		- multiple processors (with their main memory units) can cumulatively hold all data in the main memory to avoid swapping entirely (each processing smaller chunk of data at once)
+> 		- state-space search anomaly: multiple processors exploring different parts of the state-space could find the solution faster
+> 
+> Parallel efficiency:
+> - $E(n, p) = \frac{SU(n)}{C(n, p)} = \frac{S(n, p) \cdot T(n, p)}{p \cdot T(n, p)} = \frac{S(n, p)}{p} \leq 1$
+> 	- if the total parallel cost is equal to the sequential time, we have 100% efficiency (but this is often not possible due to communication/synchronization overhead)
+> 	- it could also be expressed as speedup per core
+> 	- constant efficiency means that the efficiency does not degrade to 0 when $n$ and $p$ grow (it should be bounded below by a positive constant $E_0$
+> 
+> Parallel performance optimality:
+> - all three expressions are equal:
+> 	- parallel algorithm is cost optimal
+> 	- it has linear speedup
+> 	- it has a constant efficiency
+
+
 ### Prerequisities
 ##### Sequential time complexity
 - parameters which influence the time complexity: size of the data, algorithm used, what problem do I solve
 - every problem has a sequential lower bound (it doesn't have to be known)
+	- so the worst-time run of any sequential algorithm cannot be better than this
 	- typical (trivial) lowerbound is the size of the data (because for solving the problem we need to read the data)
 	- this lower bound cannot be beaten in the future
 - upper bound is set by the complexity of the worst-case run of the best known sequential algorithm
@@ -50,6 +85,7 @@ $$
 - the best I can do is sequential complexity (in terms of the cost)
 	- we cannot have a parallel algorithm that has a lower cost than a sequential complexity
 		- that would imply that by simulating the parallel algorithm sequentially would yield a faster sequential algorithm - that's a contradiction
+		- the work cannot vanish, it is only distributed (so the total work (= parallel cost) cannot be lower than the sequential work, only higher (adding some overhead))
 	- = the total work done is asymptotically the same as the best sequential algorithm
 - cost optimality
 	- means you are not wasting parallel resources - the total work done by all processors is asymptotically the same as the best sequential algorithm
@@ -68,7 +104,7 @@ $$
 	- it depends on the degree of data independence (more independent = more options to paralellize)
 - superlinear speedup (speedup exceeds $p$)
 	- better speedup caused by hardware limitations with the sequential approach
-		- memory effect: where sequentiall algorithm requires more main memory, resulting to disk swapping (and cumulative memory of the parallel system holds everything in RAM, avoiding swapping entirely)
+		- memory effect: where sequential algorithm requires more main memory, resulting to disk swapping (and cumulative memory of the parallel system holds everything in RAM, avoiding swapping entirely)
 		- state-space search anomaly: parallel search may explore a different part of the search tree first and find the solution faster by luck
 	- this is rather an exception
 
@@ -87,6 +123,7 @@ E(n, p) = \frac{SU(n)}{C(n, p)} = \frac{S(n, p) \cdot T(n, p)}{p \cdot T(n, p)} 
 $$
 ##### Constant efficiency
 - **Definition (Constant efficiency):** Given a constant $0 < E_0 < 1$, a parallel algorithm has constant efficiency if $E(n, p) \geq E_0$, i.e., asymptotically $E(n, p) = \Omega(1)$.
+- e.g. if efficiency is $E(n,p)=\frac{1}{log(n)}$, it is not optimal as it goes to 0 as $n$ grows
 
 ---
 ### Parallel performance optimality theorem

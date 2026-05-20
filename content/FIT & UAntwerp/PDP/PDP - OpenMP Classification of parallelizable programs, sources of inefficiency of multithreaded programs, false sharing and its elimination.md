@@ -1,3 +1,39 @@
+
+> [!tldr] First 5 minutes of hell
+> The parallel algorithms fall into 2 categories (from the view of effective parallelizability on multicore CPUs with shared memory):
+> 
+> 1) CPU/compute bound algorithms
+> 	- the performance is limited by CPU, the compute time given data is larger than the time needed for moving the data from shared memory to the CPU (and back)
+> 	- examples: matrix-matrix multiplication, combinatorial NP-Hard problems...
+>    
+> 2) Memory bound algorithms
+> 	- the performance is limited by the CPU-memory bandwidth, the compute time given data is less than the time needed for moving the data from shared memory to the CPU and back
+> 	- CPU finishes early and has to wait for new data to arrive
+> 		- this is called the CPU-memory bottleneck
+> 	- examples: sequentially linear algorithms, where data pieces are used only few times
+> 
+> Sources of code inefficiencies:
+> - thread load is not balanced = faster threads wait on slower ones (unnecessary idling)
+> - too many sychronization points (barriers, critical sections) = each point has significant overhead (some threads must wait)
+> - limited parallelism = not enough work for all threads (having 10 threads and 5 iterations)
+> - a big inherently sequential part = we should parallelize as much as we can (the sequential part is the bottleneck due to Amdahl's Law)
+> - inefficient usage of cache, not using space locality principle (random memory accesses, many cache misses etc.)
+> - ignorance of cache coherence protocols, causing false sharing
+> 
+> False sharing
+> - happens when another thread performs a close-enough write to the location I am looking at (= the same cache block), it causes an invalidation of that cache block (because of the cache coherence protocol - I cannot look on stale data)
+> 	- so I need to constantly reload the new cache blocks as other threads write into almost-same locations
+> - it's called false sharing, because the threads do not share any data logically, but from the hardware point of view, they share data (on the cache-block granularity)
+>   
+> How to reduce false sharing?
+> - not using `schedule(static, 1)`, but `schedule(static)` - only reduces the problem, not eliminates
+> - for large arrays:
+> 	- calculate the chunk-size, so the chunks fit into the cache block without any overflow + align the array to the address divisible by the size of the cache block 
+> - for small arrays (e.g. size $kp$ for small $k$):
+> 	- artificial enlargement of each array element to fit the cache block (to pad the cache memory with dummy data), so each thread has a dedicated space to write the result of it's own computations without trigerring any cache invalidation for other threads
+> 	- not suitable for large arrays because of flooding the memory bus with dummy data
+
+
 ### Classification of parallelizable programs
 - two categories (from the view of effective parallelizability on multicore CPU with shared memory): 
 	- CPU/compute-bound algorithms
@@ -27,6 +63,11 @@ $$T_{computation(CPU\ registers)} \ll T_{memory (read,\ write)} \ll T_{synchroni
 - the memory bus becomes more and more the narrower bottleneck for multicore CPUs (especially if the algorithm cannot use transferred data many times)
 - example:
 	- a scalar product on a 4-core i7-6700 using AVX, each core can execute 16 FP multiply-and-add operations per clock cycle, requiring 32 float numbers (= 128 bytes) per cycle. One core therefore needs `3.4 GHz × 128B = 435 GB/s` of bandwidth - even the L1 cache (approx. 320 GB/s) cannot supply data fast enough
+- how to mitigate it? (how to optimize the sequential codes):
+	- maximize the number of operations per byte read from memory
+	- maximize the utilization of cache
+	- use the fact that the data are brought from memory through the cache blocks
+	- try to use space locality (so no random jumping), so the prefetching can work
 ---
 ### Sources of OpenMP code inefficiencies
 
@@ -61,6 +102,7 @@ This manifests as frequent writes into cached shared variables and, critically, 
 - it appears typically in the data parallelism
 - typical situation: 1 cache block size `β = 64B`, an `int` number has 4B, so a cache block consists of `X = 16` numbers. A write from another thread into a shared array at index `+/- i`, where `i ≤ 15`, may cause cache block invalidation (e.g., in the MESI protocol)
 - worst-case: `schedule(static,1)`
+	- all threads essentially always writing into the same block 
 - it's called false sharing, because the threads do not share any data logically, but from the hardware point of view, they share data (on the cache-block granularity)
 ### Elimination of false sharing
 

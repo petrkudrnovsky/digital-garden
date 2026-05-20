@@ -1,3 +1,23 @@
+
+> [!tldr] First 5 minutes of hell
+> All threads are synchronized at the end of the parallel region, but we often need to synchronize them during the parallel calculation (to ensure the correct accesses to the shared memory).
+> 
+> Directives (+ interesting info (otherwise described below)):
+> - barrier: there are a lot of implicit barriers, but we can also specify this explicit one
+> - master: the code is performed by master (rank 0) only, other threads skips and don't wait
+> - single: used with task parallelism
+> - critical: defines a critical section and the execution of this section is mutually exclusive to all threads (only one thread can execute this section)
+> 	- there are named and anonymous critical sections
+> - atomic
+> 	- atomic read and atomic write: mainly for platforms, which don't support atomic reads/writes
+> 	- atomic update: for mutually exclusive access to shared memory (for the read-update-write operation)
+> 	- atomic capture: extension of atomic update to handle update+assignment of the value (new or old)
+> 		- e.g. `my_ticket = counter++` or `my_ticket = ++counter` 
+> - taskwait: the parent task has to wait on all child tasks
+> - flush: forced write-through of local versions of shared variables to the shared memory (there are many implicit flushes)
+> - cancel: jump out of the parallel block prematurely and signal to all other threads to terminate and jump as well (threads wait on each other at the implicit barrier) 
+
+
 - synchronization directives for synchronization of thread accesses to shared memory with parallel regions:
 ### Barrier
 ```c
@@ -96,6 +116,14 @@ int *ptr = (int*) malloc(....);  // shared array
     // my_ptr[0], ..., my_ptr[BLOCK_SIZE - 1]
 }
 ```
+- simply put:
+```c
+#pragma atomic capture
+my_ticket = counter++
+```
+- these are two things (counter++) and assignment to my_ticket
+	- atomic update could do only one operation atomically (counter++)
+	- atomic capture handles both operations (update and assignment) - as this is often thing to do in the code
 ### Flush
 ```c
 #pragma omp flush [(list)]

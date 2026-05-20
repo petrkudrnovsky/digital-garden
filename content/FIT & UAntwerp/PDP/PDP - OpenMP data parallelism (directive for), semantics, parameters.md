@@ -1,3 +1,29 @@
+
+> [!tldr] First 5 minutes of hell
+> Data (loop) parallelism is defined with the `for` directive (often in combination: `parallel for`) and realizes independent loop iterations in parallel. There is an implicit barrier at the end to synchronize the threads.
+> 
+> Scheduling (clause `schedule()`) - how to assign iterations to threads:
+> - static - cyclically assign chunks of successive loop iterations to respective threads - small overhead, but the workload could be unequal
+> - dynamic - each thread grabs one iteration at a time (by default 1, could be specified) - good load balance, high overhead
+> - guided - tries to assign bigger chunks to each thread and decreases the chunk size as the number of unassigned iterations decreases (balancing overhead and load balancing)
+> - runtime - scheduling is decided at the moment of loop execution (according to a system variable)
+> - auto - scheduling is determined by OS and compiler
+> 
+> Collapsing multiple `for` loops together using `collapse(i)` clause:
+> - defines how many levels of the multilevel loop to collapse into one larger single-level loop, which is then scheduled
+> - could lead to better load balancing (better parallel distribution)
+> - usable when nested loops have uniform and independent iterations
+> 
+> Other clauses:
+> - `ordered` - the order of the iteration execution is sequential
+> - `nowait` - after the completion, threads will not wait on the final barrier (useful when the there is no data dependency between first and second loop for example)
+> 
+> `lastprivate(list)` variable property: all variables in the list will get copied the value from the sequentially last iteration to the master (could be used instead of `reduction` property)
+> 
+> Notes:
+> - if inner loop is data-dependent on outer loop, only the inner loop should be parallelized (the outer loop could be purely sequential or in the parallel region - but each thread runs "own" version of outer loop)
+
+
 - the OpenMP is primarily focused on data parallelism
 - the directives `parallel` and `for` can be joined on a single codeline (as they are often used together)
 ```c
@@ -19,6 +45,7 @@ for (int i = 0; i < n; i++) { /* loop body */ }
 	- dynamic - whenever a thread becomes idle, the system gives him next iteration to execute
 		- a master-slave pattern
 		- chunk-size = 1 by default, useful when the iteration latencies are unpredictable (conservative approach)
+			- could be specified, e.g. chunk-size = 3 (it assigns 3 iterations at once)
 		- good when the iteration time of each iteration vary 
 		- has slightly higher overhead (increasing  the chunk size decreases the overhead - fewer scheduling decisions)
 	- runtime
@@ -26,6 +53,9 @@ for (int i = 0; i < n; i++) { /* loop body */ }
 	- auto
 		- Scheduling is left entirely to the compiler and operating system.
 	- guided - also dynamic, for each assignment, it computes:
+		- the idea is to start with big chunks (to keep all threads busy on the cheap iterations) and then as there are less unassigned iterations, assign smaller and smaller chunks down to specified chunk-size (and do not go lower than that)
+			- the idea is to balance the 
+		- the chunks wait in the shared queue and whatever thread is idle first, it will pick up the next chunk
 		- good when the iteration costs grow monotonically with the index (so batch cheap first iterations together and let smaller chunks handle the expensive finish) 
 $$x = \max\left(\left\lceil \frac{\text{remaining unassigned iterations}}{p} \right\rceil, \text{chunk-size}\right)$$
 - lecturer's advice:

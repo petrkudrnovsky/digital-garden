@@ -1,3 +1,18 @@
+
+> [!tldr] First 5 minutes of hell
+> Sequential time is $O(n)+O(range)$, firstly final histogram array of length `range` is initialized to null values and then we go through `n` values and increasing respective positions in the final histogram.
+> 
+> There are two different ways, how to handle parallelization of histogram computation (codes below):
+> - having one shared histogram and using `atomic update` to access it
+> 	- $O(range)+O(n/p)$
+> 	- less memory load, but atomic adds overhead and it sequentializes the algorithm a bit
+> 	- can cause false sharing (depends on data distribution, if many threads will write into close locations in the final histogram)
+> - having multiple local histograms, which are accumulated separately and then reduced in the end
+> 	- $O(range)+O(n/p)+O(range)$ 
+> 	- more memory usage as there are multiple local copies of the histogram
+> 
+> The local computation and then global reduction is an often used trick.
+
 ### Problem definition
 - histogram expresses frequencies of appearances of data values
 - we expect values in the input array that are in some range (e.g. 0-256 for 8-bit grayscale images)
@@ -68,6 +83,7 @@ int *A, n,
 	1. **Initialization** (`O(range)` per thread, all in parallel): Each thread zeroes out its own row of the 2D histogram array.
 	2. **Parallel computation** (`O(n/p)`): Threads write into their own local histograms only - no side effects to other threads, no atomic operations needed, no false sharing during this phase.
 	3. **Parallel reduction** (`O(range)`): The `range` columns of the 2D histogram are split among `p` threads. Each thread sums `range/p` columns across all `p` rows into `histogram[0]`.
+		- there is no race condition, since no thread writes to the same location there (only the outer loop is parallelized, the inner loop is sequential and writes only to \[0\]\[i], which is split by the parallel for)
 ##### Parallel time
 $T(n, range, p) = O(range) + O(n/p) + O(range)$
 - The initialization and reduction phases each cost `O(range)` parallel time. The main computation phase costs `O(n/p)`.

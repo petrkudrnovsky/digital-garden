@@ -1,3 +1,30 @@
+
+> [!tldr] First 5 minutes of hell
+> The sequential algorithm has $O(nm)$ complexity (first polynomial has $n$ coefficients, second polynomial has $m$ coefficients). The final `C[n+m+1]` array has to be initialized to zeros first, so running sums can take place.
+> 
+> 1) Parallelization of the outer i-loop
+> 	- the outer loop is split to different threads and each thread reads the inner array sequentially
+> 	- `atomic update` is needed for writing to the $C$ array (the threads may may meet each other at the same memory cell of the $C$ thread)
+> 2) Parallelization of the inner j-loop
+> 	- here are two ways:
+> 		- sequential outer loop and team of threads is initialized within each outer-loop (fork-join overhead)
+> 		- team of threads created once, each thread running outer loop in parallel and only inner-loop iterations are split
+> 	- since the inner-loop iterations are split, the `i+j` combinations are unique and there is no need for atomicity
+> 	- false sharing is unavoidable in both variants, because the written areas of `C[i+j]` are shifted only 1 position to the right (outer loop moves it synchronously for all threads), so they will often invalidate each other's cache blocks
+> 3) Parallelization via output array decomposition
+> 	- this approach uses a different view on the problem, we utilize the convolution formula `C[k] = sum over (l) of A[l] * B[k-l]`
+> 		- we separate the output into disjoint areas and each thread computes different areas
+> 		- this way false sharing and atomic operations are entirely eliminated
+> 	- and for `A[l]` and `B[k-l]` to be valid for a fixed `k` (set by the outer loop), they need to be in those bounds:
+> 		- `l >= max(0, k - n)`
+> 		- `l <= min(k, m)`
+> 		- it creates the diamond shape (we need to distribute the iterations (and those disjoint areas) in a way that there is a similar load on all threads)
+> 	- next improvements:
+> 		- align the chunk size with the cache block size (`cache_line_size / sizeof(element)`)
+> 		- compute everything locally and write only the final result to the shared memory 
+>  
+
+
 ### Problem definition
 
 **Input:** Polynomials $A = \sum_{i=0}^{m} a_i x^i$ and $B = \sum_{i=0}^{n} b_i x^i$, where $a_m \neq 0$ and $b_n \neq 0$. **Output:** Polynomial $C = A \times B = \sum_{i=0}^{m+n} c_i x^i$, where:
@@ -153,6 +180,13 @@ for (int k = 0; k <= (m + n); k++)
     for (int l = max(0, k - n); l <= min(k, m); l++)
         C[k] += A[l] * B[k-l];
 ```
+- $k$ is an index of the final array 
+- $l$ needs to run between 0 and $k-n$, which is in fact $m$ (because $k=n+m$) because the array A is of size $m$
+- it creates the diamond-like shape
+	- left side of the diamond (where $k$ is low):
+		- the $l$ runs from 0 (we are still in the $m$ array) to $k$ (we are still in the $n$ array)
+	- right side of the diamond (where $k$ is large):
+		- the $l$ runs from $k-n$ (beyond A's range)
 
 This works because `schedule(static, X)` distributes chunks of size `X` in round-robin fashion across threads. The symmetric load profile (grows then shrinks) means each thread gets a mix of cheap chunks (near edges) and expensive chunks (near center), naturally balancing the total work. At the same time, each chunk occupies exactly one cache block (given alignment), eliminating false sharing. The requirement is that `m, n ≫ Xp` (the polynomials must be sufficiently large).
 ##### PM-C3: local accumulation optimization

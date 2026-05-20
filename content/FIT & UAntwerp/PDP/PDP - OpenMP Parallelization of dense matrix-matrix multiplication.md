@@ -1,3 +1,32 @@
+
+> [!tldr] First 5 minutes in hell
+> The classic sequential solution has complexity of $O(n^3)$. There are no data dependencies among the loop levels, which allows for multiple parallelization versions (essentially placing the `#pragma omp for` to any loop level).
+> 
+> The MMM problem is typical CPU-bound parallelization problem. The memory complexity is only $O(n^2)$, so for each "loaded" matrix elements, $n$ CPU operations are made. This algorithm then could be well parallelized, since there is no significant CPU-memory bottleneck.
+> 
+> Parallelization of the outer i-loop:
+> - the most simplest and most effective, each thread has a continuous block of  `n/p` rows and computes corresponding `C` values, no overlaps (no conflicts and minor false sharing for big matrices)
+> - it's good to parallelize only the outermost loop, since it balances the workload well and there are minor synchronization delays
+> 
+> Parallelization of the middle j-loop, two versions:
+> - with block iteration chunks
+> 	- master thread runs the outer loop only, the middle loop schedules `n/p` iterations (disjoint parts of the same row)
+> 	- higher synchronization overhead (often fork-join, $n*T_{barr}$)
+> 	- no write collisions in the shared memory
+> 	- enhancemend could be done by moving the creation of `parallel` region up, so there is no fork-join overhead (but the barrier synchronization overhead stays - that is essential)
+> - with cyclic iteration chunks (with `schedule(static,1)`)
+> 	- same as block iteration chunks, just each thread gets exactly one row element (which can cause false sharing since each thread operates right next to other threads)
+> 
+> Parallelization of the inner k-loop, two versions:
+> - utilizing the parallel reduction property for the `C[i][j]` calculation
+> 	- having a big overhead of $n^2*(T_{barr}+T{reduction}(n,p))$ 
+> - having outer- and middle-loop to be duplicated over all threads and splitting work only on the inner loop + having the `master` directive that only master thread writes to the final $C$ 
+> 	- slightly better (not having the overhead from $n^2$ fork-joins, but still really slow)
+> - so yes, we can parallelize the innermost scalar products, but the synchronization overhead is large and is driving the total parallel time $T(n,p)$
+
+For better visualization:
+![[Pasted image 20260520114408.png]]
+
 ### Problem definition
 - Consider two square matrices `A`, `B` of dimension `n × n`. The goal is to compute the product `C = A × B`.
 - The classical algorithm computes `n²` scalar products of rows of `A` and columns of `B`, requiring `n³` multiplications and additions.
@@ -43,6 +72,7 @@ Each thread receives a contiguous block of `n/p` rows and computes the correspon
 - **Synchronization**: Minimal - only 1 implicit barrier at the end of the parallel region.
 - **False sharing**: Negligible for large matrices. Can theoretically occur at the boundary between adjacent thread blocks (last cache block of one thread's band may overlap with the first of the next), but with `n/p ≫ X` this affects at most 1 cache block per boundary.
 - **Load balance**: Perfect - each thread performs `n/p` identical row computations.
+![[Pasted image 20260520114907.png]]
 
 > This is the simplest and, as it turns out, the best option for parallelizing MMM.
 
@@ -69,6 +99,7 @@ All threads share a given row index `i` of `A`. Each thread covers a fixed porti
 - **Synchronization**: Higher overhead: `n × T_barr` (one fork-join per row `i`).
 - **False sharing**: Minor for sufficiently large `n/p`, since each thread writes a continuous segment of size `n/p` within a row.
 - **Load balance**: Perfect.
+![[Pasted image 20260520114919.png]]
 
 ---
 ### Variant MMM-j2: parallelization of the j-loop with cyclic chunks
@@ -91,6 +122,7 @@ Identical to MMM-j1 in synchronization and absence of write collisions, but `sch
 - **Synchronization**: `n × T_barr` (same as MMM-j1).
 - **False sharing**: Significant - different threads write simultaneously into adjacent elements of the same row of `C`, sharing cache blocks. This is measurably slower than MMM-j1.
 - **Load balance**: Perfect.
+![[Pasted image 20260520115139.png]]
 
 ---
 ### Variant MMM-j3: j-loop within a persistent parallel region

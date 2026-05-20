@@ -1,3 +1,21 @@
+
+> [!tldr] First 5 minutes of hell
+> PRAM (Parallel RAM) is a abstraction computational model for a parallel computer. It abstracts:
+> - all $p$ RAM processors are synchronized with the same clock
+> - each $p_i$ accesses the shared memory in constant $O(1)$ time (not taking synchronization and communication overhead into account)
+> - three types of operations:
+> 	- global read
+> 	- local computation
+> 	- global write
+> - two time models:
+> 	- unit time model (each operation takes 1 time unit)
+> 	- global time model (local computation takes 1 time unit, R/W take $d>1$ time unit, still constant)
+> - how are conflicts handled?
+> 	- EREW
+> 	- CREW
+> 	- CRCW (three options: priority, arbitrary, common)
+
+
 - = Parallel Random Access Machine
 - a different distinction:
 	- a RAM in PRAM means Random Access Machine (as in Von Neumann's architecture)
