@@ -2,7 +2,7 @@
 > [!tldr] First 5 minutes in hell
 > The classic sequential solution has complexity of $O(n^3)$. There are no data dependencies among the loop levels, which allows for multiple parallelization versions (essentially placing the `#pragma omp for` to any loop level).
 > 
-> The MMM problem is typical CPU-bound parallelization problem. The memory complexity is only $O(n^2)$, so for each "loaded" matrix elements, $n$ CPU operations are made. This algorithm then could be well parallelized, since there is no significant CPU-memory bottleneck.
+> The MMM problem is typical CPU-bound parallelization problem. The memory complexity is only $O(n^2)$, so for each "loaded" matrix element, $n$ CPU operations are made. This algorithm then could be well parallelized, since there is no significant CPU-memory bottleneck.
 > 
 > Parallelization of the outer i-loop:
 > - the most simplest and most effective, each thread has a continuous block of  `n/p` rows and computes corresponding `C` values, no overlaps (no conflicts and minor false sharing for big matrices)

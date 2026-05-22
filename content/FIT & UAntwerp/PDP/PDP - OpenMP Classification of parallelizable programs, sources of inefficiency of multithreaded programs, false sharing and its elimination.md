@@ -32,6 +32,10 @@
 > - for small arrays (e.g. size $kp$ for small $k$):
 > 	- artificial enlargement of each array element to fit the cache block (to pad the cache memory with dummy data), so each thread has a dedicated space to write the result of it's own computations without trigerring any cache invalidation for other threads
 > 	- not suitable for large arrays because of flooding the memory bus with dummy data
+> 
+> False sharing cannot be eliminated 100%:
+> - e.g. when we need to perform indirect addressing (e.g. when computing the histogram)
+> - the write regions are dynamically shifted according to parallel for schedule (e.g. when computing the polynomial product)
 
 
 ### Classification of parallelizable programs

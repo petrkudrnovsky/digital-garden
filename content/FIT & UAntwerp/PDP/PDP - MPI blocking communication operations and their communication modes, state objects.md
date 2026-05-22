@@ -1,6 +1,40 @@
-# Exam Q18: MPI blocking communication operations and their communication modes, state objects
 
-Blocking point-to-point communication in MPI: the four send modes (standard, buffered, synchronous, ready), the matching receive, and the `MPI_Status` state object that carries metadata about a received message.
+> [!tldr] First 5 minutes of hell
+> A blocking operation is the kind of operation, which returns only when a certain completion condition is satisfied.
+> 
+> `MPI_Send` is a blocking operation (it is completed when the input buffer can be modified (= the sending of all the data is complete)) - realizes "standard mode"
+> - there are two options (decided by the MPI library, the code must handle both)
+> 	- the data are either sent to the destination process (non-local operation - the completion of the MPI_Send depeds on the data reception from the destination process)
+> 	- or the data are copied to the temporary system buffer (for later sending) - this is a local operation (the completion is after loading the buffer, it does not depend on the reception of the destination process)
+> - the uncertainty is good for portability of the MPI application across multiple systems (each system handles buffering in a different way and the run of the program should not depend on it)
+> - before sending, there is a small handshake in the background
+> 	- the sender sends a tiny rendesvous message "hey, I have N bytes with tag T for you, are you ready?"
+> 	- receiver firstly has to get to its `MPI_Recv` and then replies, yes, I am ready, send it to the address 0x... in my memory
+> 	- sender then transfers the data
+> 
+> `MPI_Bsend` - realized "buffered mode", only local operation (the completion does not depend on the destination process receiving the data)
+> - the programmer has to prepare a buffer to load the data into (calling `MPI_Buffer_attach`), in case of calling multiple MPI_Bsend functions, the buffer has to be able to store the sum of all data
+> - buffering may improve the performance of a correct program, but a sufficient large buffer must always be allocated
+> 
+> `MPI_Ssend` - realizes the "synchronous mode", it is blocking until the destination process initializes the data reception, so it is only non-local operation
+> 
+> `MPI_Rsend` - realizes "ready mode", the receiving process must already be waiting for the message (e.g. with `MPI_Recv` and buffer already allocated)
+> - the handshake is omitted, because the receiver is ready (the library trusts it, so it sends the message right away, if the receiver is not waiting, the system is undefined)
+> - it is non-local operation (the receiver has to be involved)
+>   
+> There are two communication modes:
+> - point-to-point: communication between two MPI processes
+> - collective: communication among all MPI processes associated with the given communicator
+> 	- communicator is a group of processes within which is allowed communication (each communication function has a parameter for the communicator to specify to which processes could the message be sent)
+> 	- the implicit default is: `MPI_COMM_WORLD` = all defined processes within the MPI run
+> 	- `MPI_Comm_rank`, `MPI_Comm_size` = functions to get the rank within the comm. group and the number of MPI processes in the comm. group
+> 
+> State object - `MPI_Status` is a data structure informing about the status of the source and of the communication for the receiving process:
+> - it is populated by the `MPI_Recv` function and it contains information:
+> 	- "who sent this message?", useful, when `MPI_ANY_SOURCE` is used
+> 	- "what tag is there?", useful, when `MPI_ANY_TAG` is used
+> 	- how many elements will arrive?, the `MPI_Recv` has specified only the maximum of elements to arrive (there could be less)
+> 		- this is not directly in the struct, but needs to be retrieved using `MPI_Get_count(&status, MPI_INT, &received);` function
 
 ### Definition: blocking operation
 

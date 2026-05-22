@@ -15,13 +15,19 @@
 > 	- this approach uses a different view on the problem, we utilize the convolution formula `C[k] = sum over (l) of A[l] * B[k-l]`
 > 		- we separate the output into disjoint areas and each thread computes different areas
 > 		- this way false sharing and atomic operations are entirely eliminated
+> 		- the process visually:
+> 			- take array B, reverse it and slide it over array A (and multiply overlapping elements)
+> 			- for $k=0$, only first element from A and first element from (reversed) B overlap
+> 			- for $k=1$, first two elements overlap
+> 			- this way, we can easily calculate the $C[k]$ separately
 > 	- and for `A[l]` and `B[k-l]` to be valid for a fixed `k` (set by the outer loop), they need to be in those bounds:
 > 		- `l >= max(0, k - n)`
 > 		- `l <= min(k, m)`
 > 		- it creates the diamond shape (we need to distribute the iterations (and those disjoint areas) in a way that there is a similar load on all threads)
 > 	- next improvements:
 > 		- align the chunk size with the cache block size (`cache_line_size / sizeof(element)`)
-> 		- compute everything locally and write only the final result to the shared memory 
+> 			- eliminates false sharing
+> 		- compute everything locally and write only the final result to the shared memory (eliminates frequent writes into the shared memory)
 >  
 
 
@@ -29,7 +35,7 @@
 
 **Input:** Polynomials $A = \sum_{i=0}^{m} a_i x^i$ and $B = \sum_{i=0}^{n} b_i x^i$, where $a_m \neq 0$ and $b_n \neq 0$. **Output:** Polynomial $C = A \times B = \sum_{i=0}^{m+n} c_i x^i$, where:
 
-$$c_k = \sum_{l=\max(0,, k-n)}^{\min(k,, m)} a_l \cdot b_{k-l}$$
+$$c_k = \sum_{l=\max(0, k-n)}^{\min(k, m)} a_l \cdot b_{k-l}$$
 
 Polynomials are represented as arrays of coefficients (`A[m+1]`, `B[n+1]`, `C[m+n+1]`). The classical sequential algorithm has `O(nm)` complexity.
 

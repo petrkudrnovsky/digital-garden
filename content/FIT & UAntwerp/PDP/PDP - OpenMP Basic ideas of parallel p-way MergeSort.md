@@ -1,6 +1,35 @@
-_Covers the motivation for abandoning recursive 2-way MergeSort in favor of p-way Parallel Multi-Way MergeSort (PMWMS), the algorithm structure (local sort, splitter computation via pivotization, sequential p-way merge of cut-outs), the `Splitters_by_Rank` algorithm, asymptotic parallel time analysis, and final performance comparison with GNU's implementation._
 
----
+> [!tldr] First 5 minutes of hell
+> See the [[PDP - OpenMP Basic ideas of parallel 2-way MergeSort]].
+> - 2-way merge implementation may suffer from false sharing and also, due to the recursive MergeSort nature, not all threads are 100% utilized all the time
+> 
+> The idea is to forget the traditional recursive MergeSort and:
+> - split the array to `n/p` parts, each thread will sort its part using the best sequential algorithm there is
+> - so we have $p$ sorted arrays and now we need to merge them together
+> 	- the idea is that:
+> 		- thread 0 will merge the smallest `n/p` elements
+> 		- thread 1 will merge the next `n/p` elements
+> 		- thread $p-1$ will merge the largest `n/p` elements
+> 	- each thread will then compute it's array of splitters (= "at which index does my sequence in each of the sorted array start"?)
+> 	- it will than sequentially merge the first `n/p` elements from all sorted arrays starting from the splitter indexes
+> 	- and it will write them to the final sorted array B at index `i * n/p` (`i` is the rank of the thread and there are `i-1` blocks of smaller elements before it)
+> 		- so the sum of all elements in all sorted arrays before the splitter indexes is equal to `i * n/p`
+> 
+> Splitters_by_Rank function
+> - essentially perform a binary search across all sorted arrays
+> 	- for each sorted array, keep two indexes as bounds (at the beginning, the bounds bound the whole array)
+> 	- pick a pivot between those bounds for each sorted array and count the number of elements that are less than the picked pivot (and sum the counts across all sorted arrays)
+> 		- the sum is the global rank of the pivot in the output array 
+> 		- if the global rank is bigger than the `i * n/p` target rank -> pull the right bounds and repeat
+> 		- if the global rank is too small, pull the left bounds and repeat
+> 	- repeat until the bounds collapse => we have found the splitters in each sorted array
+> 		- the goal is to find splitters (values) from which the current thread can start merging (and be sure that it will not conflict with other threads)
+> 
+> Benefits:
+> - there are no conflicts between threads, each one of them is doing own work and the final write to the sorted array is also without conflicts
+> - small synchronization overhead - only two barriers (after each phase) compared to a lot of `taskwait` directives on each level of the recursion tree in traditional MergeSort
+> - thread utilization is very good (especially at the beginning, where each thread sorts it's own part)
+
 
 ### Motivation: why p-way merge instead of parallel 2-way merge
 
@@ -70,6 +99,8 @@ S[2] = [2, 5, 8, 11, 15, 17, 22, 25, 26]
 Each thread `tau_i` (for `i > 0`) computes splitters - indices into all three sorted sequences such that the cut-outs between neighboring splitters sum to exactly 9 elements. Visually, each thread's cut-outs are color-coded across all three sequences. For example, `tau_0` receives the smallest 9 numbers from across all three sequences (e.g., the "red" numbers `{1, 2, 3, 4, 5, 6, 7, 8, 9}`), `tau_1` receives the next 9, and `tau_2` receives the largest 9.
 
 Each thread then performs a sequential 3-way merge of its 3 cut-outs (one from each `S[j]`) into a sorted output segment `B[i]` of size exactly 9.
+
+![[Pasted image 20260520174136.png]]
 
 ### The `Splitters_by_Rank` algorithm
 

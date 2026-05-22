@@ -1,6 +1,33 @@
-# Exam Q17: OpenMP+MPI cooperation of processes and threads
 
-Hybrid parallel programming combining MPI (distributed-memory, inter-node) with OpenMP (shared-memory, intra-node) on clusters whose nodes contain one or more multicore CPUs.
+> [!tldr] First 5 minutes in hell
+> MPI = message passing interface, processes utilize messages to communicate between each other (this is often used for a model of parallel computer with distributed memory = NUMA (Non-uniform memory access)). There are multiple implementations of the MPI standard.
+> 
+> Threads in OpenMP communicate using Read/Write operations to the shared memory. The MPI processes cannot share memory, so they communicate exclusively via message passing (therefore all variables are inherently private to each process).
+> 
+> Different models of cooperation in hybrid applications:
+> - MPI only model
+> 	- on each core/CPU/node there are only MPI processes running, which communicate only via messages (they do not utilize the shared memory, they are not forked into threads)
+> - MPI+OpenMP Hybrid model
+> 	- on each CPU/node there are MPI processes running, which fork into multiple threads (which utilize the shared memory)
+> 
+> Why the hybrid model outperforms the MPI only model (1 thread per core vs. 1 MPI process per core)?
+> - MPI process is more heavy (own address space, replicated data structure, heap space, lookup tables, constants etc.) and every communication goes through the MPI stack (pure overhead, since they share memory)
+> - all threads (on different cores) share the same shared space and the communication between all threads/cores happens via shared memory, which is faster
+> 
+> Typical architectures:
+> - 1 MPI process per computing node (one node could consist of multiple CPUs, e.g. server)
+> - 1 MPI process per CPU
+> 	- this is more efficient, because the shared memory (which is shared from the programmer's point of view) is actually split into multiple parts (NUMA architecture, each socket/CPU has it's own memory connector to different DIMMs) and it's faster to access only "your part of the RAM"
+> 	- of course the CPU can access other parts of RAM connected to other CPUs, but it's a bit slower (it has to basically ask the other CPU for the data on his RAM part)
+> 
+> Hybrid application is initialized with `MPI_Init_thread`, where we can specify the level of cooperation of MPI with threads:
+> - `MPI_THREAD_SINGLE`: MPI Only model. Processes are not forked into threads.
+> - `MPI_THREAD_FUNNELED`: multithreaded processes are allowed with the limitation that **only the master thread can call MPI functions**
+> - `MPI_THREAD_SERIALIZED`: multithreaded processes are allowed with the limitation that **at a given time only one thread can call MPI functions** (it requires critical sections - any thread may call MPI, but they must be handled by the user)
+> - `MPI_THREAD_MULTIPLE`: multithreaded processes where **all threads can call MPI functions without any constraints**
+> 	- this is hard to implement correctly and therefore not all MPI implementations offer this 
+> 
+> Each MPI implementation provides different levels of cooperation, so with every call of `MPI_Init_thread`, we ask for a specific level of cooperation (`required` parameter) and we get a `provided` parameter and if it is lower, we cannot proceed (we have a wrong implementation)
 
 ### Motivation: hybrid hardware
 
@@ -18,6 +45,7 @@ Two standard mappings:
 
 1. **1 MPI process per computing node**: the process forks into multiple threads corresponding to all cores of the node.
 2. **1 MPI process per CPU (= socket)**: the process forks into multiple threads corresponding to the cores of the CPU. **Better access to data ⇒ often higher performance**, because each MPI process and its threads stay within one NUMA domain (one socket), avoiding cross-socket memory traffic.
+- computing node could have multiple sockets (e.g. a computing node has two 12-core sockets(=CPUs)), so in total, it has 24 cores (and one share memory)
 
 ### Initialization: `MPI_Init_thread`
 

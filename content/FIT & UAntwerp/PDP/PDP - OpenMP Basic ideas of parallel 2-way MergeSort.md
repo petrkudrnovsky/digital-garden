@@ -1,6 +1,39 @@
-_Covers the sequential MergeSort baseline, why naive parallelization catastrophically fails (false sharing from bottom-up work), the three improvements (thresholding, Divide-&-KeepOneHalf, parallel 2-way merge via the binary matrix construction and antidiagonal splitters), and their performance._
 
----
+> [!tldr] First 5 minutes of hell
+> MergeSort is a recursive Divide-and-Conquer algorithm. It halves the input array, recursively sorts both halves, then merges them together and returns.
+> - is data independent (the distribution and structure of data do not affect the performance)
+> - is out-of-place (needs an extra array of the same size as the input)
+> - is stable (preserves the order of equal elements)
+> 
+> Why does not the standard task parallelism work?
+> - because unlike the QuickSort (which does the work and then recurses), the MergeSort first recurses and then does the work
+> - with the recursion first, it creates many small OpenMP tasks, which are merging only individual elements (to the array of 2) => massive task management overhead + massive false sharing (all threads essentially competing for the cache blocks, because they merge and write next to each other) 
+> - just a note: the directive `taskwait` is needed before merging to ensure that both sides are recursively sorted (before merging them)
+> 
+> How to improve this?
+> - thresholding the input size for creating parallel OpenMP tasks - do not create many small OpenMP tasks and do the sequentially (faster)
+> - instead of Divide-and-Conquer, do Divide-and-KeepOneHalf - same problem as in the QuickSort, the parent thread creates two tasks and waits idling on the `taskwait`, better is to keep it busy by executing one of the halves
+> - parallelization of the merge operation -> see Parallel 2-way merge
+> 	- because the sequential merging operation is the biggest bottleneck
+>   
+> Parallel 2-way merge
+> - suppose, we have got sorted arrays C and D and have to merge them using $p$ threads
+> - split C into $p$ chunks and D into $p$ chunks so that:
+> 	- if we merge chunk 1 from C with chunk 1 from D, we get exactly `n/p` elements (of the final array having $n$ elements)
+> 	- all elements in both chunks 1 are smaller than all elements in both chunks 2 and so on
+> - each thread does it's own sequential merge on it's chunk and writes the sorted merge independently to the final array part
+> - how to find the splitters (points, where to split C and D)?
+> 	- get the matrix (below) representing the merge (moving right = take from D, moving down = take from C)
+> 	- draw $p-1$ equidistant antidiagonals, which cut the staircase into $p$ slices, where each slice represents a slice of C (the rows it spans) and the slice of D (the columns it spans) for the given thread
+> 	- so each thread:
+> 		- finds it's splitter (using binary search find where it's antidiagonal crosses the staircase)
+> 		- waits on barrier until all threads find their splitters
+> 		- reads it's neighbours' splitters to figure out it's slices of C and D (where they start and end)
+> 		- do a sequential merge of the slices, producing an output of size `n/p` and write to the determined location in the output array (no conflicts between threads)
+> - total cost is then $O(n/p + log(n))$ 
+> 	- $O(log(n))$ for binary search to find the splitter
+> 	- $O(n/p)$ to do the local merges
+
 
 ### MergeSort properties relevant to parallelization
 
@@ -117,6 +150,10 @@ Because both `C` and `D` are sorted, the matrix has two key properties:
 
 The boundary between 0s and 1s forms a **rightwards-downwards-staircase-like curve** from the upper-left corner to the lower-right corner (the "thick blue line" in the slides).
 
+![[Pasted image 20260520170325.png]]
+- moving right = take from D
+- moving down = take from C
+- the matrix is only a mental model, the binary search evaluates the 0/1 on the few places it visits
 ##### Concrete example
 
 For `n = 16`, `p = 4`, with sorted arrays `C = [4, 6, 7, 11, 13, 14, 15, 16]` and `D = [1, 2, 3, 5, 8, 9, 10, 12]`, the matrix is constructed row by row: for a given `C[i]`, as you move across columns (increasing `D[j]` values), at some point `D[j]` exceeds `C[i]` and entries switch from 0 to 1. The staircase boundary always progresses rightward and downward.

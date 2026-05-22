@@ -1,6 +1,27 @@
-# Exam Q19: MPI nonblocking communication operations and tests of their completion, state objects
 
-Nonblocking point-to-point communication in MPI: the four nonblocking send modes plus nonblocking receive, the `MPI_Request` handle, the `MPI_Test` / `MPI_Wait` family for completion checking, and why nonblocking primitives are essential for both correctness and performance.
+> [!tldr] First 5 minutes of hell
+> The non-blocking operation returns immediately (independently of the completion condition). The data transfer is then in progress and we cannot modify the buffer (after sending) or read the buffer (before receiving) until explicitly testing whether the communication has finished. 
+> 
+> Operations: `MPI_Isend`, `MPI_Ibsend`, `MPI_Issend`, `MPI_Irsend`, `MPI_Irecv` (prefix "I" = immediate)
+> - the completion conditions did not change (see previous exam question), only that those functions return immediately
+> - `MPI_Irecv` initiates the data reception, but the data cannot be read until the explicit check
+> 	- so this function does not return `MPI_Status` struct, because the data are not received yet
+> - all operations have an extra variable: `MPI_Request`, which is like a semantic connection between the kickoff of the communication and the completion of the communication
+> 	- this is useful for checking whether the communication has finished or not?
+> 
+> How to check if the communication is finished?
+> - `MPI_Test` - for active pooling (returns instantly with true/false if the communication is finished)
+> - `MPI_Wait` - for passive pooling, but is blocking (waits until the communication is finished)
+> - both functions fill the `MPI_Status` field after the communication takes place
+> - both functions serve for checking both sending and receiving statuses even though `MPI_Status` is not needed for the sending side (it is done for universality), could be ignored
+> - there are also: 
+> 	- `Testany`, `Waitany`, `Testall`, `Waitall` (testing/waiting for any process or all processes)
+> 
+> What are the benefits of the nonblocking operations?
+> - threads can do useful work while waiting on the data (communication X work overlap)
+> - threads can wait on multiple communications at once (communication X communication overlap)
+> - mitigation of the risk of communication deadlock (which could happen easily with blocking communication method - one process waits on other, which waits on the first since it needs certain data to continue)
+> 	- the send needs to be matched with receive in order that does not cause deadlock
 
 ### Definition: nonblocking operation
 

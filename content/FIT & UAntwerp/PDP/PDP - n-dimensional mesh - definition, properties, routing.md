@@ -1,204 +1,164 @@
-# Exam question 25: n-dimensional hypercube - definition, properties, routing
 
-Topic: the binary hypercube `Q_n` as the canonical `orthogonal direct topology` based on Boolean algebra - its formal definition, structural properties (regularity, distance, connectivity, bisection, bipartiteness, Hamiltonicity, vertex symmetry), and routing algorithm (`e-cube`).
+> [!tldr] First 5 minutes in hell
+> A $n$-dimensional mesh $M(z_1, z_2, \ldots, z_n)$ is like a grid of $n$ dimensions, where each $z_i$ denotes a number of points along the $i$-axis. A vertex has an unique address $[a_1, a_2, \ldots, a_n]$ and two vertices are neighbors iff their adresses differ at one dimension by exactly one.
+> 
+> A binary hypercube $Q_n$ is just a special example of $n$-dimensional mesh $M(2,2,\ldots, 2)$.
+> - $M(k,k,\ldots, k)$ is a $k$-ary cube
+> 
+> It is a Cartesian product of linear arrays: $M(z_1, z_2, \ldots, z_n) \equiv M(z_1) \times M(z_2) \times \cdots \times M(z_n)$.
+> 
+> The most practical meshes are 2D and 3D.
+> 
+> Properties:
+> - number of vertices is just multiplying all dimensions $z_i$ 
+> - diameter: $\sum_{i=1}^{n} (z_i - 1)$ - the maximum path length is from one corner to the opposite corner (I have to travel $z_i-1$ edges in each dimension)
+> - meshes are hierarchically recursive (the constructor is a Cartesian product)
+> 	- we can have submeshes of the two flavors:
+> 		- same $n$ dimensional, but some dimensions have smaller values (less vertices along the $i$-th axis)
+> 		- fix some dimensions to fixed values, effectively reducing the dimensionality of the whole mesh
+> 	- useful for D&C algorithms (splitting the problem into smaller subproblems and run them independently on smaller meshes)
+> - degree set is ${n,\ldots , 2n}$, because corner vertices have 1 neighbors along each dimension/axis and inner has 2 neighbors per dimension (and there are $n$ dimensions)
+> 	- so mesh is not regular, and that also implies that it is not vertex-symmetric (no automorphism can map a corner vertex onto the inner one (they have different degrees))
+> - bisection width: 
+> 	- slice through the largest dimension ($N/max z_i$ edges), if the largest dimension is even, the mesh is split exactly in half
+> - mesh are always bipartite (so I can color all vertices in a way so no edge has the same color vertices), but not always balanced
+> - a mesh always has a Hamiltonian path (visit every vertex once)
+> 	- it has a Hamiltonian circuit (return to start after visiting all vertices) exists only of the number of vertices is even (if there is even number of vertices, the circuits alternates colors and both color classes are balanced) = at least one dimension is even
+> - connectivity
+> 	- $\kappa =\lambda =\delta =n$
+> 	- to disconnect a corner vertex, we need to cut only $n$ edges, so the connectivity cannot exceed $n$
+> 
+> Routing is dimension-ordered:
+> - 2D mesh: XY routing (go first along the X axis until you hit the X-position of the destination vertex, then continue on another dimension (Y) until you hit the Y-position of the destination vertex)
+> - 3D mesh: XYZ routing
+> - it's like generalized Manhattan distance to multiple dimensions
+> - it is deadlock free, because fixing the dimensions in a given order prevents cyclic dependencies
+> 
+> Why use meshes?
+> - constant degree regardless of size (compared to hypercubes, which have degree $log(N)$, which grows with the size of the network)
+> - embed naturally in physical world (chips are 2D, server rooms are 3D)
 
-### Definition of `Q_n`
 
-The `binary hypercube of dimension n`, denoted `Q_n`, is defined by:
+### Definition
 
-```
-V(Q_n) = {0, 1}^n = { x_{n-1} x_{n-2} ... x_0 ; x_i ∈ {0, 1} }
-E(Q_n) = { <x, neg_i(x)> ; x ∈ V(Q_n),  0 ≤ i ≤ n - 1 }
-```
+The n-dimensional mesh of dimensions $z_1, z_2, \ldots, z_n$, denoted $M(z_1, z_2, \ldots, z_n)$, is an orthogonal direct topology whose constructor is the Cartesian product. It is defined as follows. Each $z_i \geq 2$.
 
-where `neg_i(x)` denotes the `n`-bit string obtained from `x` by flipping bit `i`. In words: vertices are `n`-bit binary strings, and two vertices are adjacent iff they differ in exactly one bit position.
+Vertex set: $$
+V(M(\ldots)) = \{\, [a_1, a_2, \ldots, a_n] \mid 0 \leq a_i \leq z_i - 1 \;\; \forall i \in \{1, \ldots, n\} \,\}
+$$
 
-Key parameters:
+Edge set (two vertices are adjacent iff they differ in exactly one coordinate by exactly $\pm 1$): $$
+E(M(\ldots)) = \{\, \langle [\ldots, a_i, \ldots], [\ldots, a_i + 1, \ldots] \rangle \mid 0 \leq a_i \leq z_i - 2 \,\}
+$$
 
-```
-|V(Q_n)|    = 2^n
-|E(Q_n)|    = n · 2^{n-1}
-diam(Q_n)   = n
-deg(Q_n)    = {n}          (i.e., Q_n is n-regular)
-bw_e(Q_n)   = 2^{n-1} = N/2
-```
+Equivalently as Cartesian product of linear arrays: $$M(z_1, z_2, \ldots, z_n) \equiv M(z_1) \times M(z_2) \times \cdots \times M(z_n)$$
 
-The `Hamming distance` `ϱ(u, v)` (number of bit positions where `u` and `v` differ) coincides with the graph distance in `Q_n`.
+A 1-D mesh $M(z)$ is just a linear array (path of $z$ vertices) - the counterpoint to the complete graph.
 
-### Properties I - regularity, density, recursivity, subcubes
+When all dimensions are equal, $M(k, k, \ldots, k)$ is called a $k$-ary $n$-cube. The binary hypercube is the special case $M(2, 2, \ldots, 2) \equiv Q_n$, so n-dimensional meshes are direct generalizations of $Q_n$.
 
-`Q_n` is `n-regular` and has `logarithmic diameter` (`diam = n = log_2 N`). Because the degree grows with `n`, `Q_n` is a `dense topology`, not sparse.
+### Basic parameters
 
-`Hierarchical recursivity` via Cartesian product:
+Number of vertices: $$|V(M(\ldots))| = \prod_{i=1}^{n} z_i$$
 
-```
-Q_n ≡ Q_p × Q_{n-p}  ≡  Q_p × Q_q × Q_{n-p-q}  =  Q_1^n
-```
+Number of edges: $$|E(M(\ldots))| = \sum_{i=1}^{n} (z_i - 1) \prod_{\substack{j=1 \ j \neq i}}^{n} z_j$$
 
-(with `Q_1` being a single edge - two vertices labeled 0 and 1 connected by an edge).
+Diameter (sum of side lengths minus $n$): $$\mathrm{diam}(M(\ldots)) = \sum_{i=1}^{n} (z_i - 1) = \Omega!\left(\sqrt[n]{|V(M(\ldots))|}\right)$$
 
-`Subcubes` correspond to Boolean terms. A subcube is specified by a string `s_{n-1} ... s_1 s_0` where each `s_i ∈ {0, 1, *}` and `*` is the `don't-care` symbol. The subcube contains all vertices that match the fixed bits and are free on the starred positions. These are exactly the `terms in Boolean algebra` - min-terms, max-terms, and intermediate terms - now reinterpreted as sub-structures of the hypercube.
+Degree set (mesh is NOT regular because corner/edge vertices have lower degree than interior vertices): $$
+\deg(M(\ldots)) \in \{n, \ldots, n + j\}, \quad j = |\{\, z_i \mid z_i > 2 \,\}|
+$$
 
-Example graphical recursivity: `Q_6 ≡ Q_3 × Q_3` - `Q_6` can be drawn as a `Q_3` whose vertices are themselves `Q_3`s.
+In particular, $\Delta(M(\ldots)) = 2n$ for interior vertices and $\delta(M(\ldots)) = n$ for corner vertices (assuming all $z_i > 2$).
 
-### Properties II - connectivity and bisection
+Bisection width (slice orthogonally through the largest dimension): $$
+\mathrm{bw}_e(M(\ldots)) =
+\begin{cases}
+\dfrac{\prod_{i=1}^{n} z_i}{\max_i z_i} & \text{if } \max_i z_i \text{ is even,} \\[6pt]
+\Omega\!\left(\dfrac{\prod_{i=1}^{n} z_i}{\max_i z_i}\right) & \text{otherwise.}
+\end{cases}
+$$
 
-`Q_n` has `optimal connectivity`:
+The piecewise formula is messy precisely because of the irregularity (an odd-sized largest dimension cannot be split exactly in half).
 
-```
-κ(Q_n) = λ(Q_n) = δ(Q_n) = n.
-```
+### Diameter comparison: meshes vs. logarithmic bound
 
-That is, vertex connectivity, edge connectivity, and minimum degree all coincide at `n`.
+The theorem on sparse-graph diameters (Theorem 15) states $\mathrm{diam}(G) = \Omega(\log N)$ for any $N$-vertex sparse graph. The mesh has constant degree (when $n$ is held fixed), hence it is sparse, and its diameter $\Omega(\sqrt[n]{N})$ is therefore strictly worse than the optimal $\Omega(\log N)$ for any fixed $n$. Concretely:
 
-`Bisection width` is the `largest possible`:
+- $\sqrt[3]{N} \geq \log N$ for $N > 1000$
+- $\sqrt{N} \geq \log N$ for $N > 16$
 
-```
-bw_e(Q_n) = 2^{n-1} = N/2.
-```
+So meshes pay a real latency price compared to hypercubes for the benefit of having constant degree and being naturally embeddable in 2-D or 3-D physical space.
 
-The recursive picture makes this obvious: `Q_n ≡ Q_{n-1} × Q_1`, and splitting along the `Q_1` factor cuts exactly `2^{n-1}` edges - every vertex on the left has exactly one image on the right. This maximum bisection makes `Q_n` `ideal for binary divide-and-conquer algorithms`.
+### Structural properties
 
-### Properties III - bipartiteness and Hamiltonicity
+Hierarchical recursivity (very strong - this is a key advantage of meshes):
 
-`Q_n` is a `balanced bipartite graph`. The 2-coloring is given by `parity` (number of 1-bits modulo 2): every edge flips exactly one bit, hence flips parity, so endpoints of every edge have opposite parities. The two color classes have equal size `2^{n-1}`.
+- Same-dimension submeshes: for example $\mathrm{SubM}([1\text{-}3], *, [2\text{-}5], _) \subset M(6, 5, 8, 3)$, where $\_$ means "the whole range" and $[a\text{-}b]$ means coordinates restricted to that interval.
+- Lower-dimension submeshes: for example $\mathrm{SubM}(*, 1, *, 3) \subset M(3, 4, 2, 7)$, obtained by fixing some coordinates.
 
-`Q_n` is `Hamiltonian`. Any `n`-bit `Gray code` is a Hamiltonian circuit in `Q_n`. Gray codes are sequences of all `2^n` strings in which consecutive entries differ in exactly one bit - the standard example is the `binary reflected Gray code`. Many Hamiltonian circuits exist; Gray codes are the most popularly known construction.
+Connectivity: meshes have optimal connectivity, $\kappa(M(\ldots)) = \lambda(M(\ldots)) = \delta(M(\ldots)) = n$ (limited by the corner-vertex degree).
 
-`Q_n` is also a highly cyclic graph: starting with 4-cycles (the smallest, since `Q_n` is bipartite so no odd cycles), then 6, 8, 10-cycles, always even. This cyclicity provides `routing redundancy` and supports deadlock avoidance.
+Regularity / symmetry: meshes are NOT regular and therefore NOT vertex-symmetric (degrees range from $n$ at corners to $2n$ in the interior).
 
-### Properties IV - vertex symmetry (Theorem 16)
+Bipartiteness: meshes are ALWAYS bipartite (regardless of the parities of the $z_i$). The 2-coloring is the parity of the sum of coordinates: $\mathrm{color}([a_1, \ldots, a_n]) = (a_1 + a_2 + \cdots + a_n) \bmod 2$. Moving along any edge flips exactly one coordinate by $\pm 1$, so it always flips the parity. Meshes are not necessarily balanced.
 
-Theorem 16: `Q_n` is vertex-symmetric with `2^n × n!` different automorphisms.
+Hamiltonicity:
 
-Proof sketch. Vertex symmetry follows from Theorem 7 combined with `Q_n ≡ Q_1^n` (and `Q_1` is trivially vertex-symmetric). All automorphisms are constructed by composing two independent families:
+- $M(\ldots)$ has a Hamiltonian path always.
+- $M(\ldots)$ is Hamiltonian (has a Hamiltonian circuit) iff at least one side has even length.
 
-1. `Dimension permutations`. For a permutation `π : {0, ..., n-1} → {0, ..., n-1}`, define
+Number of vertices at distance $i$ in a $k$-ary $n$-cube: due to the irregularity there is no simple closed form, but the count is of order $O(i^{n-1})$.
 
-```
-κ(π) : Q_n → Q_n,   κ(π)(x_{n-1} ... x_0) = x_{π(n-1)} ... x_{π(0)}.
-```
+Practical dimensions: 2-D and 3-D meshes are the most common in practice. 2-D dominates VLSI (chips are flat) and 3-D is common in large machine rooms (racks form a 2-D floor grid, stacked vertically).
 
-There are `n!` such permutations. Each preserves Hamming distance, hence adjacency. 2. `Translations`. For any `u, v ∈ V(Q_n)`, define
+### Routing
 
-```
-τ_{u,v} : Q_n → Q_n,   τ_{u,v}(x) = x XOR (u XOR v),
-```
+The basic shortest-path routing on meshes is dimension-ordered routing. For 2-D and 3-D meshes these are known as XY routing and XYZ routing respectively.
 
-where XOR is bitwise addition modulo 2. There are `2^n` such translations (one per translation vector). XOR with a fixed vector preserves Hamming differences, hence adjacency.
+Algorithm (dimension-ordered routing from $u = [u_1, \ldots, u_n]$ to $v = [v_1, \ldots, v_n]$):
 
-Composing yields `2^n × n!` automorphisms. `Q_n` has far more automorphisms than the definition of vertex symmetry requires.
+1. Resolve the offset in dimension $1$ first: move from $u_1$ to $v_1$ along dimension 1.
+2. Then resolve the offset in dimension $2$, then dimension $3$, and so on, up to dimension $n$.
 
-Corollary 17: for any pair `u, v ∈ V(Q_n)`, there are `n!` automorphisms `f_{u,v}` with `f_{u,v}(u) = v`. Explicit formula:
+At each stage the routing uses only edges of the current dimension; the next dimension is touched only after the current offset has been fully resolved. Because the mesh has no wraparound, the shortest path in each dimension is uniquely the linear traversal from the current coordinate to the target.
 
-```
-f(x) = π(x) XOR (v XOR π(u))
-```
+Properties of dimension-ordered routing:
 
-for any chosen permutation `π` of `n` dimensions. Substituting `x = u`:
+- It produces a shortest path - the total length equals the Manhattan distance $\sum_i |u_i - v_i|$, which equals the graph distance in $M(\ldots)$.
+- It is deadlock-free under the standard dimension-ordered ordering (always traversing dimensions in the same fixed order across all packets).
+- It is simple and stateless: each router only needs to know the destination address.
 
-```
-f(u) = π(u) XOR (v XOR π(u)) = v. ✓
-```
+Many optimal communication and parallel mesh algorithms exist - "optimal" here meaning that the number of steps matches the mesh lower bounds (e.g., from diameter for broadcast, or from bisection width for permutation routing).
 
-### Properties V - distance distribution and shortest path count
+### Summary table of properties
 
-Lemma 18: the number of vertices at distance `i` from a given vertex in `Q_n` is
-
-```
-C(n, i) = ( n choose i ).
-```
-
-Proof: the number of `n`-bit strings differing in exactly `i` bits from a given vertex equals the number of ways to choose `i` bit positions out of `n`. By the symmetry of Pascal's triangle (`C(n, i) = C(n, n-i)`), the distance distribution is symmetric about `n/2`.
-
-The `average distance` is therefore:
-
-```
-dist(Q_n) ≈ ⌈n/2⌉.
-```
-
-Lemma 19: between two vertices in distance `k`, there are exactly `k!` different shortest paths. Proof: each shortest path between `u` and `v` corresponds to a permutation of the `k` bit-coordinates in which `u` and `v` differ - each order yields a distinct shortest path.
-
-### Properties VI - vertex-disjoint paths (Lemma 20)
-
-Lemma 20: if `u, v ∈ V(Q_n)` with `ϱ(u, v) = k`, then there exist `n` vertex-disjoint paths `P(u, v)` among which:
-
-- `k` paths are of length `k`
-- `n - k` paths are of length `k + 2`
-
-Proof idea (constructive):
-
-- Build the first path of length `k` by inverting the `k` differing bits in some order (any permutation works)
-- For the other `k - 1` shortest paths, use `k` different rotations of this initial permutation. The key observation: for every intermediate stage `1 ≤ i ≤ k - 1`, different rotations invert different `subsets` of `i` dimensions out of the `k` differing ones - so intermediate vertices never coincide, guaranteeing vertex disjointness
-- The remaining `n - k` paths of length `k + 2` are built by starting with a `side trip` through some bit `j` in which `u` and `v` `do not differ`: invert bit `j` (step aside into a disjoint subcube), traverse the `k` differing bits inside that subcube, then invert bit `j` again to return. This adds 2 extra edges - hence length `k + 2`
-
-This matches the optimal connectivity `κ(Q_n) = n`.
-
-### e-cube routing
-
-The `standard shortest-path routing` algorithm in `Q_n` is called `e-cube routing`:
-
-> Bits in `n`-bit addresses are tested always from the right to the left. At each step, the first differing bit (lowest-index mismatch) is flipped.
-
-Equivalently: to route from source `u` to destination `v`, compute `d = u XOR v` (the Hamming difference vector) and flip the bits of `d` in a `fixed order` (e.g., from least significant to most significant). At step `i`, if bit `i` of `d` is set, traverse the edge along dimension `i`; otherwise skip.
-
-This produces a shortest path of length `ϱ(u, v)` (using Lemma 18's reasoning) and is `deadlock-free` because all packets use dimensions in the same fixed order, so no cyclic wait among dimensions can develop. The fixed-order property is what makes `e-cube routing` more deadlock-resistant than arbitrary dimension-reordering schemes, despite `Q_n` being a highly cyclic graph with many shortest paths (`k!` per pair at distance `k`).
-
-> The routing must be based on something more deadlock-proof, and it has a name: `e-cube` routing.
-
-### Summary of `Q_n` parameters
-
-Compact summary of the hypercube `Q_n`:
-
-- Vertices: `2^n` binary `n`-tuples
-- Edges: `n · 2^{n-1}`, connecting vertices that differ in exactly one bit
-- Regular: yes, `n`-regular (dense topology)
-- Diameter: `n` (logarithmic in `N`)
-- Average distance: `≈ ⌈n/2⌉`
-- Connectivity: optimal, `κ = λ = δ = n`
-- Bisection width: `N/2` (maximum possible)
-- Vertex-symmetric: yes, with `2^n · n!` automorphisms
-- Hierarchically recursive: yes, `Q_n ≡ Q_p × Q_{n-p}`
-- Balanced bipartite: yes (parity 2-coloring)
-- Hamiltonian: yes (Gray codes give Hamiltonian circuits)
-- Number of vertices at distance `i`: `C(n, i)`
-- Number of shortest paths between vertices at distance `k`: `k!`
-- Vertex-disjoint paths between vertices at distance `k`: `n` (matching optimal connectivity)
-- Routing: `e-cube` (flip bits in fixed order, deadlock-free)
-
-Optimal algorithms exist for `all collective communication operations` on `Q_n`.
-
-### Importance and drawbacks
-
-Two main `drawbacks` of the hypercube:
-
-1. `Logarithmic degree` - supercomputers cannot be built arbitrarily large from one router component (router port count grows with dimension)
-2. `Scalability only by powers of 2`
-
-As a result, real supercomputers use only `low-dimensional hypercubes`. Example: Salomon at IT4I (manufactured by SGI) is built on `Q_7` - routers have 7 ports, and "M-Cells" are 7-dimensional cubes.
-
-Despite these drawbacks, the hypercube is the `testbed for feasibility of distributed-memory parallel solutions`, analogous to PRAM in the shared-memory world.
-
-> If you are not able to find a good solution on a hypercube topology, it is probably difficult to solve in general in a distributed manner.
-
-Because of its density, `Q_n` can `efficiently simulate almost any other topology`.
+- Constructor: Cartesian product of linear arrays, $M(z_1, \ldots, z_n) \equiv M(z_1) \times \cdots \times M(z_n)$
+- $|V| = \prod_i z_i$, $|E| = \sum_i (z_i - 1) \prod_{j \neq i} z_j$
+- $\mathrm{diam} = \sum_i (z_i - 1) = \Omega(\sqrt[n]{N})$, degree $\in {n, \ldots, 2n}$
+- Not regular, not vertex-symmetric
+- Always bipartite (parity of coordinate sum), not always balanced
+- Hamiltonian iff at least one $z_i$ is even; always has a Hamiltonian path
+- Optimal connectivity $\kappa = \lambda = \delta = n$
+- Hierarchically recursive: contains both same-dimension and lower-dimension submeshes
+- Routing: dimension-ordered (XY, XYZ, ...), shortest, deadlock-free
+- Generalizes $Q_n$ since $M(2, 2, \ldots, 2) \equiv Q_n$
 
 ### Potential exam questions
 
-1. Give the formal definition of the `n`-dimensional binary hypercube `Q_n`: vertex set, edge set, and key parameters (`|V|`, `|E|`, diameter, degree, bisection width).
-2. Is `Q_n` a sparse or dense topology? Justify your answer.
-3. Prove that `Q_n` has `n · 2^{n-1}` edges.
-4. State and prove Lemma 18: the number of vertices at distance `i` from a given vertex in `Q_n` is `C(n, i)`. What is the average distance?
-5. Prove Lemma 19: there are exactly `k!` shortest paths between two vertices at distance `k` in `Q_n`.
-6. State and sketch the proof of Lemma 20 (vertex-disjoint paths in `Q_n`). How many vertex-disjoint paths exist between two vertices at Hamming distance `k`, and what are their lengths?
-7. State Theorem 16. How many automorphisms does `Q_n` have? Describe the two independent families (dimension permutations and translations) and prove each is an automorphism.
-8. Prove Corollary 17: for any pair `u, v ∈ V(Q_n)`, there are `n!` automorphisms mapping `u` to `v`. Write out the explicit formula `f(x) = π(x) XOR (v XOR π(u))` and verify `f(u) = v`.
-9. Show that `Q_n` is hierarchically recursive via Cartesian product. Give the decomposition `Q_n ≡ Q_p × Q_{n-p}` and draw `Q_6 ≡ Q_3 × Q_3`.
-10. What is a `subcube` in `Q_n`? Explain the connection to Boolean algebra terms.
-11. Show that `Q_n` has optimal connectivity `κ(Q_n) = λ(Q_n) = δ(Q_n) = n` and bisection width `N/2`. Why is the latter ideal for binary divide-and-conquer algorithms?
-12. Prove that `Q_n` is balanced bipartite, using parity as a 2-coloring.
-13. What is a Gray code? Explain why any `n`-bit Gray code is a Hamiltonian circuit in `Q_n`.
-14. Describe `e-cube routing` in `Q_n`. Given source `0110` and destination `1101`, construct the e-cube path and compute its length.
-15. Why is e-cube routing deadlock-free, even though `Q_n` is highly cyclic (it contains 4-, 6-, 8-cycles, etc.)?
-16. Discuss the drawbacks of the hypercube as a real-world INPC. Why do supercomputers use only low-dimensional hypercubes? Give an example (Salomon / IT4I).
-17. Why is `Q_n` considered the `testbed` for distributed-memory parallel algorithms, analogous to PRAM in the shared-memory world?
+The questions below match the lecturer's proof-heavy, definition-precise style.
+
+1. Define formally the n-dimensional mesh $M(z_1, \ldots, z_n)$: give $V$, $E$, and write its expression as a Cartesian product.
+2. Derive the formula for $|E(M(z_1, \ldots, z_n))|$. Verify it on the example $M(3, 3, 4)$.
+3. Why is $M(z_1, \ldots, z_n)$ not regular, and what is its degree set? Give an example showing all degree values for $M(3, 3, 4)$.
+4. State and justify the diameter of $M(z_1, \ldots, z_n)$. Compare it with the diameter lower bound for sparse graphs (Theorem 15) and explain why the mesh is strictly suboptimal in diameter for fixed $n \geq 2$.
+5. Prove that $M(z_1, \ldots, z_n)$ is bipartite for all choices of $z_i$. Give the explicit 2-coloring.
+6. Under what condition is $M(z_1, \ldots, z_n)$ Hamiltonian? What weaker property holds for any mesh?
+7. Show that $M(z_1, \ldots, z_n)$ has optimal connectivity, i.e., $\kappa = \lambda = \delta$. What is this common value?
+8. Describe the bisection width formula for $M(z_1, \ldots, z_n)$ and explain why it splits into two cases depending on the parity of $\max_i z_i$.
+9. Show that $M(2, 2, \ldots, 2) \equiv Q_n$. In what sense are n-dimensional meshes generalizations of the binary hypercube?
+10. Describe the dimension-ordered routing algorithm (XY / XYZ) on a mesh. Argue that it produces a shortest path and that it is deadlock-free.
+11. Explain the hierarchical recursivity of meshes. Give one example of a same-dimension submesh and one example of a lower-dimension submesh inside $M(6, 5, 8, 3)$.
+12. For $N = 256$, the slides compare $M(8, 8, 4) \subset K(8, 8, 4) \subset Q_8$: $\mathrm{diam} = 17, 10, 8$ respectively. Recompute the mesh diameter from the definition and explain qualitatively why the mesh has the largest diameter of the three.
+13. How many vertices are at distance $i$ from a fixed vertex in a $k$-ary $n$-cube? Why is there no simple closed-form formula like there is for $Q_n$?
+14. Why are 2-D and 3-D meshes the most common in practice? Relate the answer to physical (VLSI / room-scale) constraints.

@@ -2,7 +2,7 @@
 > [!tldr] The first 5 minutes of hell
 > SpMVM (= Sparse Matrix Vector Multiplication) is a way to multiply a large and sparse `n x n` matrix with a vector using special formats (saving the whole matrix, having majority of elements zero) would be memory-inefficient. SpMVM operations are common in linear algebra operations.
 > 
-> SpMVM is a memory-bound operation with sequential complexity of $O(N)$, where $N$ denotes the number of non-zero elements in the matrix. It is memory-bound, because each one of the $N$ non-zero elements loaded from the memory are used exactly once.
+> SpMVM is a memory-bound operation with sequential complexity of $O(N)$, where $N$ denotes the number of non-zero elements in the matrix. It is memory-bound, because each one of the $N$ non-zero elements loaded from the memory is used exactly once.
 > 
 > The multiplication has the form: `y=Ax`.
 > 
@@ -32,7 +32,10 @@
 > 		- improves load balance, but dynamic schedule has a higher overhead
 > 		- if $K$ are multiples of the number of non-zero elements, we can eliminate false sharing
 > 	- load-balanced SpMVM: split the matrix into $p$ disjoint row bands so they all contain roughly the same number of non-zeros (and then distribute them statically)
-> 		- the idea is to use binary search on the RowStart array, calculate the perfect splits, align into whole rows and then each thread should have the same amount of work
+> 		- idea of the algorithm:
+> 			- each thread calculates it's ideal split `my_id * (N/p)` - those are the ideal splits of the ElementValues array
+> 			- since the threads need to be row-aligned, we will use binary search (O(log n), the RowStarts array is sorted) to find the first occurence in the RowStarts array that is higher or equal to the ideal split (this is then going to be the real split)
+> 			- and each thread then should have the same amount of work
 
 ### Problem definition
 

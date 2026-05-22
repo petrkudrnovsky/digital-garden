@@ -1,7 +1,25 @@
-# Exam Q21: MPI return values of functions and error handling
 
-How MPI signals errors via return codes, the assumptions about underlying communication reliability, the three predefined error handlers, the mechanism for attaching custom handlers to communicators, and the typical use of `MPI_ERRORS_RETURN`.
-
+> [!tldr] First 5 minutes of hell
+> The MPI standard assumes that the underlying communication is realiable and all messages sent are also received correctly. The transmission problems are not programmer's concern. Also the MPI library does not provide any mechanisms to handle the MPI errors (e.g. SW or HW crash resulting in immediate termination of the MPI process). By default, a serious failure aborts every process in the program.
+> 
+> This note is about, what happens if there is an algorithmic error (non-existing destination, invalid communicator, buffer too small) or resource error (too many pending messages, system buffers exhausted etc.)
+> 
+> MPI functions return `MPI_SUCCESS` on success run (all other returns are made via function arguments). If there is an error -> the specified error handler is invoked, which determines, what will happen next. 
+> 
+> We can attach error handlers to communicators (to groups of processes) to specify the level of error handling in this communicator group:
+> - `MPI_ERRORS_ARE_FATAL` - this is default (for the `MPI_COMM_WORLD`)
+> 	- it calls the `MPI_Abort` internally, the function never returns (so we don't know anything) and all processes die
+> - `MPI_ERRORS_RETURN`
+> 	- does nothing, the function returns the error code (instead of `MPI_SUCCESS`), where it could be inspected
+> 	- but the state of the MPI computation is undefined, so we should not perform any other MPI calls
+> 	- we can log the error and terminate peacefully
+> - `MPI_ERRORS_ABORT`
+> 	- same idea as `MPI_ERRORS_ARE_FATAL`, but only in the affected communicator (the rest of the system runs normally)
+> 
+> How to connect the error handler? 
+> - using the `MPI_Comm_set_errhandler` function
+> 
+> Programmers can also specify their own error handlers. But even then, the state of the MPI computation is undefined.
 ### Reliability assumptions of the MPI standard
 
 MPI assumes that **the underlying communication is reliable**:

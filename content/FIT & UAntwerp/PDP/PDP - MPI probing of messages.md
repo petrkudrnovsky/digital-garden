@@ -1,3 +1,26 @@
+
+> [!tldr] First 5 minutes of hell
+> Using functions like `MPI_Probe` or `MPI_Iprobe` we are able to test if the message has arrived or not (without actually consuming it). By probing, we can get the `MPI_Status` struct (containing the MPI_Source, MPI_Tag and the actual count of elements in the message).
+> 
+> MPI_Probe: blocking, non-local
+> - is blocking and waits until the specified type of message appears (source, tag, communicator)
+> 
+> MPI_Iprobe: nonblocking, local
+> - is not blocking, just looks whether the message is already ready to be received and fills the flag variable
+> 
+> Usage:
+> - when probing optional messages while doing useful work (e.g. looking whether other process found the optimum, so I can terminate early)
+> - to look at the message size (number of elements) before consuming it, so I can preallocate the buffer for the message contents
+> 
+> In multithreaded processes, the list of incoming messages is shared, so threads may compete to receive messages
+> - one thread probes a message, it is there, so the thread thinks it could receive (consume) the message, but another thread is faster (so the original thread blocks on the "second" receive indefinitely, or receives a wrong message)
+> - handled by: `MPI_Improbe` or `MPI_Mprobe` and `MPI_Mrecv`
+> 	- `MPI_Improbe` (=matching probe) returns a "message handle" to the probed message
+> 	- this message handle `MPI_Message` is then used as input to `MPI_Mrecv` (=matching receive), which will successfully receive the message (the matching probe call has reserved the message for that thread)
+> 	- to ensure that only one `MPI_Mrecv` is called, before the return from this function, the message handle is changed to `MPI_MESSAGE_NO_PROC` and all successive calls of `MPI_Mrecv` with this message handle will fail
+> 		- it's for closing the dangling reference to the message
+
+
 # Exam Q20: MPI probing of messages
 
 Probing in MPI: non-destructive inspection of incoming messages via `MPI_Probe` / `MPI_Iprobe`, the typical applications (optional messages and unknown-size reception), the race condition that arises in multithreaded processes, and the matching-probe family (`MPI_Improbe` / `MPI_Mrecv`) that solves it.

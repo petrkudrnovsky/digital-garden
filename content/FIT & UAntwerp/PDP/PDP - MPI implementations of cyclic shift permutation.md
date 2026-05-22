@@ -1,6 +1,26 @@
-# Exam Q22: MPI implementations of cyclic shift permutation
 
-The cyclic shift permutation on a virtual ring of MPI processes: why the naive blocking implementation is broken, and four correct solutions of progressively increasing elegance. This is the paradigmatic worked example for understanding the interaction between communication modes, blocking semantics, and deadlock avoidance.
+> [!tldr] First 5 minutes in hell
+> The cyclic shift permutation is a common communication operation. There is a ring of processes and each wants to send a message to the right and receive the message from the left. When using blocking sending/receiving operations, deadlock may appear (the dining philosophers problem). 
+> - if I use `MPI_Send` (in standard mode), it could be local and non-local (depends on the MPI library), if the operation is non-local for all processes (waiting for data reception initialization), there will be deadlock (the receiving process will be stuck on sending, therefore I will be stuck on sending as well)
+> - the deadlock appears always when using `MPI_Ssend`
+> 
+> 1st solution: alternating sends and receives
+> - the processes will be split according to their rank and the order of `MPI_Send` and `MPI_Recv` will be in opposite order for odd/even processes
+> 
+> 2nd solution: using `BSend` (local only) operation
+> - the `BSend` operation is guaranteed to return even if the data reception has not been initiated yet
+> - programmer has to define and allocate a sufficient buffer for it (this method is more memory intensive), if not, the function throws an error
+> 
+> 3rd solution: using non-blocking operations
+> - switch to:
+> 	- non-blocking `MPI_Isend` sending (received by blocking `MPI_Recv` and freed by `MPI_Wait`)
+> 	- non-blocking `MPI_Irecv` receiving (sent by blocking `MPI_Send` and freed by `MPI_Wait`)
+> 	- the `MPI_Wait` is there to safely return if the data reception has been initialized and then frees the `MPI_Request` object
+> 
+> 4th solution: using special `MPI_Sendrecv` operation
+> - simplest and the most effective solution, as this operation could simultaneously receive data from the left and send data to the right
+> - in general, for this function, the source and destination process can, but does not have to be distinct
+
 
 ### The cyclic shift permutation
 
@@ -52,6 +72,8 @@ if (even) {
 
 > **Question (left as exercise by the lecturer):** does this work for an **odd** number of processes, where the first and last processes are both even-ranked?  
 > The answer is yes - it does work even in that case, but verifying it requires careful case analysis.
+> - it's a problem, because for odd number of threads, we have (e.g. for 5 threads): E, O, E, O, E. So from thread 4 to thread 1, it does not alternate cleanly
+> 	- but it is still okay, because the rank 0 send will be handled in order, so it will be ready to receive
 
 ### Solution II - buffered mode
 

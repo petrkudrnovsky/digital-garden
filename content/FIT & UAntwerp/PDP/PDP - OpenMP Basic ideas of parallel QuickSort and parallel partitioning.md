@@ -1,3 +1,47 @@
+
+> [!tldr] First 5 minutes in hell
+> Sequential "Lomuto's Quicksort" works as follows:
+> - select a pivot = the last element of the unsorted array
+> - have two indexes $i$ and $j$, which both traverse the array from left to right so that this invariant applies:
+> 	- all elements from first element to $i-1$-th position are less than pivot
+> 	- all elements from $i$ to $j$-th position are greater or equal to the pivot
+> - the last operation is swapping the pivot with $i$-th position (so all elements on the right are less than pivot and all elements on the left are bigger than pivot)
+> 	- but after one round not all elements are sorted, we need to recurse to 1) left part of the array and 2) right part of the array (the pivot "stays" in place)
+> 
+> Straightforward parallelization (PUV):
+> - apply task parallelism on both recursions and begin with the `single` directive
+> - problems:
+> 	- inefficient use of the task pool (even small OpenMP tasks are put there)
+> 	- the swapping procedure is sequential (so other threads could be idle), because the $i$ and $j$ depend on each other
+> 	- a thread creates 2 tasks and does not have own work to do (has to go to task pool and pick up the task it just created)
+> - solutions:
+> 	- Tail call optimization (TCO) - right side is processed iteratively by the current thread and the left side is packaged to a task and handed off to the task pool (so the parent thread still has work to do)
+> 	- Task parallelism thresholding (ST) - we will introduce a threshold of the form `n/(k*p)` and if the number of array elements is under this threshold, solve it sequentially 
+> 		- $k=1$: exactly same number of tasks as threads, no effective load balancing could be done
+> 		- $k>1$: allows for better load balancing (more tasks than threads in the pool), "not going too far with small, ineffective, tasks"
+> 
+> Hoare's Quicksort
+> - because Lomuto's Quicksort cannot be well parallelized ($i$ and $j$ move sequentially and depend on each other)
+> - the process:
+> 	- $i$ goes left-to-right and $j$ goes right-to-left and again, the last element is the pivot
+> 	- there are 4 cases what could happen while comparing values on both pointers 
+> 	- the process is called neutralization (= at least one element ends up in the right place)
+> 	- at the end, the pivot is swapped into the meeting point of $i$ and $j$
+> - how it could be parallelized?
+> 	- each thread has a unique `my_i` and `my_j`, it neutralizes this pair and then takes another free `my_i` and `my_j`, which are not taken up by other threads (going closer to the center of the array)
+> 		- therefore the values must be shared (visible by other threads) and be updated by `atomic capture` directive
+> 		- more effective way is not to take individual element pairs (a lot of atomic operations and false sharing), but capturing a neutralizing whole disjoint blocks of pairs
+> 			- the same rules apply:
+> 				- after seq. neutralization at most one dirty block (having displaced elements) and at least one clean block (having all elements in the correct part) is left 
+> 				- the thread keeps the dirty block and gets another block (because the clean block is finished)
+> 			- the block size be a multiple of the cache block size
+> 			- at the end there are at most $p$ dirty blocks - they are neutralized sequentially by master thread (this is relatively cheap for small $p$)
+> 			- pivot is not swapped as in the previous version, it is determined by the common pivot determination techniques (e.g. randomly sample 5 and take median)
+> 				- quicksort is data-dependable and the complexity depends on the quality of the pivot with respect to the data
+> 	- warning, the Hoarse Quicksort helps me to parallelize the sequential partition, but the recursive part of the algorithm is still there (so it is a nested parallelism (task + multithreaded par_partition)), so we need to set the maximum active levels to keep the number of threads optimal in relation to number of physical cores (best scenario is to have the same amount of threads as cores, I can go up to twice as much threads as core, but not more)
+>
+
+
 ### QuickSort properties relevant to parallelization
 
 QuickSort is a recursive Divide-and-Conquer algorithm that is **data sensitive** (performance depends on input distribution), **in-place** (requires only `O(log₂ n)` auxiliary memory for the recursion stack in efficient implementations), and can be implemented exclusively with Compare-and-Swap operations. It is unstable - the ordering of equal elements is not preserved.
@@ -145,12 +189,14 @@ The correct solution uses `#pragma omp atomic capture` (Fetch-and-Add):
 ```c
 #pragma omp atomic capture
 { my_i = i; i++; }    // abbreviated as [my_i = i++]
+// the thread takes up the current i and increases it by one atomically (so other threads can take up other i)
 
 #pragma omp atomic capture
 { my_j = j; j--; }    // abbreviated as [my_j = j--]
 ```
 
 Each thread captures unique private copies `my_i` and `my_j`, performs neutralization on `A[my_i]` and `A[my_j]`, then captures new elements as needed. At the end, each thread is left with at most one dirty (incorrectly placed) element. Since `p << n`, sequential cleaning of at most `p` dirty elements is fast.
+![[Pasted image 20260520161216.png]]
 
 ##### Why element-level partitioning is inefficient
 
