@@ -20,7 +20,7 @@
 > - degree set is ${n,\ldots , 2n}$, because corner vertices have 1 neighbors along each dimension/axis and inner has 2 neighbors per dimension (and there are $n$ dimensions)
 > 	- so mesh is not regular, and that also implies that it is not vertex-symmetric (no automorphism can map a corner vertex onto the inner one (they have different degrees))
 > - bisection width: 
-> 	- slice through the largest dimension ($N/max z_i$ edges), if the largest dimension is even, the mesh is split exactly in half
+> 	- slice through the largest dimension (`N/max z_i` edges), if the largest dimension is even, the mesh is split exactly in half
 > - mesh are always bipartite (so I can color all vertices in a way so no edge has the same color vertices), but not always balanced
 > - a mesh always has a Hamiltonian path (visit every vertex once)
 > 	- it has a Hamiltonian circuit (return to start after visiting all vertices) exists only of the number of vertices is even (if there is even number of vertices, the circuits alternates colors and both color classes are balanced) = at least one dimension is even

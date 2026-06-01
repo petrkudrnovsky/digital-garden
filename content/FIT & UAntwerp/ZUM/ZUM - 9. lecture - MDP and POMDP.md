@@ -1,0 +1,111 @@
+### Non-deterministic environments
+- environments for AI agents, where each move is achieved with some given probability (usually < 1)
+	- in comparison to deterministic environments - we can simply plan the sequence of actions and just perform it
+	- here, we can plan the sequence of actions, but there is only a given probability, that the moves will really go in the planned sequence
+		- e.g. the probability of doing the intended action is 0.8, so in 20% cases, the agent will perform an action that is not in the proposed plan
+		- the agent therefore needs something to tell him, what to do in every state => that is a "policy"
+- non-deterministic environment contains states with rewards 
+	- goal state has a high reward
+	- far-away state, where we don't want the agent to go have a low reward (or negative reward)
+	- each non-goal state could have a really small negative reward (to motivate the agent to finish early rather than wander around - "each move costs something")
+	- rewards are a way of telling the agent's utility function, which step is good and which is not
+	- rewards are often additive (so the add to each other as the agent progresses through the state space)
+### Markov decision process (MDP)
+- a triple $(s_0, P, R)$, where:
+	- $s_0$ is a start state
+	- $P$ is a transition model (from which state to which state on which action)
+		- the $P(s'|s,a)$ specify the probability of going from $s$ to $s'$ with action $a$
+		- the Markovian property applies (the probability of reaching $s'$ depends only on the previous state, not the further history)
+	- $R$ is a reward function (S->$R$ (as in for real numbers)
+- $\pi$ is called a policy (a solution to MDP)
+	- for each state s, the $\pi(s)$ determines the best action for the agent in this state (it maps states to actions)
+		- the action still has some probability of actually fulfulling, there is still chance of going somewhere else (other than intended), but the policy function should have a recommended action for that state as well
+	- sometimes, we have a policy that is not set for all states (=> partial policy)
+	- "if I fix a policy, the MDP collapses into a Markov chain - we would have a matrix of transition probabilities (discrete time)"
+### Good policies and how to find them?
+- when we execute a policy from the starting state, each time a different set of steps is performed (because each state has a certain probability of being actually fulfilled)
+- the quality of the policy corresponds to the expected utility
+	- and the optimal policy has the best expected utility of all possible policies
+	- how to measure utility:
+		- additive - just add the rewards of the states that the agent went through (= environment history)
+		- discounted - add the rewards and multiply them by coefficient $0\lt\gamma\lt1$ (the future matters less - the rewards are multiplied by $\gamma, \gamma^2, \gamma^3,\ldots$)
+			- benefits:
+				- the infinite environment histories have finite utility if the rewards are bounded by the $R_{max}$
+				- algorithm converge more often
+### How to find an optimal policy
+- each state actually has two properties:
+	- reward of the state = a short them reward of the state
+	- utility of the state = a long term utility (under a certain policy) - it is the expected discounted reward of all histories that can follow this state
+		- the "true utility" of a state is the utility under the optimal policy
+		- once we have true utilities for each state, then picking the best action in each state is easy (just pick the action, whose probability-weighted average of successor utilities is the highest)
+- MEU (The Maximum Expected Utility principle) is the rule for choosing an action under uncertainty
+	- no action is certain, but we know the expected utilities (the average of the utilities of the distribution of outcomes (the possible future sequences of actions) - weighted by how likely each action is)
+	- this is the difference from the deterministic environments - we cannot choose the next state, we just can choose the action, that will "likely" move us into that state
+### Bellman equation
+- the value (utility) of the state is:
+	- the immediate reward R (taken "now" in the state) +
+	- discounted expected value (utility) of the best action you can take from the current state
+		- enumerate all possible moves/actions from the state, for them get their expected utilities and return the action, that has the maximum expected utility of all possible actions
+			- it is recursive (I am now looking in the expected utilities of the neighbors and the expected utilities of states "more in the future" is hidden in the neighbours expected utilities)
+		- it is discounted, because it happens one step later ("in the future")
+- this could be solved by iteration (cannot be solved directly, the expected utilities depend on each other and actions (not numbers) are picked - it is non-linear)
+##### Value iteration
+- the value iteration algorithm run:
+	- start with utility = 0 for all states
+	- define a maximum error I tolerate $\epsilon$
+	- repeatedly apply the Bellman update equation, track the $\delta$ = the largest change of utility in any state during the sweep
+		- one sweep = one update of all utilities of all states (calculate $U_1$ from $U_0$, $U_2$ from $U_1$, etc.)
+		- until the $\delta$ is below the tolerated error
+- the ordering of all actions in each state usually converges (the ordering of the actions is exactly, what the policy actually needs)
+##### Policy iteration
+- a different way of getting to a good policy
+- the policy iteration algorithm run:
+	- assume an initial policy $\pi_0$ (even a random one)
+		- 1) evaluate the policy - take the current policy as fixed and compute how good it actually is
+			- compute the utility of each state given this policy (the policy = a fixed ordering of actions, so the order is fixed, the system of equations is linear - could be solved by a matrix solver)
+		- 2) improve the policy 
+			- now, we know the utilities of all states (how good each state is under the current policy)
+			- check every state whether some other action looks better than the current policy (using the MEU)
+			- possible results:
+				- if in any state there is a better-looking action, switch to it (we got a new policy - repeat the loop)
+				- if there are no switches - we are done, we have the best policy possible
+
+- both approaches could be combined - do a few sweeps to get some moderate middle ground and then finish it with the deterministic improvements (policy iteration)
+### POMDP
+- = Partially observable Markov decision processes
+- used, when we have non-deterministic actions and also no full observability (= the agent does not always know the full environment)
+- formally, POMDP is a triple:
+	- P - transition model (same as for MDP)
+	- R - reward function (same as for MDP)
+	- O: $S\times A\rightarrow R$ (observation/sensor model)
+		- $O(o|s)$ - is the probability of perceiving observation $o$ in the state $s$
+		- since from the beginning, the agent does not know in which state it is in, there is not a initial state anymore
+			- instead of it, the agent maintains a "belief" = the probability distribution over states
+			- as the agent decides for some actions and performs moves, this belief is updated according to observations it makes
+### How to solve POMDPs
+- first: work with beliefs (continuous distributions) in the same way as with states (in MDPs)
+	- this is correct, but very hard to compute (PSPACE complexity)
+- second:
+	- based on look-ahead
+	- the agent has a belief of being in some state, enroll a decision tree up to a certain depth, collect utilities and choose the right action 
+	- so, as an input, we have a decision network
+		- we have state X in time t (action A that led us to this state)
+			- and at each state, we have the observation function, which gives us the observation probabilities + the reward function
+	- the tree works in a way (alternating level of triangular and round states):
+		- in triangular (decision) states: the belief states, where the agent takes a decision A
+			- we want to take the maximum (the agent picks the action, which gives it the highest value)
+			- to get the actual values, it has to descend though the current triangular node down to the leaves and then estimate the actual utility of this action (do this for all possible action given the current belief and then pick the action with the maximum approximated utility)
+		- in round states: corresponding observations of the environment, this is what the agent cannot control
+			- after taking an action, the agents gets its perception of the environment through its sensors
+			- the round-node's value is the probability-weighted average of its children values
+			- as the agent cannot pick the observation, it just averages all possible observations to get a good estimate of the result (of taking the previous action)
+		- the leaves are labeled using some approximation of utility (so at the bottom of the tree, we can see the approximate utilities of the state in some time e.g. $t+5$) and then the agent can decide based on that
+		- so it works this way:
+			- at the root, the agent has some belief and some actions to do
+			- it builds up this tree of possible "hypothetical" beliefs if it would choose this action (triangular nodes) and get this observation (round nodes)
+			- it works its way down to the bottom, the beliefs in leaves are evaluated by the approximation function to give them utilities
+			- and the value (utility) flows back up (averaging at the round nodes, taking the maximum at the triangular nodes, to show the agent which action is best right now) 
+		- the agent:
+			- runs the whole look-ahead tree, picks the best action given the current belief and executes it
+			- then it gets a real observation from the environment (after executing the action) and it updates the belief based on this observation
+			- rebuild the whole look-ahead tree and continues again

@@ -10,7 +10,7 @@
 > - $Q_5=Q_2\times Q_3$ 
 > 
 > Hamming distance $\rho(u,v)$ counts how many bit positions differ between two vertices. The graph distance in $Q_n$ equals the Hamming distance. The distance from $u$ to $v$ is exactly the number of bit switches.
-> - diameter is $n$: the farthes I can go is $n$ (= flipping all bits)
+> - diameter is $n$: the furthest I can go is $n$ (= flipping all bits)
 > - number of vertices at distance $i$ from any given vertex is equal to $\binom{n}{i}$ (just pick, which bits to flip)
 > - average distance is $n/2$ (by the symmetry of the Pascal's triangle)
 > 

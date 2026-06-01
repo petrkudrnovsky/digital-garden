@@ -1,5 +1,7 @@
 This note contains my own solutions to the exam questions, organized by the lecture. Sources: slides, lectures, my own explanations, AI.
 
+Disclaimer: for the full context and correct understanding, the official slides are needed. Also, the list of the questions may differ each academic year. 
+
 Lecture 1
 - [[PDP - PRAM model and shared memory access conflict resolution]]
 - [[PDP - APRAM model and implementation of synchronization barriers]]
@@ -43,4 +45,37 @@ Lecture 7
 - [[PDP - n-dimensional torus - definition, properties, routing]] 
 - [[PDP - Sparse hypercubic networks and fat trees - definition, properties, routing]] 
 - [[PDP - Clos topologies - definitions, variants, properties]] 
-- [[PDP - Dragonfly topology - definition, properties]] 
+- [[PDP - Dragonfly topology - definition, properties]]
+
+Lecture 8
+- [[PDP - Quasiisometric topologies - meshes-tori, ordinary-wrapped butterflies]]
+- [[PDP - Embedding of the hypercube into lower-dimensional meshes]]
+
+Lecture 9 (no summary at the top of all exam questions)
+- [[PDP - Switching technology in parallel computers - Store-and-Forward and wormhole - description, communication latency]] 
+- [[PDP - OAB in all-port and 1-port SF networks - lower bounds, algorithms and their latencies]]
+- [[PDP - OAB in 1-port WH networks - lower bounds, algorithms and their latencies]]
+- [[PDP - OAB in all-port WH 2-D tori - lower bounds, the dilated diagonal algorithm and its latency]]
+- [[PDP - Multicast in 1-port WH 2-D meshes - lower bounds, optimal algorithm, and its latency]]
+- [[PDP - Combining OAS - lower bounds, algorithms, and their latencies]]
+- [[PDP - Noncombining AAB and AAG - lower bounds, algorithms, and their latencies. Timearc disjoint trees and edge-disjoint hamiltonian circuits]]
+- [[PDP - AAS - communication latency lower bounds]]
+
+Lecture 10
+- [[PDP - Parallel prefix sum (PPS) - definition, implementation on PRAM, APRAM, and various topologies and their complexities, scalability, MPI function]]
+- [[PDP - PPS application - packing problem and parallel RadixSort]]  
+- [[PDP - PPS application - carry-look-ahead adder]]  
+- [[PDP - PPS application - tridiagonal system of linear equations]]  
+- [[PDP - Segmented parallel prefix sum - definition, implementations on PRAM and various topologies, and their complexities, scalability, MPI functions]]
+- [[PDP - Out-of-place parallel QuickSort based on segmented parallel prefix sum]]  
+
+Lecture 11
+- no exam questions
+
+Lecture 12
+- [[PDP - MPI implementation of distributed generation of random permutation of sequence 1...n]] 
+- [[PDP - Multiplication of a dense matrix with a vector - row-wise, column-wise, checkerboard mapping, scalability]] 
+- [[PDP - Cannon algorithm of distributed multiplication of dense matrices, correctness, properties]] 
+- [[PDP - MPI implementation of the Cannon algorithm for dense matrix-matrix multiplication]] 
+- [[PDP - MPI implementation of the Power Method with arbitrary and row-wise matrix mapping]] 
+- [[PDP - MPI implementation of the Power Method with checkerboard matrix mapping]] 

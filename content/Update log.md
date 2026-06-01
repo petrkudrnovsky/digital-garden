@@ -24,3 +24,10 @@ V průběhu konce semestru a Vánoc jsem postupně aktualizoval zahrádku násle
 Zároveň dalším mým cílem je aktualizovat jednotlivé poznámky ke státnicím z Webového inženýrství - chci poznámky sjednotit, zlepšit vizuální dojem z nich a poštelovat lepší zobrazování.
 ### 18. 3. 2026
 Další aktualizace poznámek, teď už z letního semestru (NIE-NSS a Empirical Research in MIS) pro mé kolegy a kohokoliv dalšího, kdo si je bude chtít přečíst.
+### May 2026
+- postupné přidání veškerých materiálů na předměty:
+	- Digital Risk and Security - UAntwerp
+	- Parallel and Distributed Programming - FIT
+- rework hlavní stránky pro poznámky
+- velká změna: digitální zahrádka se posouvá na subdoménu: https://vault.petrkudrnovsky.cz/, což bylo mým dlouhodobějším plánem
+	- na hlavní stránce je moje osobní stránka: https://www.petrkudrnovsky.cz/, která je ale s digitální zahradou úzce provázaná

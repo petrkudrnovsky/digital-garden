@@ -68,7 +68,7 @@ Analogous to the mesh, the torus decomposes by Cartesian product, but each facto
 Special cases:
 
 - $K(z) =$ cycle/ring of length $z$
-- $K(k, k, \ldots, k) = $ `k-ary n-torus`
+- $K(k, k, \ldots, k) =$ `k-ary n-torus`
 - $K(2, 2, \ldots, 2) \equiv Q_n$ (the torus collapses to the hypercube when all side lengths are 2)
 
 Consequently, meshes, tori, and hypercubes are all members of the same family of orthogonal topologies - the hypercube is the $k = 2$ special case, and tori and meshes are its generalizations.
@@ -163,11 +163,11 @@ You can build tori of any dimension - limited only by engineering creativity for
 
 Among equal-sized meshes, tori, and hypercubes, the `torus strikes the best trade-off`: diameter smaller than the mesh but larger than the hypercube; density and bisection width likewise intermediate. Numerical example for $N = 256$:
 
-||$M(8,8,4)$|$K(8,8,4)$|$Q_8$|
-|---|---|---|---|
-|diameter|17|10|8|
-|$\lvert E \rvert$|640|768|1024|
-|$\mathrm{bw}_e$|32|64|128|
+| $M(8,8,4)$        | $K(8,8,4)$ | $Q_8$ |      |
+| ----------------- | ---------- | ----- | ---- |
+| diameter          | 17         | 10    | 8    |
+| $\lvert E \rvert$ | 640        | 768   | 1024 |
+| $\mathrm{bw}_e$   | 32         | 64    | 128  |
 
 Finally, `optimal algorithms exist for many fundamental problems on tori`, and tori interact well with dimension-ordered collective communication patterns - XY(Z) routing also drives broadcast, reduction, and all-to-all primitives.
 

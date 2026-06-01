@@ -18,7 +18,7 @@
 > 	- $B(p) = \Theta(dp)$ - the increments are linear, since they are mutually exclusive
 > 	- once the counter is equal to the number of processors, all are woken up and release (in the outgoing phase)
 > - binary reduction tree
-> 	- $B(p)=\Theta(d\ log(p))$  - because of the logarithmic organization of the processors (the three is "pre-allocated" and the processors sit in the leaves of the binary tree), so both reduction and activation take logarithmic time instead of linear time
+> 	- $B(p)=\Theta(d\ log(p))$  - because of the logarithmic organization of the processors (the tree is "pre-allocated" and the processors sit in the leaves of the binary tree), so both reduction and activation take logarithmic time instead of linear time
 > - trade-off:
 > 	- central counter is significantly slow for large $p$, but memory allocation is only $O(1)$ - only one atomic counter
 > 	- binary reduction tree is more complex, is faster for large $p$ and takes up 

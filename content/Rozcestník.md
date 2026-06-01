@@ -22,6 +22,7 @@ Zápisky z jednotlivých předmětů MAGISTR (specializace Digital business engi
 - [[PDB - Advanced Database Systems]] - final lecture notes + tutorial cheatsheets
 - [[NSS - Normalized Software Systems]] - final notes
 - [[PDP - Parallel and Distributed Programming]] - exam questions
+- [[ZUM - Introduction to Artificial Intelligence]] - final notes
 - UAntwerp courses:
 	- [[Engineering and design science methodologies]] - final lecture notes
 	- [[Machine learning for business]] - final lecture and tutorial notes

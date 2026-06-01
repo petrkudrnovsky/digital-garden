@@ -5,7 +5,8 @@
 > Sparse hypercubic topologies are the constant-degree derivatives of the hypercube with logarithmic diameters (the maximum possible distance between nodes)
 > - so they retain the algorithmic advantages of the hypercube and also allow the realistic builds with single fixed-degree routers (extending the network does not require exchange of all routers for routers with more connections)
 > - the cost of doing so:
-> 	- scalability is worse (fewer vertices per dimension count)
+> 	- scalability is worse (we cannot choose the exact amount on nodes we want)
+> 		- $N=2^n$ for hypercube, $N=n\cdot 2^n$ for wrapped butterfly yield even more gaps between vertex counts
 > 
 > Wrapped butterfly: fix the degree by exploding each vertex into a cycle of $n$ nodes
 > - so the $n$ edges connecting to the vertex in hypercube are now distributed into $n$ nodes in the cycle (one edge per node)
@@ -22,6 +23,8 @@
 > - gain hierarchical recursivity and a column structure (which is perfect for normal hypercubic algorithms))
 > 	- $oBF_n$ contains two $oBF_{n-1}$ as subgraphs
 > 	- in those algorithms, only one dimension of hypercube edges is used at any step of the algorithm
+> - it is a minimal permutation network (there is exactly one shortest path between two vertices)
+> 	- it serves as a cheap replacement to crossbar switches
 > 
 > Direct vs. indirect butterfly
 > - direct: every node is a full computing node (CPU+memory+switch)
@@ -32,13 +35,29 @@
 > 		- upper broadcast = upper input to both outputs
 > 		- lower broadcast = lower input to both outputs
 > - routing: using the bits of the destination address (looking from LSB to MSB)
-> 	- if the bit is 0: take the upper output
-> 	- if the bit is 1: take the lower output
+> 	- on direct butterflies:
+> 		- if the bit is 0: take the upper output
+> 		- if the bit is 1: take the lower output
+> 	- on indirect butterflies:
+> 		- do a XOR of the source and destination addresses and then go from LSB to MSB 
+> 		- if the bit is 0: perform inversion
+> 		- if the bit is 1: perform identity
 > 
 > Bidirectional butterfly: add turnaround (data can hit some middlepoint and get back), get multiple parallel paths between nodes
+> - it is an extension to the ordinary butterfly
+> - the middle point is the root of the tree connecting the source and the destination (and at this point the data "can decide" on which side they will continue)
+> 	- this is the most significant bit that differs for source and destination (the data from source go from LSB to MSB, which is the highest differing) and then in descends back to the destination
+> - with this bidirectional butterfly, it behaves like a crossbar switch, a computer on the left side can send something to the computer also on the left side
+> - there are multiple common roots, so the traffic could be split
+> 	- improves parallelism (parallel routes to take)
+> 		- the bigger distance between nodes u and v is, the more turnaround points, there are $2^{m(u,v)}$ of them (where $m(u,v)$ is the position of the highest most significant bit that differs)
+> 	- increases fault tolerance (multiple ways to get to the destination)
 > 
 > Fat tree: same graph as the bidirectional butterfly, drawn as a tree with growing bandwidth towards the root
-> 	- this is what actually gets built and sold (simple routing, commodity switches are enough, modular and extensible, bandwidth scaling)
+> - this is what actually gets built and sold (simple routing, commodity switches are enough, modular and extensible, bandwidth scaling)
+> - the tree gets fatter and fatter towards the root
+> 	
+>![[Pasted image 20260526171829.png]]
 
 ### Motivation: why sparse hypercubic?
 
