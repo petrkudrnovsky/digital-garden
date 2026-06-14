@@ -8,6 +8,7 @@ Lectures:
 - [[EDSM - 5. lecture - C1]]
 - [[EDSM - 6. lecture - C2]] 
 - [[EDSM - NST (all lectures)]]
+- [[EDSM - Biomimetics]]
 
 Papers:
 - [[Hevner - Design Science in Information Systems]]

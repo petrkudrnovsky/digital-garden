@@ -28,6 +28,7 @@ Zápisky z jednotlivých předmětů MAGISTR (specializace Digital business engi
 	- [[Machine learning for business]] - final lecture and tutorial notes
 	- [[Empirical Research in MIS]] - final lecture notes
 	- [[Digital Risk & Security]] - final lecture notes
+	- [[Entrepreneurial Finance]] - final lecture notes
 
 Pro další předměty a popřípadně jiné vysvětlení doporučuji další digitální zahrádku od kolegy na FITu: https://obsidian.jancerny.dev/
 ***
